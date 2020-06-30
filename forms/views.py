@@ -329,6 +329,24 @@ class ConsumerismTypes(TemplateView):
         return render(request, self.template_name, args)
 
 
+class MedicalScience(TemplateView):
+    template_name = "tables/medical-science.html"
+
+    def get(self, request):
+        data = models.MedicalScience.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class Technologies(TemplateView):
+    template_name = "tables/technologies.html"
+
+    def get(self, request):
+        data = models.Technology.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
 # FORMS ###############################################################################################################
 
 
@@ -632,6 +650,20 @@ class NewArticles(CreateView):
     success_url = reverse_lazy('home')
 
 
+class NewMedicalScience(CreateView):
+    template_name = "tables/new/new-medical-science.html"
+    model = models.MedicalScience
+    form_class = forms.MedicalScienceForm
+    success_url = reverse_lazy('medical-science')
+
+
+class NewTechnologies(CreateView):
+    template_name = "tables/new/new-technologies.html"
+    model = models.Technology
+    form_class = forms.TechnologyForm
+    success_url = reverse_lazy('technologies')
+
+
 # Edit Methods ########################################################################################################
 
 class EditLocationType(UpdateView):
@@ -863,6 +895,20 @@ class EditArticles(UpdateView):
     model = models.Article
     form_class = forms.ArticleForm
     success_url = reverse_lazy('home')
+
+
+class EditMedicalScience(UpdateView):
+    template_name = "tables/new/new-medical-science.html"
+    model = models.MedicalScience
+    form_class = forms.MedicalScienceForm
+    success_url = reverse_lazy('medical-science')
+
+
+class EditTechnologies(UpdateView):
+    template_name = "tables/new/new-technologies.html"
+    model = models.Technology
+    form_class = forms.TechnologyForm
+    success_url = reverse_lazy('technologies')
 
 
 # Delete Methods ######################################################################################################
@@ -1110,3 +1156,17 @@ class DeleteArticles(TemplateView):
     def get(self, request, id):
         models.Article.objects.filter(id=id).delete()
         return redirect(reverse('home'))
+
+
+class DeleteMedicalScience(TemplateView):
+
+    def get(self, request, id):
+        models.MedicalScience.objects.filter(id=id).delete()
+        return redirect(reverse('medical-science'))
+
+
+class DeleteTechnologies(TemplateView):
+
+    def get(self, request, id):
+        models.Technology.objects.filter(id=id).delete()
+        return redirect(reverse('technologies'))

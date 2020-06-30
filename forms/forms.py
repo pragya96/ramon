@@ -415,6 +415,26 @@ class ConsumerismForm(forms.ModelForm):
         fields = '__all__'
 
 
+class MedicalScienceForm(forms.ModelForm):
+    name = forms.CharField(max_length=100, widget=forms.TextInput(
+        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+    ))
+
+    class Meta:
+        model = models.MedicalScience
+        fields = '__all__'
+
+
+class TechnologyForm(forms.ModelForm):
+    name = forms.CharField(max_length=100, widget=forms.TextInput(
+        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+    ))
+
+    class Meta:
+        model = models.Technology
+        fields = '__all__'
+
+
 class ArticleForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}

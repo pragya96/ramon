@@ -56,6 +56,8 @@ urlpatterns = [
     url(r'^social-science$', views.SocialScience.as_view(), name='social-science'),
     url(r'^consumerism$', views.Consumerism.as_view(), name='consumerism'),
     url(r'^consumerism-types$', views.ConsumerismTypes.as_view(), name='consumerism-types'),
+    url(r'^medical-science$', views.MedicalScience.as_view(), name='medical-science'),
+    url(r'^technologies$', views.Technologies.as_view(), name='technologies'),
 
     url(r'^new-locations(?:/(?P<id>[0-9]+))?/$', views.NewLocations.as_view(), name='new-locations'),
     url(r'^new-location-types/$', views.NewLocationType.as_view(), name='new-location-types'),
@@ -92,6 +94,8 @@ urlpatterns = [
     url(r'^new-consumerism-types/$', views.NewConsumerismTypes.as_view(), name='new-consumerism-types'),
     url(r'^new-consumerism/$', views.NewConsumerism.as_view(), name='new-consumerism'),
     url(r'^new-articles/$', views.NewArticles.as_view(), name='new-articles'),
+    url(r'^new-medical-science/$', views.NewMedicalScience.as_view(), name='new-medical-science'),
+    url(r'^new-technologies/$', views.NewTechnologies.as_view(), name='new-technologies'),
 
     url(r'^(?P<pk>\d+)/edit-location-types/$', views.EditLocationType.as_view(), name='edit-location-types'),
     url(r'^(?P<pk>\d+)/edit-building-types/$', views.EditBuildingType.as_view(), name='edit-building-types'),
@@ -126,6 +130,8 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/edit-consumerism-types/$', views.EditConsumerismTypes.as_view(), name='edit-consumerism-types'),
     url(r'^(?P<pk>\d+)/edit-consumerism/$', views.EditConsumerism.as_view(), name='edit-consumerism'),
     url(r'^(?P<pk>\d+)/edit-articles/$', views.EditArticles.as_view(), name='edit-articles'),
+    url(r'^(?P<pk>\d+)/edit-medical-science/$', views.EditMedicalScience.as_view(), name='edit-medical-science'),
+    url(r'^(?P<pk>\d+)/edit-technologies/$', views.EditTechnologies.as_view(), name='edit-technologies'),
 
     url(r'^delete-location/(?P<id>[0-9]+)$', views.DeleteLocation.as_view(), name='delete-location'),
     url(r'^delete-location-types/(?P<id>[0-9]+)$', views.DeleteLocationTypes.as_view(), name='delete-location-types'),
@@ -162,6 +168,8 @@ urlpatterns = [
     url(r'^delete-consumerism-types/(?P<id>[0-9]+)$', views.DeleteConsumerismTypes.as_view(), name='delete-consumerism-types'),
     url(r'^delete-consumerism/(?P<id>[0-9]+)$', views.DeleteConsumerism.as_view(), name='delete-consumerism'),
     url(r'^delete-articles/(?P<id>[0-9]+)$', views.DeleteArticles.as_view(), name='delete-articles'),
+    url(r'^delete-medical-science/(?P<id>[0-9]+)$', views.DeleteMedicalScience.as_view(), name='delete-medical-science'),
+    url(r'^delete-technologies/(?P<id>[0-9]+)$', views.DeleteTechnologies.as_view(), name='delete-technologies'),
 
 ]
 
