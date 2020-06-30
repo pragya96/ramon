@@ -496,7 +496,7 @@ class ArticleForm(forms.ModelForm):
     ))
     status = forms.CharField(max_length=2, widget=forms.Select(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'},
-        choices=STATUS_CHOICES
+        choices=models.Article.STATUS_CHOICES
     ))
 
     class Meta:

@@ -8,7 +8,17 @@ $(function() {
 
 $(document).ready(function() {
     var table = $('#table_id').DataTable({
-        "scrollX": true
+        "scrollX": true, 
+        rowCallback: function(row, data, index){
+        	console.log( 'data: ' + data );
+        	console.log( 'data[27]: ' + data[27] );
+        	if(data[27]==='Incomplete'){
+        		$('td', row).css('background-color', '#ffcccc');
+        	}
+        	if(data[27]==='Ready for Review'){
+        		$('td', row).css('background-color', '#d3f3dd');
+        	}
+        }
     });
 
     new $.fn.dataTable.Buttons( table, {
@@ -20,7 +30,6 @@ $(document).ready(function() {
 				var length = str.length;
 				var substr = str.substring(n +1, length);
         		location.href = '/ramon/forms/new-' + substr;
-        		console.log( 'new-' + substr  );
     		}
         }]
 	});

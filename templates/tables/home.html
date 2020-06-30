@@ -52,6 +52,7 @@ Ramón | Articles
                                     <th>Social Issue</th>
                                     <th>Social Science</th>
                                     <th>Consumerism</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,6 +88,7 @@ Ramón | Articles
                                         <td>{% for social_issue in item.social_issue.all %}{{ social_issue.name }}<br/>{% endfor %}</td>
                                         <td>{% for social_science in item.social_science.all %}{{ social_science.name }}<br/>{% endfor %}</td>
                                         <td>{% for consumerism in item.consumerism.all %}{{ consumerism.type }}<br/>{% endfor %}</td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
