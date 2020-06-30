@@ -1,0 +1,28 @@
+.label {
+    margin: 0px;
+    padding-right: 12px;
+}
+
+.form-inline .form-check-input {
+    margin-left: 12px;
+}
+
+.form-control {
+    margin-left: 8px;
+}
+
+ul {
+    list-style-type: none;    
+    margin: 0; 
+    padding: 0;
+}
+
+li {
+    float: left;
+    display: inline;
+    margin-right: 15px;
+}
+
+.radio {
+    margin: 10px;
+}

@@ -1,0 +1,157 @@
+<div id="sidebar-wrapper">
+    <aside id="sidebar">
+        <ul id="sidemenu" class="sidebar-nav">
+            <li>
+                <a href="{% url 'home' %}">
+                    <span class="sidebar-title">Articles</span>
+                </a>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-2">
+                    <span class="sidebar-title">Location Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-2" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'locations' %}"><i class="fa fa-caret-right"></i>Locations</a></li>
+                    <li><a href="{% url 'location-types' %}"><i class="fa fa-caret-right"></i>Location Types</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-3">
+                    <span class="sidebar-title">Building Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-3" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'buildings' %}"><i class="fa fa-caret-right"></i>Buildings</a></li>
+                    <li><a href="{% url 'building-types' %}"><i class="fa fa-caret-right"></i>Building Types</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-4">
+                    <span class="sidebar-title">Art Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-4" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'arts' %}"><i class="fa fa-caret-right"></i>Arts</a></li>
+                    <li><a href="{% url 'art-types' %}"><i class="fa fa-caret-right"></i>Art Types</a></li>
+                    <li><a href="{% url 'artist-types' %}"><i class="fa fa-caret-right"></i>Artist Types</a></li>
+                    <li><a href="{% url 'artists' %}"><i class="fa fa-caret-right"></i>Artists</a></li>
+                    <li><a href="{% url 'art-styles' %}"><i class="fa fa-caret-right"></i>Art Styles</a></li>
+                    <li><a href="{% url 'artistic-movements' %}"><i class="fa fa-caret-right"></i>Artistic Movements</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'applied-arts' %}">
+                    <span class="sidebar-title">Applied Arts</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'text-formats' %}">
+                    <span class="sidebar-title">Text Formats</span>
+                </a>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-5">
+                    <span class="sidebar-title">Politics Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-5" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'politics' %}"><i class="fa fa-caret-right"></i>Politics</a></li>
+                    <li><a href="{% url 'politics-periods' %}"><i class="fa fa-caret-right"></i>Politics Periods</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-6">
+                    <span class="sidebar-title">Biography Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-6" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'biographies' %}"><i class="fa fa-caret-right"></i>Biographies</a></li>
+                    <li><a href="{% url 'relations' %}"><i class="fa fa-caret-right"></i>Relations</a></li>
+                    <li><a href="{% url 'biography-periods' %}"><i class="fa fa-caret-right"></i>Periods</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'urbanism' %}">
+                    <span class="sidebar-title">Urbanism</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'architectures' %}">
+                    <span class="sidebar-title">Architectures</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'cultural-life' %}">
+                    <span class="sidebar-title">Cultural Life</span>
+                </a>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-7">
+                    <span class="sidebar-title">Literature Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-7" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'literature' %}"><i class="fa fa-caret-right"></i>Literature</a></li>
+                    <li><a href="{% url 'movements' %}"><i class="fa fa-caret-right"></i>Movements</a></li>
+                    <li><a href="{% url 'writers' %}"><i class="fa fa-caret-right"></i>Writers</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-8">
+                    <span class="sidebar-title">Popular Culture Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-8" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'popular-cultures' %}"><i class="fa fa-caret-right"></i>Popular Cultures</a></li>
+                    <li><a href="{% url 'culture-types' %}"><i class="fa fa-caret-right"></i>Culture Types</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'entertainment' %}">
+                    <span class="sidebar-title">Entertainment</span>
+                </a>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-9">
+                    <span class="sidebar-title">Media Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-9" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'media' %}"><i class="fa fa-caret-right"></i>Media</a></li>
+                    <li><a href="{% url 'media-types' %}"><i class="fa fa-caret-right"></i>Media Types</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'objects' %}">
+                    <span class="sidebar-title">Objects</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'psychology' %}">
+                    <span class="sidebar-title">Psychology</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'social-issues' %}">
+                    <span class="sidebar-title">Social Issues</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'social-science' %}">
+                    <span class="sidebar-title">Social Science</span>
+                </a>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-10">
+                    <span class="sidebar-title">Consumerism Tables</span>
+                    <b class="fa fa-caret-down"></b>
+                </a>
+                <ul id="submenu-10" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'consumerism' %}"><i class="fa fa-caret-right"></i>Consumerism</a></li>
+                    <li><a href="{% url 'consumerism-types' %}"><i class="fa fa-caret-right"></i>Consumerism Types</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>

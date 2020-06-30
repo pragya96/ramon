@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ramón | Articles
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
+  <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
+{% endblock %}
+
+{% block content %}
+    <div id="wrapper">
+        {% include 'tables/sidenav.html' %}
+        <main id="page-content-wrapper" role="main">
+            <div class="row">
+                <div class="col-11 card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Articles</h2>
+                        <table id="table_id" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Actions</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Newspaper</th>
+                                    <th>Issue</th>
+                                    <th>Page Numbers</th>
+                                    <th>Location</th>
+                                    <th>Building</th>
+                                    <th>URL</th>
+                                    <th>Art</th>
+                                    <th>Applied Art</th>
+                                    <th>Text Format</th>
+                                    <th>Politics</th>
+                                    <th>Biography</th>
+                                    <th>Urbanism</th>
+                                    <th>Architecture</th>
+                                    <th>Cultural Life</th>
+                                    <th>Literature</th>
+                                    <th>Popular Culture</th>
+                                    <th>Entertainment</th>
+                                    <th>Media</th>
+                                    <th>Modernity</th>
+                                    <th>Objects</th>
+                                    <th>Psychology</th>
+                                    <th>Social Issue</th>
+                                    <th>Social Science</th>
+                                    <th>Consumerism</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in data %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'edit-articles' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-articles' item.id %}" onclick="return confirm('Do you want to delete {{ item.title }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.date }}</td>
+                                        <td>{{ item.newspaper }}</td>
+                                        <td>{{ item.issue }}</td>
+                                        <td>{{ item.page_numbers }}</td>
+                                        <td>{% for location in item.location.all %}{{ location.name }}<br/>{% endfor %}</td>
+                                        <td>{% for building in item.building.all %}{{ building.name }}<br/>{% endfor %}</td>
+                                        <td>{{ item.url }}</td>
+                                        <td>{% for art in item.art.all %}{{ art.title }}<br/>{% endfor %}</td>
+                                        <td>{% for applied_art in item.applied_art.all %}{{ applied_art.type }}<br/>{% endfor %}</td>
+                                        <td>{{ item.text_format }}</td>
+                                        <td>{% for politics in item.politics.all %}{{ politics.figure }}<br/>{% endfor %}</td>
+                                        <td>{% for biography in item.biography.all %}{{ biography.name }}<br/>{% endfor %}</td>
+                                        <td>{% for urbanism in item.urbanism.all %}{{ urbanism.type }}<br/>{% endfor %}</td>
+                                        <td>{% for architecture in item.architecture.all %}{{ architecture.architect }}<br/>{% endfor %}</td>
+                                        <td>{% for cultural_life in item.cultural_life.all %}{{ cultural_life.type }}<br/>{% endfor %}</td>
+                                        <td>{% for literature in item.literature.all %}{{ literature.work }}<br/>{% endfor %}</td>
+                                        <td>{% for popular_culture in item.popular_culture.all %}{{ popular_culture.type.type }}<br/>{% endfor %}</td>
+                                        <td>{% for entertainment in item.entertainment.all %}{{ entertainment.type }}<br/>{% endfor %}</td>
+                                        <td>{% for media in item.media.all %}{{ media.name }}<br/>{% endfor %}</td>
+                                        <td>{{ item.modernity }}</td>
+                                        <td>{% for objects_mentioned in item.objects_mentioned.all %}{{ objects_mentioned.name }}<br/>{% endfor %}</td>
+                                        <td>{% for psychology in item.psychology.all %}{{ psychology.name }}<br/>{% endfor %}</td>
+                                        <td>{% for social_issue in item.social_issue.all %}{{ social_issue.name }}<br/>{% endfor %}</td>
+                                        <td>{% for social_science in item.social_science.all %}{{ social_science.name }}<br/>{% endfor %}</td>
+                                        <td>{% for consumerism in item.consumerism.all %}{{ consumerism.type }}<br/>{% endfor %}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

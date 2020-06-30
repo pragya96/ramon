@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Ramon Gomez de la Serna{% endblock %}</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link href="https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+         <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/af-2.3.5/b-1.6.2/fh-3.1.7/r-2.2.5/sp-1.1.1/datatables.min.css"/>
+        <link href="{% static 'css/index.css' %}" rel="stylesheet">
+        {% block css %}{% endblock %}
+
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" style="background-color: #f5b971;">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'index' %}" id="brand">Ramón Gómez de la Serna</a>
+                <span class="navbar-text">
+                    {% block navbar %}
+                    {% endblock %}
+                </span>
+            </div>
+        </nav>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+        <!-- DataTables -->
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/af-2.3.5/b-1.6.2/fh-3.1.7/r-2.2.5/sp-1.1.1/datatables.min.js"></script>
+        {% block js %}{% endblock %}
+    </body>
+</html>

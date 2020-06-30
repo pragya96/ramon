@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ramón | New Article
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
+{% endblock %}
+
+{% block content %}
+    <div id="wrapper">
+        {% include 'tables/sidenav.html' %}
+        <main id="page-content-wrapper" role="main">
+            <div class="row">
+                <div class="col-11 card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">New Article</h2>
+                        <hr>
+                        <br>
+                        <form method="post" enctype='multipart/form-data'>
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label required" for="{{ form.title.id_for_label }}">Title:</label>
+                                        {{ form.title }}
+                                        {{ form.title.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.date.id_for_label }}">Date:</label>
+                                        {{ form.date }}
+                                        {{ form.date.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.newspaper.id_for_label }}">Newspaper:</label>
+                                        {{ form.newspaper }}
+                                        {{ form.newspaper.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.issue.id_for_label }}">Issue:</label>
+                                        {{ form.issue }}
+                                        {{ form.issue.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.page_numbers.id_for_label }}">Page Numbers:</label>
+                                        {{ form.page_numbers }}
+                                        {{ form.page_numbers.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.location.id_for_label }}">Locations:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.location }}
+                                        {{ form.location.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.building.id_for_label }}">Buildings:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.building }}
+                                        {{ form.building.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.url.id_for_label }}">URL:</label>
+                                        {{ form.url }}
+                                        {{ form.url.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.art.id_for_label }}">Arts:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.art }}
+                                        {{ form.art.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.applied_art.id_for_label }}">Applied Arts:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.applied_art }}
+                                        {{ form.applied_art.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.text_format.id_for_label }}">Format of Text:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.text_format }}
+                                        {{ form.text_format.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.politics.id_for_label }}">Politics:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.politics }}
+                                        {{ form.politics.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.biography.id_for_label }}">Biographies:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.biography }}
+                                        {{ form.biography.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.urbanism.id_for_label }}">Urbanism:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.urbanism }}
+                                        {{ form.urbanism.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.architecture.id_for_label }}">Architectures:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.architecture }}
+                                        {{ form.architecture.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.cultural_life.id_for_label }}">Cultural Lives:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.cultural_life }}
+                                        {{ form.cultural_life.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.literature.id_for_label }}">Literature:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.literature }}
+                                        {{ form.literature.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.popular_culture.id_for_label }}">Popular Culture:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.popular_culture }}
+                                        {{ form.popular_culture.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.entertainment.id_for_label }}">Entertainment:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.entertainment }}
+                                        {{ form.entertainment.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.media.id_for_label }}">Media:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.media }}
+                                        {{ form.media.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.modernity.id_for_label }}">Modernity:</label>
+                                        {{ form.modernity }}
+                                        {{ form.modernity.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.objects_mentioned.id_for_label }}">Objects:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.objects_mentioned }}
+                                        {{ form.objects_mentioned.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.psychology.id_for_label }}">Psychology:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.psychology }}
+                                        {{ form.psychology.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.social_issue.id_for_label }}">Social Issue:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.social_issue }}
+                                        {{ form.social_issue.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.social_science.id_for_label }}">Social Science:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.social_science }}
+                                        {{ form.social_science.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.consumerism.id_for_label }}">Consumerism:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.consumerism }}
+                                        {{ form.consumerism.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.status.id_for_label }}">Status:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.status }}
+                                        {{ form.status.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <button type="button" class="btn btn-light cancel-btn" onclick="location.href='{% url 'home' %}'">Cancel</button>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <button type="submit" class="btn submit-btn">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}

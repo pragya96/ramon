@@ -1,0 +1,46 @@
+html {
+    height: 100%;
+}
+
+body {
+	background: linear-gradient(0deg, rgba(255,210,130,1) 13%, rgba(255,236,199,1) 100%) fixed;
+} 
+
+#brand {
+	font-family: 'Arbutus Slab', serif;
+}
+
+.navbar {
+	position: fixed;
+	z-index:1; 
+	top: 0;
+	width: 100%;
+}
+
+.content {
+	padding-top: 70px;
+}
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	border-radius: 5px; 
+	margin: 50px 0px 50px 0px;
+}
+
+.submit-btn {
+	border: 2px solid black;
+	border-radius: 8px;
+	background: #f5b971;
+	width: 70%;
+}
+
+.cancel-btn {
+	border: 2px solid black;
+	border-radius: 8px;
+	width: 70%;
+}
+
+.required:before {
+    content:" *";
+    color: red;
+}
