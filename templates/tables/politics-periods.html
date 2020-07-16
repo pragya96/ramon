@@ -35,7 +35,7 @@ Ramón | Politics Periods
                                 {% for item in data %}
                                     <tr>
                                         <td>{{ item.name }}</td>
-                                        <td>{{ item.years }}</td>
+                                        <td>{{ item.start_year }}-{{ item.end_year }}</td>
                                         <td>
                                             <a href="{% url 'edit-politics-periods' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-politics-periods' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>

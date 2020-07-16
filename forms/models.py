@@ -1,5 +1,7 @@
 from django.contrib.gis.db import models as gis_models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+import datetime
 
 STATUS_CHOICES = [
     ('I', 'Incomplete'),
@@ -130,6 +132,12 @@ class PersonalMemory(models.Model):
 
 class HistoricalPeriod(models.Model):
     name = models.CharField(max_length=100)
+    start_year = models.PositiveIntegerField(null=True, validators=[
+        MinValueValidator(1600),
+        MaxValueValidator(datetime.datetime.now().year)],)
+    end_year = models.PositiveIntegerField(null=True, validators=[
+        MinValueValidator(1600),
+        MaxValueValidator(datetime.datetime.now().year)],)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
@@ -150,7 +158,12 @@ class HistoricalMemory(models.Model):
 
 class PoliticsPeriod(models.Model):
     name = models.CharField(max_length=100)
-    years = models.CharField(max_length=100, null=True)
+    start_year = models.PositiveIntegerField(null=True, validators=[
+        MinValueValidator(1600),
+        MaxValueValidator(datetime.datetime.now().year)],)
+    end_year = models.PositiveIntegerField(null=True, validators=[
+        MinValueValidator(1600),
+        MaxValueValidator(datetime.datetime.now().year)],)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):

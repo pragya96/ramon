@@ -37,9 +37,16 @@ Ramón | New Politics Period
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.years.id_for_label }}">Years:</label>
-                                        {{ form.years }}
-                                        {{ form.years.errors }}
+                                        <label class="label" for="{{ form.start_year.id_for_label }}">Start Year:</label>
+                                        {{ form.start_year }}
+                                        {{ form.start_year.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.end_year.id_for_label }}">End Year:</label>
+                                        {{ form.end_year }}
+                                        {{ form.end_year.errors }}
                                     </div>
                                 </div>
                             </div>

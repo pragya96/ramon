@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.gis import forms as gis_forms
 from django.core.exceptions import ObjectDoesNotExist
 from forms import models
+import datetime
 
 
 class ArticleForm(forms.ModelForm):
@@ -329,6 +330,12 @@ class HistoricalPeriodForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
+    start_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
+        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+    ))
+    end_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
+        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+    ))
     status = forms.CharField(max_length=2, widget=forms.Select(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'},
         choices=models.STATUS_CHOICES
@@ -360,7 +367,10 @@ class PoliticsPeriodForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    years = forms.CharField(required=False, max_length=100, widget=forms.TextInput(
+    start_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
+        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+    ))
+    end_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
     status = forms.CharField(max_length=2, widget=forms.Select(
