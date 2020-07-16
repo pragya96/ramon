@@ -37,7 +37,9 @@ Ramón | New Person
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.occupation.id_for_label }}">Occupation:</label>
+                                        <label class="label" for="{{ form.occupation.id_for_label }}">Occupation:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
                                         {{ form.occupation }}
                                         {{ form.occupation.errors }}
                                     </div>
@@ -46,7 +48,9 @@ Ramón | New Person
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.relation.id_for_label }}">Relation:</label>
+                                        <label class="label" for="{{ form.relation.id_for_label }}">Relation:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
                                         {{ form.relation }}
                                         {{ form.relation.errors }}
                                     </div>

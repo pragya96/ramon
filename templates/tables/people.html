@@ -39,8 +39,8 @@ Ramón | People
                                 {% for item in data %}
                                     <tr>
                                         <td>{{ item.name }}</td>
-                                        <td>{{ item.occupation.type }}</td>
-                                        <td>{{ item.relation.name }}</td>
+                                        <td>{% for occupation in item.occupation.all %}{{ occupation.type }}<br/>{% endfor %}</td>
+                                        <td>{% for relation in item.relation.all %}{{ relation.name }}<br/>{% endfor %}</td>
                                         <td>{{ item.birthday }}</td>
                                         <td>{{ item.date_of_death }}</td>
                                         <td>{{ item.fiction_character }}</td>

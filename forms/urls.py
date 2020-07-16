@@ -21,6 +21,7 @@ from forms import views
 
 urlpatterns = [
     # url(r'^$', views.Index.as_view(), name='home'),
+    url(r'^articles$', views.Articles.as_view(), name='home'),
     url(r'^articles$', views.Articles.as_view(), name='articles'),
     url(r'^occupations$', views.Occupations.as_view(), name='occupations'),
     url(r'^relations$', views.Relations.as_view(), name='relations'),

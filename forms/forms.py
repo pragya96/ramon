@@ -125,7 +125,7 @@ class ArticleForm(forms.ModelForm):
                 self.fields['format_of_text'].queryset = models.FormatOfText.objects.filter(type_id=type_of_format_id)
             except (ValueError, TypeError):
                 pass
-        elif self.instance.pk:
+        elif self.instance.pk and self.instance.type_of_format:
             self.fields['format_of_text'].queryset = models.FormatOfText.objects.filter(type_id=self.instance.type_of_format.id)
 
 
@@ -161,12 +161,14 @@ class PersonForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    occupation = forms.ModelChoiceField(required=False, queryset=models.Occupation.objects.all(), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    relation = forms.ModelChoiceField(required=False, queryset=models.Relation.objects.all(), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
+    occupation = forms.ModelMultipleChoiceField(required=False, queryset=models.Occupation.objects.all(),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    relation = forms.ModelMultipleChoiceField(required=False, queryset=models.Relation.objects.all(),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
     birthday = forms.DateField(required=False, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control datepicker'}
     ))

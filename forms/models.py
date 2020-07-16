@@ -31,8 +31,8 @@ class Relation(models.Model):
 
 class Person(models.Model):
     name = models.CharField(max_length=100)
-    occupation = models.ForeignKey(Occupation, on_delete=models.CASCADE, null=True)
-    relation = models.ForeignKey(Relation, on_delete=models.CASCADE, null=True)
+    occupation = models.ManyToManyField(Occupation)
+    relation = models.ManyToManyField(Relation)
     birthday = models.DateField(null=True)
     date_of_death = models.DateField(null=True)
     fiction_character = models.BooleanField(default=False)

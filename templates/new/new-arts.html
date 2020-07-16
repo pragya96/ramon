@@ -37,25 +37,23 @@ Ramón | New Art
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.image.id_for_label }}">Image:</label>
+                                        {{ form.image }}
+                                        {{ form.image.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
                                         <label class="label" for="{{ form.category.id_for_label }}">Category:</label>
                                         {{ form.category }}
                                         {{ form.category.errors }}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-6">
                                     <div class="form-group form-inline">
                                         <label class="label" for="{{ form.type.id_for_label }}">Type:</label>
                                         {{ form.type }}
                                         {{ form.type.errors }}
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.image.id_for_label }}">Image:</label>
-                                        {{ form.image }}
-                                        {{ form.image.errors }}
                                     </div>
                                 </div>
                             </div>
