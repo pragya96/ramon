@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ramón | New Politics Period
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
+{% endblock %}
+
+{% block content %}
+    <div id="wrapper">
+        {% include 'tables/sidenav.html' %}
+        <main id="page-content-wrapper" role="main">
+            <div class="row">
+                <div class="col-11 card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">New Politics Period</h2>
+                        <hr>
+                        <br>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label required" for="{{ form.name.id_for_label }}">Name:</label>
+                                        {{ form.name }}
+                                        {{ form.name.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.years.id_for_label }}">Years:</label>
+                                        {{ form.years }}
+                                        {{ form.years.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label required" for="{{ form.status.id_for_label }}">Status:</label>
+                                        {{ form.status }}
+                                        {{ form.status.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <button type="button" class="btn btn-light cancel-btn" onclick="location.href='{% url 'politics-periods' %}'">Cancel</button>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <button type="submit" class="btn submit-btn">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}

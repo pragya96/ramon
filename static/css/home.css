@@ -124,3 +124,15 @@
 .row {
 	margin: 0px;
 }
+
+.inner-dropdown {
+    margin-left: 10px; 
+}
+
+.checkbox {
+    margin-left: 10px;
+}
+
+.checkbox-div {
+    padding-top: 25px;
+}

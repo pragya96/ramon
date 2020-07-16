@@ -25,18 +25,20 @@ Ramón | Urbanism
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Type</th>
+                                    <th>Name</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.type }}</td>
+                                        <td>{{ item.name }}</td>
                                         <td>
                                             <a href="{% url 'edit-urbanism' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-urbanism' item.id %}" onclick="return confirm('Do you want to delete {{ item.type }}?')"><i class="fa fa-trash"></i></a>
+                                            <a href="{% url 'delete-urbanism' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -51,5 +53,8 @@ Ramón | Urbanism
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 2;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

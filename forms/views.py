@@ -5,6 +5,8 @@ from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
 from django.urls import reverse, reverse_lazy
 from django.contrib.gis.geos import Point
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from forms import models
 from forms import forms
 
@@ -23,11 +25,29 @@ class Articles(TemplateView):
         return render(request, self.template_name, args)
 
 
-class Locations(TemplateView):
-    template_name = "tables/locations.html"
+class Occupations(TemplateView):
+    template_name = "tables/occupations.html"
 
     def get(self, request):
-        data = models.Location.objects.all()
+        data = models.Occupation.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class Relations(TemplateView):
+    template_name = "tables/relations.html"
+
+    def get(self, request):
+        data = models.Relation.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class People(TemplateView):
+    template_name = "tables/people.html"
+
+    def get(self, request):
+        data = models.Person.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -41,11 +61,11 @@ class LocationTypes(TemplateView):
         return render(request, self.template_name, args)
 
 
-class Buildings(TemplateView):
-    template_name = "tables/buildings.html"
+class Locations(TemplateView):
+    template_name = "tables/locations.html"
 
     def get(self, request):
-        data = models.Building.objects.all()
+        data = models.Location.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -59,11 +79,101 @@ class BuildingTypes(TemplateView):
         return render(request, self.template_name, args)
 
 
-class Arts(TemplateView):
-    template_name = "tables/arts.html"
+class Buildings(TemplateView):
+    template_name = "tables/buildings.html"
 
     def get(self, request):
-        data = models.Art.objects.all()
+        data = models.Building.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class TypesOfFormat(TemplateView):
+    template_name = "tables/types-of-format.html"
+
+    def get(self, request):
+        data = models.TypeOfFormat.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class FormatOfTexts(TemplateView):
+    template_name = "tables/text-formats.html"
+
+    def get(self, request):
+        data = models.FormatOfText.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class PersonalMemories(TemplateView):
+    template_name = "tables/personal-memories.html"
+
+    def get(self, request):
+        data = models.PersonalMemory.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class HistoricalPeriods(TemplateView):
+    template_name = "tables/historical-periods.html"
+
+    def get(self, request):
+        data = models.HistoricalPeriod.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class HistoricalMemories(TemplateView):
+    template_name = "tables/historical-memories.html"
+
+    def get(self, request):
+        data = models.HistoricalMemory.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class PoliticsPeriods(TemplateView):
+    template_name = "tables/politics-periods.html"
+
+    def get(self, request):
+        data = models.PoliticsPeriod.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class Politics(TemplateView):
+    template_name = "tables/politics.html"
+
+    def get(self, request):
+        data = models.Politics.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class Architectures(TemplateView):
+    template_name = "tables/architectures.html"
+
+    def get(self, request):
+        data = models.Architecture.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class Urbanism(TemplateView):
+    template_name = "tables/urbanism.html"
+
+    def get(self, request):
+        data = models.Urbanism.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class ArtCategories(TemplateView):
+    template_name = "tables/art-categories.html"
+
+    def get(self, request):
+        data = models.ArtCategory.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -73,24 +183,6 @@ class ArtTypes(TemplateView):
 
     def get(self, request):
         data = models.ArtType.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class ArtistTypes(TemplateView):
-    template_name = "tables/artist-types.html"
-
-    def get(self, request):
-        data = models.ArtistType.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class Artists(TemplateView):
-    template_name = "tables/artists.html"
-
-    def get(self, request):
-        data = models.Artist.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -113,92 +205,56 @@ class ArtisticMovements(TemplateView):
         return render(request, self.template_name, args)
 
 
-class AppliedArts(TemplateView):
-    template_name = "tables/applied-arts.html"
+class Arts(TemplateView):
+    template_name = "tables/arts.html"
 
     def get(self, request):
-        data = models.AppliedArt.objects.all()
+        data = models.Art.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
 
-class FormatOfTexts(TemplateView):
-    template_name = "tables/text-formats.html"
-
-    def get(self, request):
-        data = models.FormatOfText.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class Politics(TemplateView):
-    template_name = "tables/politics.html"
-
-    def get(self, request):
-        data = models.Politics.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class PoliticsPeriod(TemplateView):
-    template_name = "tables/politics-periods.html"
-
-    def get(self, request):
-        data = models.PoliticsPeriod.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class Biographies(TemplateView):
-    template_name = "tables/biographies.html"
-
-    def get(self, request):
-        data = models.Biography.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class Relations(TemplateView):
-    template_name = "tables/relations.html"
-
-    def get(self, request):
-        data = models.Relation.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class BiographyPeriod(TemplateView):
-    template_name = "tables/biography-periods.html"
-
-    def get(self, request):
-        data = models.Period.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class Urbanism(TemplateView):
-    template_name = "tables/urbanism.html"
-
-    def get(self, request):
-        data = models.Urbanism.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class Architectures(TemplateView):
-    template_name = "tables/architectures.html"
-
-    def get(self, request):
-        data = models.Architecture.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class CulturalLife(TemplateView):
-    template_name = "tables/cultural-life.html"
+class CulturalLives(TemplateView):
+    template_name = "tables/cultural-lives.html"
 
     def get(self, request):
         data = models.CulturalLife.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class AestheticMovements(TemplateView):
+    template_name = "tables/aesthetic-movements.html"
+
+    def get(self, request):
+        data = models.AestheticMovement.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class Aesthetics(TemplateView):
+    template_name = "tables/aesthetics.html"
+
+    def get(self, request):
+        data = models.Aesthetic.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class LiteraryMovements(TemplateView):
+    template_name = "tables/literary-movements.html"
+
+    def get(self, request):
+        data = models.LiteraryMovement.objects.all()
+        args = {'data': data}
+        return render(request, self.template_name, args)
+
+
+class LiteraryGenres(TemplateView):
+    template_name = "tables/literary-genres.html"
+
+    def get(self, request):
+        data = models.LiteraryGenre.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -212,38 +268,11 @@ class Literature(TemplateView):
         return render(request, self.template_name, args)
 
 
-class Movements(TemplateView):
-    template_name = "tables/movements.html"
-
-    def get(self, request):
-        data = models.Movement.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class Writers(TemplateView):
-    template_name = "tables/writers.html"
-
-    def get(self, request):
-        data = models.Writer.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
 class PopularCultures(TemplateView):
     template_name = "tables/popular-cultures.html"
 
     def get(self, request):
         data = models.PopularCulture.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
-class CultureTypes(TemplateView):
-    template_name = "tables/culture-types.html"
-
-    def get(self, request):
-        data = models.CultureType.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -257,15 +286,6 @@ class Entertainment(TemplateView):
         return render(request, self.template_name, args)
 
 
-class Media(TemplateView):
-    template_name = "tables/media.html"
-
-    def get(self, request):
-        data = models.Media.objects.all()
-        args = {'data': data}
-        return render(request, self.template_name, args)
-
-
 class MediaTypes(TemplateView):
     template_name = "tables/media-types.html"
 
@@ -275,38 +295,38 @@ class MediaTypes(TemplateView):
         return render(request, self.template_name, args)
 
 
-class Objects(TemplateView):
-    template_name = "tables/objects.html"
+class Media(TemplateView):
+    template_name = "tables/media.html"
 
     def get(self, request):
-        data = models.ObjectsMentioned.objects.all()
+        data = models.Media.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
 
-class Psychology(TemplateView):
-    template_name = "tables/psychology.html"
+class LeisureTypes(TemplateView):
+    template_name = "tables/leisure-types.html"
 
     def get(self, request):
-        data = models.Psychology.objects.all()
+        data = models.LeisureType.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
 
-class SocialIssues(TemplateView):
-    template_name = "tables/social-issues.html"
+class Leisure(TemplateView):
+    template_name = "tables/leisure.html"
 
     def get(self, request):
-        data = models.SocialIssue.objects.all()
+        data = models.Leisure.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
 
-class SocialScience(TemplateView):
-    template_name = "tables/social-science.html"
+class Fashion(TemplateView):
+    template_name = "tables/fashion.html"
 
     def get(self, request):
-        data = models.SocialScience.objects.all()
+        data = models.Fashion.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -320,29 +340,29 @@ class Consumerism(TemplateView):
         return render(request, self.template_name, args)
 
 
-class ConsumerismTypes(TemplateView):
-    template_name = "tables/consumerism-types.html"
+class TypesOfScience(TemplateView):
+    template_name = "tables/types-of-science.html"
 
     def get(self, request):
-        data = models.ConsumerismType.objects.all()
+        data = models.TypeOfScience.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
 
-class MedicalScience(TemplateView):
-    template_name = "tables/medical-science.html"
+class Sciences(TemplateView):
+    template_name = "tables/sciences.html"
 
     def get(self, request):
-        data = models.MedicalScience.objects.all()
+        data = models.Science.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
 
-class Technologies(TemplateView):
-    template_name = "tables/technologies.html"
+class Objects(TemplateView):
+    template_name = "tables/objects.html"
 
     def get(self, request):
-        data = models.Technology.objects.all()
+        data = models.ObjectsMentioned.objects.all()
         args = {'data': data}
         return render(request, self.template_name, args)
 
@@ -350,8 +370,119 @@ class Technologies(TemplateView):
 # FORMS ###############################################################################################################
 
 
+class NewArticles(CreateView):
+    template_name = "new/new-articles.html"
+    model = models.Article
+    form_class = forms.ArticleForm
+    success_url = reverse_lazy('articles')
+
+    # def form_valid(self, form):
+    #     self.object = form.save(commit=False)
+    #     article = models.Article(
+    #         title=form.cleaned_data['title'],
+    #         date=form.cleaned_data['date'],
+    #         newspaper=form.cleaned_data['newspaper'],
+    #         issue=form.cleaned_data['issue'],
+    #         page_numbers=form.cleaned_data['page_numbers'],
+    #         url=form.cleaned_data['url'],
+    #         status=form.cleaned_data['status'],
+    #     )
+    #     article.save()
+    #
+    #     for person in form.cleaned_data['person']:
+    #         person.article.add(article)
+    #
+    #     for location in form.cleaned_data['location']:
+    #         location.article.add(article)
+    #
+    #     for building in form.cleaned_data['building']:
+    #         building.article.add(article)
+    #
+    #     for personal_memory in form.cleaned_data['personal_memory']:
+    #         personal_memory.article.add(article)
+    #
+    #     for historical_memory in form.cleaned_data['historical_memory']:
+    #         historical_memory.article.add(article)
+    #
+    #     for politics in form.cleaned_data['politics']:
+    #         politics.article.add(article)
+    #
+    #     for architecture in form.cleaned_data['architecture']:
+    #         architecture.article.add(article)
+    #
+    #     for urbanism in form.cleaned_data['urbanism']:
+    #         urbanism.article.add(article)
+    #
+    #     for art in form.cleaned_data['art']:
+    #         art.article.add(article)
+    #
+    #     for cultural_life in form.cleaned_data['cultural_life']:
+    #         cultural_life.article.add(article)
+    #
+    #     for aesthetic in form.cleaned_data['aesthetic']:
+    #         aesthetic.article.add(article)
+    #
+    #     for literature in form.cleaned_data['literature']:
+    #         literature.article.add(article)
+    #
+    #     for popular_culture in form.cleaned_data['popular_culture']:
+    #         popular_culture.article.add(article)
+    #
+    #     for entertainment in form.cleaned_data['entertainment']:
+    #         entertainment.article.add(article)
+    #
+    #     for media in form.cleaned_data['media']:
+    #         media.article.add(article)
+    #
+    #     for leisure in form.cleaned_data['leisure']:
+    #         leisure.article.add(article)
+    #
+    #     for consumerism in form.cleaned_data['consumerism']:
+    #         consumerism.article.add(article)
+    #
+    #     for science in form.cleaned_data['science']:
+    #         science.article.add(article)
+    #
+    #     for objects_mentioned in form.cleaned_data['objects_mentioned']:
+    #         objects_mentioned.article.add(article)
+    #
+    #     if form.cleaned_data['text_format']:
+    #         form.cleaned_data['text_format'].article.add(article)
+    #
+    #     # self.object.save()
+    #     return HttpResponseRedirect(self.get_success_url())
+
+
+class NewOccupations(CreateView):
+    template_name = "new/new-occupations.html"
+    model = models.Occupation
+    form_class = forms.OccupationForm
+    success_url = reverse_lazy('occupations')
+
+
+class NewRelations(CreateView):
+    template_name = "new/new-relations.html"
+    model = models.Relation
+    form_class = forms.RelationForm
+    success_url = reverse_lazy('relations')
+
+
+class NewPeople(CreateView):
+    template_name = "new/new-people.html"
+    model = models.Person
+    form_class = forms.PersonForm
+    success_url = reverse_lazy('people')
+
+
+class NewLocationType(CreateView):
+    template_name = "new/new-location-type.html"
+    model = models.LocationType
+    form_class = forms.LocationTypeForm
+    success_url = reverse_lazy('location-types')
+
+
 class NewLocations(TemplateView):
-    template_name = "tables/new/new-locations.html"
+    template_name = "new/new-locations.html"
 
     def get(self, request, **kwargs):
         if 'id' in kwargs:
@@ -372,26 +503,31 @@ class NewLocations(TemplateView):
                                                                        type=models.LocationType.objects.get(
                                                                            pk=form.data['type']),
                                                                        coordinates=form.data['coordinates'],
-                                                                       old_madrid=form.data['old_madrid'], )
+                                                                       old_madrid=form.data['old_madrid'],
+                                                                       status=form.data['status'], )
             else:
                 pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
                 location = models.Location(name=form.cleaned_data['name'],
                                            type=form.cleaned_data['type'],
                                            coordinates=pnt,
-                                           old_madrid=form.cleaned_data['old_madrid'], )
+                                           old_madrid=form.cleaned_data['old_madrid'],
+                                           status=form.data['status'], )
                 location.save()
             return redirect(reverse('locations'))
+        messages.error(request, form.errors)
+        args = {'form': form}
+        return render(request, self.template_name, args)
 
 
-class NewLocationType(CreateView):
-    template_name = "tables/new/new-location-type.html"
-    model = models.LocationType
-    form_class = forms.LocationTypeForm
-    success_url = reverse_lazy('location-types')
+class NewBuildingType(CreateView):
+    template_name = "new/new-building-types.html"
+    model = models.BuildingType
+    form_class = forms.BuildingTypeForm
+    success_url = reverse_lazy('building-types')
 
 
 class NewBuildings(TemplateView):
-    template_name = "tables/new/new-buildings.html"
+    template_name = "new/new-buildings.html"
 
     def get(self, request, **kwargs):
         if 'id' in kwargs:
@@ -414,510 +550,531 @@ class NewBuildings(TemplateView):
                                                                        location=models.Location.objects.get(
                                                                            pk=form.data['location']),
                                                                        coordinates=form.data['coordinates'],
-                                                                       old_madrid=form.data['old_madrid'], )
+                                                                       old_madrid=form.data['old_madrid'],
+                                                                       status=form.data['status'], )
             else:
                 pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
                 building = models.Building(name=form.cleaned_data['name'],
                                            type=form.cleaned_data['type'],
                                            location=form.cleaned_data['location'],
                                            coordinates=pnt,
-                                           old_madrid=form.cleaned_data['old_madrid'], )
+                                           old_madrid=form.cleaned_data['old_madrid'],
+                                           status=form.data['status'], )
                 building.save()
             return redirect(reverse('buildings'))
+        messages.error(request, form.errors)
+        args = {'form': form}
+        return render(request, self.template_name, args)
 
 
-class NewBuildingType(CreateView):
-    template_name = "tables/new/new-building-types.html"
-    model = models.BuildingType
-    form_class = forms.BuildingTypeForm
-    success_url = reverse_lazy('building-types')
-
-
-class NewArts(CreateView):
-    template_name = "tables/new/new-arts.html"
-    model = models.Art
-    form_class = forms.ArtForm
-    success_url = reverse_lazy('arts')
-
-
-class NewArtTypes(CreateView):
-    template_name = "tables/new/new-art-types.html"
-    model = models.ArtType
-    form_class = forms.ArtTypeForm
-    success_url = reverse_lazy('art-types')
-
-
-class NewArtistTypes(CreateView):
-    template_name = "tables/new/new-artist-types.html"
-    model = models.ArtistType
-    form_class = forms.ArtistTypeForm
-    success_url = reverse_lazy('artist-types')
-
-
-class NewArtists(CreateView):
-    template_name = "tables/new/new-artists.html"
-    model = models.Artist
-    form_class = forms.ArtistForm
-    success_url = reverse_lazy('artists')
-
-
-class NewArtStyles(CreateView):
-    template_name = "tables/new/new-art-styles.html"
-    model = models.ArtStyle
-    form_class = forms.ArtStyleForm
-    success_url = reverse_lazy('art-styles')
-
-
-class NewArtisticMovements(CreateView):
-    template_name = "tables/new/new-artistic-movements.html"
-    model = models.ArtisticMovement
-    form_class = forms.ArtisticMovementForm
-    success_url = reverse_lazy('artistic-movements')
-
-
-class NewAppliedArts(CreateView):
-    template_name = "tables/new/new-applied-arts.html"
-    model = models.AppliedArt
-    form_class = forms.AppliedArtForm
-    success_url = reverse_lazy('applied-arts')
+class NewTypesOfFormat(CreateView):
+    template_name = "new/new-types-of-format.html"
+    model = models.TypeOfFormat
+    form_class = forms.TypeOfFormatForm
+    success_url = reverse_lazy('types-of-format')
 
 
 class NewFormatOfTexts(CreateView):
-    template_name = "tables/new/new-text-formats.html"
+    template_name = "new/new-text-formats.html"
     model = models.FormatOfText
     form_class = forms.FormatOfTextForm
     success_url = reverse_lazy('text-formats')
 
 
+class NewPersonalMemories(CreateView):
+    template_name = "new/new-personal-memories.html"
+    model = models.PersonalMemory
+    form_class = forms.PersonalMemoryForm
+    success_url = reverse_lazy('personal-memories')
+
+
+class NewHistoricalPeriods(CreateView):
+    template_name = "new/new-historical-periods.html"
+    model = models.HistoricalPeriod
+    form_class = forms.HistoricalPeriodForm
+    success_url = reverse_lazy('historical-periods')
+
+
+class NewHistoricalMemories(CreateView):
+    template_name = "new/new-historical-memories.html"
+    model = models.HistoricalMemory
+    form_class = forms.HistoricalMemoryForm
+    success_url = reverse_lazy('historical-memories')
+
+
 class NewPoliticsPeriod(CreateView):
-    template_name = "tables/new/new-politics-periods.html"
+    template_name = "new/new-politics-periods.html"
     model = models.PoliticsPeriod
     form_class = forms.PoliticsPeriodForm
     success_url = reverse_lazy('politics-periods')
 
 
 class NewPolitics(CreateView):
-    template_name = "tables/new/new-politics.html"
+    template_name = "new/new-politics.html"
     model = models.Politics
     form_class = forms.PoliticsForm
     success_url = reverse_lazy('politics')
 
 
-class NewRelations(CreateView):
-    template_name = "tables/new/new-relations.html"
-    model = models.Relation
-    form_class = forms.RelationForm
-    success_url = reverse_lazy('relations')
-
-
-class NewBiographyPeriod(CreateView):
-    template_name = "tables/new/new-biography-periods.html"
-    model = models.Period
-    form_class = forms.PeriodForm
-    success_url = reverse_lazy('biography-periods')
-
-
-class NewBiographies(CreateView):
-    template_name = "tables/new/new-biographies.html"
-    model = models.Biography
-    form_class = forms.BiographyForm
-    success_url = reverse_lazy('biographies')
-
-
-class NewUrbanism(CreateView):
-    template_name = "tables/new/new-urbanism.html"
-    model = models.Urbanism
-    form_class = forms.UrbanismForm
-    success_url = reverse_lazy('urbanism')
-
-
 class NewArchitectures(CreateView):
-    template_name = "tables/new/new-architectures.html"
+    template_name = "new/new-architectures.html"
     model = models.Architecture
     form_class = forms.ArchitectureForm
     success_url = reverse_lazy('architectures')
 
 
-class NewCulturalLife(CreateView):
-    template_name = "tables/new/new-cultural-life.html"
+class NewUrbanism(CreateView):
+    template_name = "new/new-urbanism.html"
+    model = models.Urbanism
+    form_class = forms.UrbanismForm
+    success_url = reverse_lazy('urbanism')
+
+
+class NewArtCategories(CreateView):
+    template_name = "new/new-art-categories.html"
+    model = models.ArtCategory
+    form_class = forms.ArtCategoryForm
+    success_url = reverse_lazy('art-categories')
+
+
+class NewArtTypes(CreateView):
+    template_name = "new/new-art-types.html"
+    model = models.ArtType
+    form_class = forms.ArtTypeForm
+    success_url = reverse_lazy('art-types')
+
+
+class NewArtStyles(CreateView):
+    template_name = "new/new-art-styles.html"
+    model = models.ArtStyle
+    form_class = forms.ArtStyleForm
+    success_url = reverse_lazy('art-styles')
+
+
+class NewArtisticMovements(CreateView):
+    template_name = "new/new-artistic-movements.html"
+    model = models.ArtisticMovement
+    form_class = forms.ArtisticMovementForm
+    success_url = reverse_lazy('artistic-movements')
+
+
+class NewArts(CreateView):
+    template_name = "new/new-arts.html"
+    model = models.Art
+    form_class = forms.ArtForm
+    success_url = reverse_lazy('arts')
+
+
+class NewCulturalLives(CreateView):
+    template_name = "new/new-cultural-lives.html"
     model = models.CulturalLife
     form_class = forms.CulturalLifeForm
-    success_url = reverse_lazy('cultural-life')
+    success_url = reverse_lazy('cultural-lives')
 
 
-class NewMovements(CreateView):
-    template_name = "tables/new/new-movements.html"
-    model = models.Movement
-    form_class = forms.MovementForm
-    success_url = reverse_lazy('movements')
+class NewAestheticMovements(CreateView):
+    template_name = "new/new-aesthetic-movements.html"
+    model = models.AestheticMovement
+    form_class = forms.AestheticMovementForm
+    success_url = reverse_lazy('aesthetic-movements')
 
 
-class NewWriters(CreateView):
-    template_name = "tables/new/new-writers.html"
-    model = models.Writer
-    form_class = forms.WriterForm
-    success_url = reverse_lazy('writers')
+class NewAesthetics(CreateView):
+    template_name = "new/new-aesthetics.html"
+    model = models.Aesthetic
+    form_class = forms.AestheticForm
+    success_url = reverse_lazy('aesthetics')
+
+
+class NewLiteraryMovements(CreateView):
+    template_name = "new/new-literary-movements.html"
+    model = models.LiteraryMovement
+    form_class = forms.LiteraryMovementForm
+    success_url = reverse_lazy('literary-movements')
+
+
+class NewLiteraryGenres(CreateView):
+    template_name = "new/new-literary-genres.html"
+    model = models.LiteraryGenre
+    form_class = forms.LiteraryGenreForm
+    success_url = reverse_lazy('literary-genres')
 
 
 class NewLiterature(CreateView):
-    template_name = "tables/new/new-literature.html"
+    template_name = "new/new-literature.html"
     model = models.Literature
     form_class = forms.LiteratureForm
     success_url = reverse_lazy('literature')
 
 
-class NewCultureTypes(CreateView):
-    template_name = "tables/new/new-culture-types.html"
-    model = models.CultureType
-    form_class = forms.CultureTypeForm
-    success_url = reverse_lazy('culture-types')
-
-
 class NewPopularCultures(CreateView):
-    template_name = "tables/new/new-popular-cultures.html"
+    template_name = "new/new-popular-cultures.html"
     model = models.PopularCulture
     form_class = forms.PopularCultureForm
     success_url = reverse_lazy('popular-cultures')
 
 
 class NewEntertainment(CreateView):
-    template_name = "tables/new/new-entertainment.html"
+    template_name = "new/new-entertainment.html"
     model = models.Entertainment
     form_class = forms.EntertainmentForm
     success_url = reverse_lazy('entertainment')
 
 
 class NewMediaTypes(CreateView):
-    template_name = "tables/new/new-media-types.html"
+    template_name = "new/new-media-types.html"
     model = models.MediaType
     form_class = forms.MediaTypeForm
     success_url = reverse_lazy('media-types')
 
 
 class NewMedia(CreateView):
-    template_name = "tables/new/new-media.html"
+    template_name = "new/new-media.html"
     model = models.Media
     form_class = forms.MediaForm
     success_url = reverse_lazy('media')
 
 
-class NewObjects(CreateView):
-    template_name = "tables/new/new-objects.html"
-    model = models.ObjectsMentioned
-    form_class = forms.ObjectsMentionedForm
-    success_url = reverse_lazy('objects')
+class NewLeisureTypes(CreateView):
+    template_name = "new/new-leisure-types.html"
+    model = models.LeisureType
+    form_class = forms.LeisureTypeForm
+    success_url = reverse_lazy('leisure-types')
 
 
-class NewPsychology(CreateView):
-    template_name = "tables/new/new-psychology.html"
-    model = models.Psychology
-    form_class = forms.PsychologyForm
-    success_url = reverse_lazy('psychology')
+class NewLeisure(CreateView):
+    template_name = "new/new-leisure.html"
+    model = models.Leisure
+    form_class = forms.LeisureForm
+    success_url = reverse_lazy('leisure')
 
 
-class NewSocialIssues(CreateView):
-    template_name = "tables/new/new-social-issues.html"
-    model = models.SocialIssue
-    form_class = forms.SocialIssueForm
-    success_url = reverse_lazy('social-issues')
-
-
-class NewSocialScience(CreateView):
-    template_name = "tables/new/new-social-science.html"
-    model = models.SocialScience
-    form_class = forms.SocialScienceForm
-    success_url = reverse_lazy('social-science')
-
-
-class NewConsumerismTypes(CreateView):
-    template_name = "tables/new/new-consumerism-types.html"
-    model = models.ConsumerismType
-    form_class = forms.ConsumerismTypeForm
-    success_url = reverse_lazy('consumerism-types')
+class NewFashion(CreateView):
+    template_name = "new/new-fashion.html"
+    model = models.Fashion
+    form_class = forms.FashionForm
+    success_url = reverse_lazy('fashion')
 
 
 class NewConsumerism(CreateView):
-    template_name = "tables/new/new-consumerism.html"
+    template_name = "new/new-consumerism.html"
     model = models.Consumerism
     form_class = forms.ConsumerismForm
     success_url = reverse_lazy('consumerism')
 
 
-class NewArticles(CreateView):
-    template_name = "tables/new/new-articles.html"
-    model = models.Article
-    form_class = forms.ArticleForm
-    success_url = reverse_lazy('home')
+class NewTypesOfScience(CreateView):
+    template_name = "new/new-types-of-science.html"
+    model = models.TypeOfScience
+    form_class = forms.TypeOfScienceForm
+    success_url = reverse_lazy('types-of-science')
 
 
-class NewMedicalScience(CreateView):
-    template_name = "tables/new/new-medical-science.html"
-    model = models.MedicalScience
-    form_class = forms.MedicalScienceForm
-    success_url = reverse_lazy('medical-science')
+class NewSciences(CreateView):
+    template_name = "new/new-sciences.html"
+    model = models.Science
+    form_class = forms.ScienceForm
+    success_url = reverse_lazy('sciences')
 
 
-class NewTechnologies(CreateView):
-    template_name = "tables/new/new-technologies.html"
-    model = models.Technology
-    form_class = forms.TechnologyForm
-    success_url = reverse_lazy('technologies')
+class NewObjects(CreateView):
+    template_name = "new/new-objects.html"
+    model = models.ObjectsMentioned
+    form_class = forms.ObjectsMentionedForm
+    success_url = reverse_lazy('objects')
 
 
 # Edit Methods ########################################################################################################
 
+
+class EditArticles(UpdateView):
+    template_name = "new/new-articles.html"
+    model = models.Article
+    form_class = forms.ArticleForm
+    success_url = reverse_lazy('articles')
+
+
+class EditOccupations(UpdateView):
+    template_name = "new/new-occupations.html"
+    model = models.Occupation
+    form_class = forms.OccupationForm
+    success_url = reverse_lazy('occupations')
+
+
+class EditRelations(UpdateView):
+    template_name = "new/new-relations.html"
+    model = models.Relation
+    form_class = forms.RelationForm
+    success_url = reverse_lazy('relations')
+
+
+class EditPeople(UpdateView):
+    template_name = "new/new-people.html"
+    model = models.Person
+    form_class = forms.PersonForm
+    success_url = reverse_lazy('people')
+
+
 class EditLocationType(UpdateView):
-    template_name = "tables/new/new-location-type.html"
+    template_name = "new/new-location-type.html"
     model = models.LocationType
     form_class = forms.LocationTypeForm
     success_url = reverse_lazy('location-types')
 
 
 class EditBuildingType(UpdateView):
-    template_name = "tables/new/new-building-types.html"
+    template_name = "new/new-building-types.html"
     model = models.BuildingType
     form_class = forms.BuildingTypeForm
     success_url = reverse_lazy('building-types')
 
 
-class EditArts(UpdateView):
-    template_name = "tables/new/new-arts.html"
-    model = models.Art
-    form_class = forms.ArtForm
-    success_url = reverse_lazy('arts')
-
-
-class EditArtTypes(UpdateView):
-    template_name = "tables/new/new-art-types.html"
-    model = models.ArtType
-    form_class = forms.ArtTypeForm
-    success_url = reverse_lazy('art-types')
-
-
-class EditArtistTypes(UpdateView):
-    template_name = "tables/new/new-artist-types.html"
-    model = models.ArtistType
-    form_class = forms.ArtistTypeForm
-    success_url = reverse_lazy('artist-types')
-
-
-class EditArtists(UpdateView):
-    template_name = "tables/new/new-artists.html"
-    model = models.Artist
-    form_class = forms.ArtistForm
-    success_url = reverse_lazy('artists')
-
-
-class EditArtStyles(UpdateView):
-    template_name = "tables/new/new-art-styles.html"
-    model = models.ArtStyle
-    form_class = forms.ArtStyleForm
-    success_url = reverse_lazy('art-styles')
-
-
-class EditArtisticMovements(UpdateView):
-    template_name = "tables/new/new-artistic-movements.html"
-    model = models.ArtisticMovement
-    form_class = forms.ArtisticMovementForm
-    success_url = reverse_lazy('artistic-movements')
-
-
-class EditAppliedArts(UpdateView):
-    template_name = "tables/new/new-applied-arts.html"
-    model = models.AppliedArt
-    form_class = forms.AppliedArtForm
-    success_url = reverse_lazy('applied-arts')
+class EditTypesOfFormat(UpdateView):
+    template_name = "new/new-types-of-format.html"
+    model = models.TypeOfFormat
+    form_class = forms.TypeOfFormatForm
+    success_url = reverse_lazy('types-of-format')
 
 
 class EditFormatOfTexts(UpdateView):
-    template_name = "tables/new/new-text-formats.html"
+    template_name = "new/new-text-formats.html"
     model = models.FormatOfText
     form_class = forms.FormatOfTextForm
     success_url = reverse_lazy('text-formats')
 
 
+class EditPersonalMemories(UpdateView):
+    template_name = "new/new-personal-memories.html"
+    model = models.PersonalMemory
+    form_class = forms.PersonalMemoryForm
+    success_url = reverse_lazy('personal-memories')
+
+
+class EditHistoricalPeriods(UpdateView):
+    template_name = "new/new-historical-periods.html"
+    model = models.HistoricalPeriod
+    form_class = forms.HistoricalPeriodForm
+    success_url = reverse_lazy('historical-periods')
+
+
+class EditHistoricalMemories(UpdateView):
+    template_name = "new/new-historical-memories.html"
+    model = models.HistoricalMemory
+    form_class = forms.HistoricalMemoryForm
+    success_url = reverse_lazy('historical-memories')
+
+
 class EditPoliticsPeriod(UpdateView):
-    template_name = "tables/new/new-politics-periods.html"
+    template_name = "new/new-politics-periods.html"
     model = models.PoliticsPeriod
     form_class = forms.PoliticsPeriodForm
     success_url = reverse_lazy('politics-periods')
 
 
 class EditPolitics(UpdateView):
-    template_name = "tables/new/new-politics.html"
+    template_name = "new/new-politics.html"
     model = models.Politics
     form_class = forms.PoliticsForm
     success_url = reverse_lazy('politics')
 
 
-class EditRelations(UpdateView):
-    template_name = "tables/new/new-relations.html"
-    model = models.Relation
-    form_class = forms.RelationForm
-    success_url = reverse_lazy('relations')
-
-
-class EditBiographyPeriod(UpdateView):
-    template_name = "tables/new/new-biography-periods.html"
-    model = models.Period
-    form_class = forms.PeriodForm
-    success_url = reverse_lazy('biography-periods')
-
-
-class EditBiographies(UpdateView):
-    template_name = "tables/new/new-biographies.html"
-    model = models.Biography
-    form_class = forms.BiographyForm
-    success_url = reverse_lazy('biographies')
-
-
-class EditUrbanism(UpdateView):
-    template_name = "tables/new/new-urbanism.html"
-    model = models.Urbanism
-    form_class = forms.UrbanismForm
-    success_url = reverse_lazy('urbanism')
-
-
 class EditArchitectures(UpdateView):
-    template_name = "tables/new/new-architectures.html"
+    template_name = "new/new-architectures.html"
     model = models.Architecture
     form_class = forms.ArchitectureForm
     success_url = reverse_lazy('architectures')
 
 
-class EditCulturalLife(UpdateView):
-    template_name = "tables/new/new-cultural-life.html"
+class EditUrbanism(UpdateView):
+    template_name = "new/new-urbanism.html"
+    model = models.Urbanism
+    form_class = forms.UrbanismForm
+    success_url = reverse_lazy('urbanism')
+
+
+class EditArtCategories(UpdateView):
+    template_name = "new/new-art-categories.html"
+    model = models.ArtCategory
+    form_class = forms.ArtCategoryForm
+    success_url = reverse_lazy('art-categories')
+
+
+class EditArtTypes(UpdateView):
+    template_name = "new/new-art-types.html"
+    model = models.ArtType
+    form_class = forms.ArtTypeForm
+    success_url = reverse_lazy('art-types')
+
+
+class EditArtStyles(UpdateView):
+    template_name = "new/new-art-styles.html"
+    model = models.ArtStyle
+    form_class = forms.ArtStyleForm
+    success_url = reverse_lazy('art-styles')
+
+
+class EditArtisticMovements(UpdateView):
+    template_name = "new/new-artistic-movements.html"
+    model = models.ArtisticMovement
+    form_class = forms.ArtisticMovementForm
+    success_url = reverse_lazy('artistic-movements')
+
+
+class EditArts(UpdateView):
+    template_name = "new/new-arts.html"
+    model = models.Art
+    form_class = forms.ArtForm
+    success_url = reverse_lazy('arts')
+
+
+class EditCulturalLives(UpdateView):
+    template_name = "new/new-cultural-lives.html"
     model = models.CulturalLife
     form_class = forms.CulturalLifeForm
-    success_url = reverse_lazy('cultural-life')
+    success_url = reverse_lazy('cultural-lives')
 
 
-class EditMovements(UpdateView):
-    template_name = "tables/new/new-movements.html"
-    model = models.Movement
-    form_class = forms.MovementForm
-    success_url = reverse_lazy('movements')
+class EditAestheticMovements(UpdateView):
+    template_name = "new/new-aesthetic-movements.html"
+    model = models.AestheticMovement
+    form_class = forms.AestheticMovementForm
+    success_url = reverse_lazy('aesthetic-movements')
 
 
-class EditWriters(UpdateView):
-    template_name = "tables/new/new-writers.html"
-    model = models.Writer
-    form_class = forms.WriterForm
-    success_url = reverse_lazy('writers')
+class EditAesthetics(UpdateView):
+    template_name = "new/new-aesthetics.html"
+    model = models.Aesthetic
+    form_class = forms.AestheticForm
+    success_url = reverse_lazy('aesthetics')
+
+
+class EditLiteraryMovements(UpdateView):
+    template_name = "new/new-literary-movements.html"
+    model = models.LiteraryMovement
+    form_class = forms.LiteraryMovementForm
+    success_url = reverse_lazy('literary-movements')
+
+
+class EditLiteraryGenres(UpdateView):
+    template_name = "new/new-literary-genres.html"
+    model = models.LiteraryGenre
+    form_class = forms.LiteraryGenreForm
+    success_url = reverse_lazy('literary-genres')
 
 
 class EditLiterature(UpdateView):
-    template_name = "tables/new/new-literature.html"
+    template_name = "new/new-literature.html"
     model = models.Literature
     form_class = forms.LiteratureForm
     success_url = reverse_lazy('literature')
 
 
-class EditCultureTypes(UpdateView):
-    template_name = "tables/new/new-culture-types.html"
-    model = models.CultureType
-    form_class = forms.CultureTypeForm
-    success_url = reverse_lazy('culture-types')
-
-
 class EditPopularCultures(UpdateView):
-    template_name = "tables/new/new-popular-cultures.html"
+    template_name = "new/new-popular-cultures.html"
     model = models.PopularCulture
     form_class = forms.PopularCultureForm
     success_url = reverse_lazy('popular-cultures')
 
 
 class EditEntertainment(UpdateView):
-    template_name = "tables/new/new-entertainment.html"
+    template_name = "new/new-entertainment.html"
     model = models.Entertainment
     form_class = forms.EntertainmentForm
     success_url = reverse_lazy('entertainment')
 
 
 class EditMediaTypes(UpdateView):
-    template_name = "tables/new/new-media-types.html"
+    template_name = "new/new-media-types.html"
     model = models.MediaType
     form_class = forms.MediaTypeForm
     success_url = reverse_lazy('media-types')
 
 
 class EditMedia(UpdateView):
-    template_name = "tables/new/new-media.html"
+    template_name = "new/new-media.html"
     model = models.Media
     form_class = forms.MediaForm
     success_url = reverse_lazy('media')
 
 
-class EditObjects(UpdateView):
-    template_name = "tables/new/new-objects.html"
-    model = models.ObjectsMentioned
-    form_class = forms.ObjectsMentionedForm
-    success_url = reverse_lazy('objects')
+class EditLeisureTypes(UpdateView):
+    template_name = "new/new-leisure-types.html"
+    model = models.LeisureType
+    form_class = forms.LeisureTypeForm
+    success_url = reverse_lazy('leisure-types')
 
 
-class EditPsychology(UpdateView):
-    template_name = "tables/new/new-psychology.html"
-    model = models.Psychology
-    form_class = forms.PsychologyForm
-    success_url = reverse_lazy('psychology')
+class EditLeisure(UpdateView):
+    template_name = "new/new-leisure.html"
+    model = models.Leisure
+    form_class = forms.LeisureForm
+    success_url = reverse_lazy('leisure')
 
 
-class EditSocialIssues(UpdateView):
-    template_name = "tables/new/new-social-issues.html"
-    model = models.SocialIssue
-    form_class = forms.SocialIssueForm
-    success_url = reverse_lazy('social-issues')
-
-
-class EditSocialScience(UpdateView):
-    template_name = "tables/new/new-social-science.html"
-    model = models.SocialScience
-    form_class = forms.SocialScienceForm
-    success_url = reverse_lazy('social-science')
-
-
-class EditConsumerismTypes(UpdateView):
-    template_name = "tables/new/new-consumerism-types.html"
-    model = models.ConsumerismType
-    form_class = forms.ConsumerismTypeForm
-    success_url = reverse_lazy('consumerism-types')
+class EditFashion(UpdateView):
+    template_name = "new/new-fashion.html"
+    model = models.Fashion
+    form_class = forms.FashionForm
+    success_url = reverse_lazy('fashion')
 
 
 class EditConsumerism(UpdateView):
-    template_name = "tables/new/new-consumerism.html"
+    template_name = "new/new-consumerism.html"
     model = models.Consumerism
     form_class = forms.ConsumerismForm
     success_url = reverse_lazy('consumerism')
 
 
-class EditArticles(UpdateView):
-    template_name = "tables/new/new-articles.html"
-    model = models.Article
-    form_class = forms.ArticleForm
-    success_url = reverse_lazy('home')
+class EditTypesOfScience(UpdateView):
+    template_name = "new/new-types-of-science.html"
+    model = models.TypeOfScience
+    form_class = forms.TypeOfScienceForm
+    success_url = reverse_lazy('types-of-science')
 
 
-class EditMedicalScience(UpdateView):
-    template_name = "tables/new/new-medical-science.html"
-    model = models.MedicalScience
-    form_class = forms.MedicalScienceForm
-    success_url = reverse_lazy('medical-science')
+class EditSciences(UpdateView):
+    template_name = "new/new-sciences.html"
+    model = models.Science
+    form_class = forms.ScienceForm
+    success_url = reverse_lazy('sciences')
 
 
-class EditTechnologies(UpdateView):
-    template_name = "tables/new/new-technologies.html"
-    model = models.Technology
-    form_class = forms.TechnologyForm
-    success_url = reverse_lazy('technologies')
+class EditObjects(UpdateView):
+    template_name = "new/new-objects.html"
+    model = models.ObjectsMentioned
+    form_class = forms.ObjectsMentionedForm
+    success_url = reverse_lazy('objects')
 
 
 # Delete Methods ######################################################################################################
 
-class DeleteLocation(TemplateView):
+
+class DeleteArticles(TemplateView):
 
     def get(self, request, id):
-        models.Location.objects.filter(id=id).delete()
-        return redirect(reverse('locations'))
+        models.Article.objects.filter(id=id).delete()
+        return redirect(reverse('articles'))
+
+
+class DeleteOccupations(TemplateView):
+
+    def get(self, request, id):
+        models.Occupation.objects.filter(id=id).delete()
+        return redirect(reverse('occupations'))
+
+
+class DeleteRelations(TemplateView):
+
+    def get(self, request, id):
+        models.Relation.objects.filter(id=id).delete()
+        return redirect(reverse('relations'))
+
+
+class DeletePeople(TemplateView):
+
+    def get(self, request, id):
+        models.Person.objects.filter(id=id).delete()
+        return redirect(reverse('people'))
 
 
 class DeleteLocationTypes(TemplateView):
@@ -927,11 +1084,11 @@ class DeleteLocationTypes(TemplateView):
         return redirect(reverse('location-types'))
 
 
-class DeleteBuildings(TemplateView):
+class DeleteLocation(TemplateView):
 
     def get(self, request, id):
-        models.Building.objects.filter(id=id).delete()
-        return redirect(reverse('buildings'))
+        models.Location.objects.filter(id=id).delete()
+        return redirect(reverse('locations'))
 
 
 class DeleteBuildingTypes(TemplateView):
@@ -941,53 +1098,18 @@ class DeleteBuildingTypes(TemplateView):
         return redirect(reverse('building-types'))
 
 
-class DeleteArts(TemplateView):
+class DeleteBuildings(TemplateView):
 
     def get(self, request, id):
-        models.Art.objects.filter(id=id).delete()
-        return redirect(reverse('arts'))
+        models.Building.objects.filter(id=id).delete()
+        return redirect(reverse('buildings'))
 
 
-class DeleteArtTypes(TemplateView):
-
-    def get(self, request, id):
-        models.ArtType.objects.filter(id=id).delete()
-        return redirect(reverse('art-types'))
-
-
-class DeleteArtistTypes(TemplateView):
+class DeleteTypesOfFormat(TemplateView):
 
     def get(self, request, id):
-        models.ArtistType.objects.filter(id=id).delete()
-        return redirect(reverse('artist-types'))
-
-
-class DeleteArtist(TemplateView):
-
-    def get(self, request, id):
-        models.Artist.objects.filter(id=id).delete()
-        return redirect(reverse('artists'))
-
-
-class DeleteArtStyles(TemplateView):
-
-    def get(self, request, id):
-        models.ArtStyle.objects.filter(id=id).delete()
-        return redirect(reverse('art-styles'))
-
-
-class DeleteArtisticMovements(TemplateView):
-
-    def get(self, request, id):
-        models.ArtisticMovement.objects.filter(id=id).delete()
-        return redirect(reverse('artistic-movements'))
-
-
-class DeleteAppliedArts(TemplateView):
-
-    def get(self, request, id):
-        models.AppliedArt.objects.filter(id=id).delete()
-        return redirect(reverse('applied-arts'))
+        models.TypeOfFormat.objects.filter(id=id).delete()
+        return redirect(reverse('types-of-format'))
 
 
 class DeleteFormatOfTexts(TemplateView):
@@ -995,6 +1117,27 @@ class DeleteFormatOfTexts(TemplateView):
     def get(self, request, id):
         models.FormatOfText.objects.filter(id=id).delete()
         return redirect(reverse('text-formats'))
+
+
+class DeletePersonalMemories(TemplateView):
+
+    def get(self, request, id):
+        models.PersonalMemory.objects.filter(id=id).delete()
+        return redirect(reverse('personal-memories'))
+
+
+class DeleteHistoricalPeriods(TemplateView):
+
+    def get(self, request, id):
+        models.HistoricalPeriod.objects.filter(id=id).delete()
+        return redirect(reverse('historical-periods'))
+
+
+class DeleteHistoricalMemories(TemplateView):
+
+    def get(self, request, id):
+        models.HistoricalMemory.objects.filter(id=id).delete()
+        return redirect(reverse('historical-memories'))
 
 
 class DeletePoliticsPeriod(TemplateView):
@@ -1011,25 +1154,11 @@ class DeletePolitics(TemplateView):
         return redirect(reverse('politics'))
 
 
-class DeleteRelations(TemplateView):
+class DeleteArchitectures(TemplateView):
 
     def get(self, request, id):
-        models.Relation.objects.filter(id=id).delete()
-        return redirect(reverse('relations'))
-
-
-class DeleteBiographyPeriod(TemplateView):
-
-    def get(self, request, id):
-        models.Period.objects.filter(id=id).delete()
-        return redirect(reverse('biography-periods'))
-
-
-class DeleteBiographies(TemplateView):
-
-    def get(self, request, id):
-        models.Biography.objects.filter(id=id).delete()
-        return redirect(reverse('biographies'))
+        models.Architecture.objects.filter(id=id).delete()
+        return redirect(reverse('architectures'))
 
 
 class DeleteUrbanism(TemplateView):
@@ -1039,32 +1168,74 @@ class DeleteUrbanism(TemplateView):
         return redirect(reverse('urbanism'))
 
 
-class DeleteArchitectures(TemplateView):
+class DeleteArtCategories(TemplateView):
 
     def get(self, request, id):
-        models.Architecture.objects.filter(id=id).delete()
-        return redirect(reverse('architectures'))
+        models.ArtCategory.objects.filter(id=id).delete()
+        return redirect(reverse('art-categories'))
 
 
-class DeleteCulturalLife(TemplateView):
+class DeleteArtTypes(TemplateView):
+
+    def get(self, request, id):
+        models.ArtType.objects.filter(id=id).delete()
+        return redirect(reverse('art-types'))
+
+
+class DeleteArtStyles(TemplateView):
+
+    def get(self, request, id):
+        models.ArtStyle.objects.filter(id=id).delete()
+        return redirect(reverse('art-styles'))
+
+
+class DeleteArtisticMovements(TemplateView):
+
+    def get(self, request, id):
+        models.ArtisticMovement.objects.filter(id=id).delete()
+        return redirect(reverse('artistic-movements'))
+
+
+class DeleteArts(TemplateView):
+
+    def get(self, request, id):
+        models.Art.objects.filter(id=id).delete()
+        return redirect(reverse('arts'))
+
+
+class DeleteCulturalLives(TemplateView):
 
     def get(self, request, id):
         models.CulturalLife.objects.filter(id=id).delete()
-        return redirect(reverse('cultural-life'))
+        return redirect(reverse('cultural-lives'))
 
 
-class DeleteMovements(TemplateView):
-
-    def get(self, request, id):
-        models.Movement.objects.filter(id=id).delete()
-        return redirect(reverse('movements'))
-
-
-class DeleteWriters(TemplateView):
+class DeleteAestheticMovements(TemplateView):
 
     def get(self, request, id):
-        models.Writer.objects.filter(id=id).delete()
-        return redirect(reverse('writers'))
+        models.AestheticMovement.objects.filter(id=id).delete()
+        return redirect(reverse('aesthetic-movements'))
+
+
+class DeleteAesthetics(TemplateView):
+
+    def get(self, request, id):
+        models.Aesthetic.objects.filter(id=id).delete()
+        return redirect(reverse('aesthetics'))
+
+
+class DeleteLiteraryMovements(TemplateView):
+
+    def get(self, request, id):
+        models.LiteraryMovement.objects.filter(id=id).delete()
+        return redirect(reverse('literary-movements'))
+
+
+class DeleteLiteraryGenres(TemplateView):
+
+    def get(self, request, id):
+        models.LiteraryGenre.objects.filter(id=id).delete()
+        return redirect(reverse('literary-genres'))
 
 
 class DeleteLiterature(TemplateView):
@@ -1072,13 +1243,6 @@ class DeleteLiterature(TemplateView):
     def get(self, request, id):
         models.Literature.objects.filter(id=id).delete()
         return redirect(reverse('literature'))
-
-
-class DeleteCultureTypes(TemplateView):
-
-    def get(self, request, id):
-        models.CultureType.objects.filter(id=id).delete()
-        return redirect(reverse('culture-types'))
 
 
 class DeletePopularCultures(TemplateView):
@@ -1109,39 +1273,25 @@ class DeleteMedia(TemplateView):
         return redirect(reverse('media'))
 
 
-class DeleteObjects(TemplateView):
+class DeleteLeisureTypes(TemplateView):
 
     def get(self, request, id):
-        models.ObjectsMentioned.objects.filter(id=id).delete()
-        return redirect(reverse('objects'))
+        models.LeisureType.objects.filter(id=id).delete()
+        return redirect(reverse('leisure-types'))
 
 
-class DeletePsychology(TemplateView):
-
-    def get(self, request, id):
-        models.Psychology.objects.filter(id=id).delete()
-        return redirect(reverse('psychology'))
-
-
-class DeleteSocialIssues(TemplateView):
+class DeleteLeisure(TemplateView):
 
     def get(self, request, id):
-        models.SocialIssue.objects.filter(id=id).delete()
-        return redirect(reverse('social-issues'))
+        models.Leisure.objects.filter(id=id).delete()
+        return redirect(reverse('leisure'))
 
 
-class DeleteSocialScience(TemplateView):
-
-    def get(self, request, id):
-        models.SocialScience.objects.filter(id=id).delete()
-        return redirect(reverse('social-science'))
-
-
-class DeleteConsumerismTypes(TemplateView):
+class DeleteFashion(TemplateView):
 
     def get(self, request, id):
-        models.ConsumerismType.objects.filter(id=id).delete()
-        return redirect(reverse('consumerism-types'))
+        models.Fashion.objects.filter(id=id).delete()
+        return redirect(reverse('fashion'))
 
 
 class DeleteConsumerism(TemplateView):
@@ -1151,22 +1301,34 @@ class DeleteConsumerism(TemplateView):
         return redirect(reverse('consumerism'))
 
 
-class DeleteArticles(TemplateView):
+class DeleteTypesOfScience(TemplateView):
 
     def get(self, request, id):
-        models.Article.objects.filter(id=id).delete()
-        return redirect(reverse('home'))
+        models.TypeOfScience.objects.filter(id=id).delete()
+        return redirect(reverse('types-of-science'))
 
 
-class DeleteMedicalScience(TemplateView):
-
-    def get(self, request, id):
-        models.MedicalScience.objects.filter(id=id).delete()
-        return redirect(reverse('medical-science'))
-
-
-class DeleteTechnologies(TemplateView):
+class DeleteSciences(TemplateView):
 
     def get(self, request, id):
-        models.Technology.objects.filter(id=id).delete()
-        return redirect(reverse('technologies'))
+        models.Science.objects.filter(id=id).delete()
+        return redirect(reverse('sciences'))
+
+
+class DeleteObjects(TemplateView):
+
+    def get(self, request, id):
+        models.ObjectsMentioned.objects.filter(id=id).delete()
+        return redirect(reverse('objects'))
+
+
+def load_art_types(request):
+    category_id = request.GET.get('category')
+    types = models.ArtType.objects.filter(category_id=category_id)
+    return render(request, 'new/art_type_dropdown_list_options.html', {'types': types})
+
+
+def load_text_format(request):
+    type_of_format_id = request.GET.get('type_of_format')
+    text_format = models.FormatOfText.objects.filter(type_id=type_of_format_id)
+    return render(request, 'new/text_format_dropdown_list_options.html', {'text_format': text_format})

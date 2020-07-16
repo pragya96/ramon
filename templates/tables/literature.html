@@ -29,20 +29,24 @@ Ramón | Literature
                                     <th>Movement</th>
                                     <th>Writer</th>
                                     <th>Themes</th>
+                                    <th>Genre</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
                                         <td>{{ item.work }}</td>
-                                        <td>{{ item.movement }}</td>
-                                        <td>{% for writer in item.writer.all %}{{ writer.name }}<br/>{% endfor %}</td>
+                                        <td>{{ item.movement.name }}</td>
+                                        <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
                                         <td>{{ item.themes }}</td>
+                                        <td>{{ item.genre.name }}</td>
                                         <td>
                                             <a href="{% url 'edit-literature' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-literature' item.id %}" onclick="return confirm('Do you want to delete {{ item.work }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -57,5 +61,8 @@ Ramón | Literature
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 6;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

@@ -25,20 +25,28 @@ Ramón | Popular Cultures
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Type</th>
-                                    <th>Description</th>
+                                    <th>Event</th>
+                                    <th>Person</th>
+                                    <th>Religious Traditions</th>
+                                    <th>Celebrity Culture</th>
+                                    <th>Kitsch</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.type }}</td>
-                                        <td>{{ item.description }}</td>
+                                        <td>{{ item.event }}</td>
+                                        <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
+                                        <td>{{ item.religious_traditions }}</td>
+                                        <td>{{ item.celebrity_culture }}</td>
+                                        <td>{{ item.kitsch }}</td>
                                         <td>
                                             <a href="{% url 'edit-popular-cultures' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-popular-cultures' item.id %}" onclick="return confirm('Do you want to delete {{ item.type.type }}?')"><i class="fa fa-trash"></i></a>
+                                            <a href="{% url 'delete-popular-cultures' item.id %}" onclick="return confirm('Do you want to delete {{ item.event }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -53,5 +61,8 @@ Ramón | Popular Cultures
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 6;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

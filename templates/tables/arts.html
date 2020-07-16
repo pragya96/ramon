@@ -26,33 +26,35 @@ Ramón | Arts
                             <thead>
                                 <tr>
                                     <th>Title</th>
+                                    <th>Category</th>
                                     <th>Type</th>
                                     <th>Image</th>
                                     <th>Artist</th>
                                     <th>Style</th>
                                     <th>Artistic Movement</th>
-                                    <th>Aesthetic</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
                                         <td>{{ item.title }}</td>
-                                        <td>{% for art_type in item.type.all %}{{ art_type.type }}<br/>{% endfor %}</td>
+                                        <td>{{ item.category }}</td>
+                                        <td>{{ item.type }}</td>
                                         <td>
                                             {% if item.image %}
                                                 <img src="/ramon/forms{{ item.image.url}}" alt="{{ item.title }}">
                                             {% endif %}
                                         </td>
-                                        <td>{% for artist in item.artist.all %}{{ artist.name }}<br/>{% endfor %}</td>
+                                        <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
                                         <td>{% for style in item.style.all %}{{ style.type }}<br/>{% endfor %}</td>
                                         <td>{% for movement in item.movement.all %}{{ movement.name }}<br/>{% endfor %}</td>
-                                        <td>{{ item.aesthetic }}</td>
                                         <td>
                                             <a href="{% url 'edit-arts' pk=item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-arts' item.id %}" onclick="return confirm('Do you want to delete {{ item.title }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -67,5 +69,8 @@ Ramón | Arts
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 8;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

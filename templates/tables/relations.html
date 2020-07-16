@@ -27,6 +27,7 @@ Ramón | Relations
                                 <tr>
                                     <th>Name</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,6 +38,7 @@ Ramón | Relations
                                             <a href="{% url 'edit-relations' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-relations' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -51,5 +53,8 @@ Ramón | Relations
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 2;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

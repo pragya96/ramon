@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ramón | New Article
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
+{% endblock %}
+
+{% block content %}
+    <div id="wrapper">
+        {% include 'tables/sidenav.html' %}
+        <main id="page-content-wrapper" role="main">
+            <div class="row">
+                <div class="col-11 card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">New Article</h2>
+                        <hr>
+                        <br>
+                        <form method="post" id="articleForm" enctype='multipart/form-data' data-text-format-url="{% url 'ajax-load-text-format' %}">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label required" for="{{ form.title.id_for_label }}">Title:</label>
+                                        {{ form.title }}
+                                        {{ form.title.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.date.id_for_label }}">Date:</label>
+                                        {{ form.date }}
+                                        {{ form.date.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.newspaper.id_for_label }}">Newspaper:</label>
+                                        {{ form.newspaper }}
+                                        {{ form.newspaper.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.issue.id_for_label }}">Issue:</label>
+                                        {{ form.issue }}
+                                        {{ form.issue.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.page_numbers.id_for_label }}">Page Numbers:</label>
+                                        {{ form.page_numbers }}
+                                        {{ form.page_numbers.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.url.id_for_label }}">URL:</label>
+                                        {{ form.url }}
+                                        {{ form.url.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label required" for="{{ form.status.id_for_label }}">Status:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.status }}
+                                        {{ form.status.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.person.id_for_label }}">People:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.person }}
+                                        {{ form.person.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.location.id_for_label }}">Locations:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.location }}
+                                        {{ form.location.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.building.id_for_label }}">Buildings:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.building }}
+                                        {{ form.building.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.type_of_format.id_for_label }}">Type of Format:</label>
+                                        {{ form.type_of_format }}
+                                        {{ form.type_of_format.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.format_of_text.id_for_label }}">Format of Text:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.format_of_text }}
+                                        {{ form.format_of_text.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.personal_memory.id_for_label }}">Personal Memories:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.personal_memory }}
+                                        {{ form.personal_memory.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.historical_memory.id_for_label }}">Historical Memories:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.historical_memory }}
+                                        {{ form.historical_memory.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.politics.id_for_label }}">Politics:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.politics }}
+                                        {{ form.politics.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.architecture.id_for_label }}">Architectures:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.architecture }}
+                                        {{ form.architecture.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.urbanism.id_for_label }}">Urbanism:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.urbanism }}
+                                        {{ form.urbanism.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.art.id_for_label }}">Arts:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.art }}
+                                        {{ form.art.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.cultural_life.id_for_label }}">Cultural Lives:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.cultural_life }}
+                                        {{ form.cultural_life.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.aesthetic.id_for_label }}">Aesthetic:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.aesthetic }}
+                                        {{ form.aesthetic.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.literature.id_for_label }}">Literature:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.literature }}
+                                        {{ form.literature.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.popular_culture.id_for_label }}">Popular Culture:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.popular_culture }}
+                                        {{ form.popular_culture.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.entertainment.id_for_label }}">Entertainment:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.entertainment }}
+                                        {{ form.entertainment.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.media.id_for_label }}">Media:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.media }}
+                                        {{ form.media.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.leisure.id_for_label }}">Leisure:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.leisure }}
+                                        {{ form.leisure.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.consumerism.id_for_label }}">Consumerism:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.consumerism }}
+                                        {{ form.consumerism.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.science.id_for_label }}">Sciences:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.science }}
+                                        {{ form.science.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.objects_mentioned.id_for_label }}">Objects:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.objects_mentioned }}
+                                        {{ form.objects_mentioned.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- {{ form.as_table }} -->
+                            <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <button type="button" class="btn btn-light cancel-btn" onclick="location.href='{% url 'articles' %}'">Cancel</button>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <button type="submit" class="btn submit-btn">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script type="text/javascript">
+        $("#id_type_of_format").change(function () {
+          var url = $("#articleForm").attr("data-text-format-url");  
+          var typeOfFormatId = $(this).val();  
+
+          $.ajax({                       
+            url: url,                    
+            data: {
+              'type_of_format': typeOfFormatId       
+            },
+            success: function (data) {   
+              $("#id_format_of_text").html(data);  
+            }
+          });
+
+        });
+    </script>
+    <script src="{% static 'js/new.js' %}"></script>
+{% endblock %}

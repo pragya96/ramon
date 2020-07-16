@@ -1,10 +1,57 @@
 from django.contrib.gis.db import models as gis_models
 from django.db import models
 
+STATUS_CHOICES = [
+    ('I', 'Incomplete'),
+    ('RR', 'Ready for Review'),
+    ('R', 'Reviewed')
+]
+
 
 # Create your models here.
+
+
+class Occupation(models.Model):
+    type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.type
+
+
+class Relation(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.name
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    occupation = models.ForeignKey(Occupation, on_delete=models.CASCADE, null=True)
+    relation = models.ForeignKey(Relation, on_delete=models.CASCADE, null=True)
+    birthday = models.DateField(null=True)
+    date_of_death = models.DateField(null=True)
+    fiction_character = models.BooleanField(default=False)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+
+    def __str__(self):
+        if self.relation and self.occupation:
+            return self.name + " (" + self.relation.name + ", " + self.occupation.type + ")"
+        elif self.relation:
+            return self.name + " (" + self.relation.name + ")"
+        elif self.occupation:
+            return self.name + " (" + self.occupation.type + ")"
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "People"
+
+
 class LocationType(models.Model):
     type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.type
@@ -15,6 +62,7 @@ class Location(gis_models.Model):
     type = models.ForeignKey(LocationType, on_delete=models.CASCADE, null=True)
     coordinates = gis_models.GeometryField(blank=True, null=True)
     old_madrid = models.BooleanField(null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
         return self.name
@@ -22,6 +70,7 @@ class Location(gis_models.Model):
 
 class BuildingType(models.Model):
     type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.type
@@ -33,35 +82,146 @@ class Building(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     coordinates = gis_models.PointField(null=True)
     old_madrid = models.BooleanField(null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
         return self.name
 
 
-class ArtType(models.Model):
+class TypeOfFormat(models.Model):
     type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.type
 
+    class Meta:
+        verbose_name_plural = "Types of Format"
 
-class ArtistType(models.Model):
-    type = models.CharField(max_length=100)
+
+class FormatOfText(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    type = models.ForeignKey(TypeOfFormat, on_delete=models.CASCADE)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
-        return self.type
+        if self.name:
+            return self.name
+            # return self.name + " (" + self.type.type + ")"
+        # else:
+        #     return self.type.type
 
 
-class Artist(models.Model):
+class PersonalMemory(models.Model):
+    person = models.ManyToManyField(Person)
+    memory = models.CharField(max_length=500)
+    building = models.ManyToManyField(Building)
+    location = models.ManyToManyField(Location)
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+
+    def __str__(self):
+        return self.memory
+
+    class Meta:
+        verbose_name_plural = "Personal Memories"
+
+
+class HistoricalPeriod(models.Model):
     name = models.CharField(max_length=100)
-    type = models.ForeignKey(ArtistType, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
-        return self.name + " (" + self.type.type + ")"
+        return self.name
+
+
+class HistoricalMemory(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    period = models.ForeignKey(HistoricalPeriod, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    class Meta:
+        verbose_name_plural = "Historical Memories"
+
+    def __str__(self):
+        return self.person.name
+
+
+class PoliticsPeriod(models.Model):
+    name = models.CharField(max_length=100)
+    years = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.name
+
+
+class Politics(models.Model):
+    period = models.ForeignKey(PoliticsPeriod, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
+    event = models.CharField(max_length=100, null=True)
+    movement = models.CharField(max_length=100, null=True)
+    concepts = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+
+    class Meta:
+        verbose_name_plural = "Politics"
+
+    def __str__(self):
+        return self.period.name
+
+
+class Architecture(models.Model):
+    style = models.CharField(max_length=100, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+
+    def __str__(self):
+        if self.style:
+            return self.person.name + " (" + self.style + ")"
+        else:
+            return self.person.name
+
+
+class Urbanism(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Urbanism"
+
+
+class ArtCategory(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Art Categories"
+
+
+class ArtType(models.Model):
+    type = models.CharField(max_length=100, null=True)
+    category = models.ForeignKey(ArtCategory, on_delete=models.CASCADE)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        if self.type:
+            return self.type
+        else:
+            return self.category.name
 
 
 class ArtStyle(models.Model):
     type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.type
@@ -69,126 +229,78 @@ class ArtStyle(models.Model):
 
 class ArtisticMovement(models.Model):
     name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.name
 
 
 class Art(models.Model):
-    title = models.CharField(max_length=100, null=True)
-    type = models.ManyToManyField(ArtType)
+    title = models.CharField(max_length=100)
+    category = models.ForeignKey(ArtCategory, on_delete=models.CASCADE, null=True)
+    type = models.ForeignKey(ArtType, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='images/', null=True)
-    artist = models.ManyToManyField(Artist)
+    person = models.ManyToManyField(Person)
     style = models.ManyToManyField(ArtStyle)
     movement = models.ManyToManyField(ArtisticMovement)
-    aesthetic = models.CharField(max_length=500, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
         return self.title
 
 
-class AppliedArt(models.Model):
-    type = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.type
-
-
-class FormatOfText(models.Model):
-    type = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.type
-
-
-class PoliticsPeriod(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Politics(models.Model):
-    period = models.ForeignKey(PoliticsPeriod, on_delete=models.CASCADE, null=True)
-    figure = models.CharField(max_length=100, null=True)
-
-    class Meta:
-        verbose_name_plural = "Politics"
-
-    def __str__(self):
-        return self.figure
-
-
-class Relation(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Period(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Biography(models.Model):
-    name = models.CharField(max_length=100, null=True)
-    relation = models.ForeignKey(Relation, on_delete=models.CASCADE, null=True)
-    period = models.ForeignKey(Period, on_delete=models.CASCADE, null=True)
-
-    class Meta:
-        verbose_name_plural = "Biographies"
-
-    def __str__(self):
-        return self.name
-
-
-class Urbanism(models.Model):
-    type = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.type
-
-
-class Architecture(models.Model):
-    architect = models.CharField(max_length=100, null=True)
-    style = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.architect + " (" + self.style + ")"
-
-
 class CulturalLife(models.Model):
-    type = models.CharField(max_length=100)
+    events = models.CharField(max_length=100)
+    associations = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     class Meta:
         verbose_name_plural = "Cultural Lives"
 
     def __str__(self):
-        return self.type
+        return self.events
 
 
-class Movement(models.Model):
+class AestheticMovement(models.Model):
     name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.name
 
 
-class Writer(models.Model):
+class Aesthetic(models.Model):
     name = models.CharField(max_length=100)
+    movement = models.ForeignKey(AestheticMovement, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.name
+
+
+class LiteraryMovement(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.name
+
+
+class LiteraryGenre(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.name
 
 
 class Literature(models.Model):
-    work = models.CharField(max_length=200, null=True)
-    movement = models.ForeignKey(Movement, on_delete=models.CASCADE, null=True)
-    writer = models.ManyToManyField(Writer)
+    work = models.CharField(max_length=100)
+    movement = models.ForeignKey(LiteraryMovement, on_delete=models.CASCADE, null=True)
+    person = models.ManyToManyField(Person)
     themes = models.CharField(max_length=500, null=True)
+    genre = models.ForeignKey(LiteraryGenre, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
         return self.work
@@ -197,30 +309,32 @@ class Literature(models.Model):
         verbose_name_plural = "Literature"
 
 
-class CultureType(models.Model):
-    type = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.type
-
-
 class PopularCulture(models.Model):
-    type = models.ForeignKey(CultureType, on_delete=models.CASCADE, null=True)
-    description = models.CharField(max_length=500, null=True)
+    event = models.CharField(max_length=100)
+    person = models.ManyToManyField(Person)
+    religious_traditions = models.CharField(max_length=100, null=True)
+    celebrity_culture = models.CharField(max_length=100, null=True)
+    kitsch = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
-        return self.type.type
+        return self.event
 
 
 class Entertainment(models.Model):
     type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.type
 
+    class Meta:
+        verbose_name_plural = "Entertainment"
+
 
 class MediaType(models.Model):
     type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
         return self.type
@@ -229,6 +343,7 @@ class MediaType(models.Model):
 class Media(models.Model):
     name = models.CharField(max_length=100)
     type = models.ManyToManyField(MediaType)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     class Meta:
         verbose_name_plural = "Media"
@@ -237,8 +352,94 @@ class Media(models.Model):
         return self.name
 
 
+class LeisureType(models.Model):
+    type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.type
+
+
+class Leisure(models.Model):
+    name = models.CharField(max_length=100)
+    type = models.ForeignKey(LeisureType, on_delete=models.CASCADE, null=True)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Leisure"
+
+
+class Fashion(models.Model):
+    type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.type
+
+    class Meta:
+        verbose_name_plural = "Fashion"
+
+
+class Consumerism(models.Model):
+    shop = models.CharField(max_length=100)
+    fashion = models.ForeignKey(Fashion, on_delete=models.CASCADE, null=True)
+    advertisement = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+
+    class Meta:
+        verbose_name_plural = "Consumerism"
+
+    def __str__(self):
+        return self.shop
+
+
+class TypeOfScience(models.Model):
+    type = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        return self.type
+
+    class Meta:
+        verbose_name_plural = "Types of Science"
+
+
+class Science(models.Model):
+    type = models.ForeignKey(TypeOfScience, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
+
+    def __str__(self):
+        if self.name:
+            return self.name + " (" + self.type.type + ")"
+        else:
+            return self.type.type
+
+
 class ObjectsMentioned(models.Model):
     name = models.CharField(max_length=100)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True)
+    urbanism = models.ForeignKey(Urbanism, on_delete=models.CASCADE, null=True)
+    leisure = models.ForeignKey(Leisure, on_delete=models.CASCADE, null=True)
+    architecture = models.ForeignKey(Architecture, on_delete=models.CASCADE, null=True)
+    personal_memory = models.ForeignKey(PersonalMemory, on_delete=models.CASCADE, null=True)
+    historical_memory = models.ForeignKey(HistoricalMemory, on_delete=models.CASCADE, null=True)
+    politics = models.ForeignKey(Politics, on_delete=models.CASCADE, null=True)
+    science = models.ForeignKey(Science, on_delete=models.CASCADE, null=True)
+    art = models.ForeignKey(Art, on_delete=models.CASCADE, null=True)
+    cultural_life = models.ForeignKey(CulturalLife, on_delete=models.CASCADE, null=True)
+    aesthetic = models.ForeignKey(Aesthetic, on_delete=models.CASCADE, null=True)
+    literature = models.ForeignKey(Literature, on_delete=models.CASCADE, null=True)
+    entertainment = models.ForeignKey(Entertainment, on_delete=models.CASCADE, null=True)
+    media = models.ForeignKey(Media, on_delete=models.CASCADE, null=True)
+    popular_culture = models.ForeignKey(PopularCulture, on_delete=models.CASCADE, null=True)
+    consumerism = models.ForeignKey(Consumerism, on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = "Object"
@@ -248,99 +449,35 @@ class ObjectsMentioned(models.Model):
         return self.name
 
 
-class Psychology(models.Model):
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = "Psychologies"
-
-    def __str__(self):
-        return self.name
-
-
-class SocialIssue(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class SocialScience(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class ConsumerismType(models.Model):
-    type = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.type
-
-
-class Consumerism(models.Model):
-    name = models.CharField(max_length=100)
-    type = models.ForeignKey(ConsumerismType, on_delete=models.CASCADE, null=True)
-
-    class Meta:
-        verbose_name_plural = "Consumerism"
-
-    def __str__(self):
-        return self.name
-
-
-class MedicalScience(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Technology(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "Technologies"
-
-
 class Article(models.Model):
-    STATUS_CHOICES = [
-        ('I', 'Incomplete'),
-        ('RR', 'Ready for Review'),
-        ('R', 'Reviewed')
-    ]
     title = models.CharField(max_length=100)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
     date = models.DateField(null=True)
     newspaper = models.CharField(max_length=100, null=True)
     issue = models.IntegerField(null=True)
     page_numbers = models.CharField(max_length=50, null=True)
+    url = models.URLField(null=True)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
+    person = models.ManyToManyField(Person)
     location = models.ManyToManyField(Location)
     building = models.ManyToManyField(Building)
-    url = models.URLField(null=True)
-    art = models.ManyToManyField(Art)
-    applied_art = models.ManyToManyField(AppliedArt)
-    text_format = models.ForeignKey(FormatOfText, on_delete=models.CASCADE, null=True)
+    type_of_format = models.ForeignKey(TypeOfFormat, on_delete=models.CASCADE, null=True)
+    format_of_text = models.ForeignKey(FormatOfText, on_delete=models.CASCADE, null=True)
+    personal_memory = models.ManyToManyField(PersonalMemory)
+    historical_memory = models.ManyToManyField(HistoricalMemory)
     politics = models.ManyToManyField(Politics)
-    biography = models.ManyToManyField(Biography)
-    urbanism = models.ManyToManyField(Urbanism)
     architecture = models.ManyToManyField(Architecture)
+    urbanism = models.ManyToManyField(Urbanism)
+    art = models.ManyToManyField(Art)
     cultural_life = models.ManyToManyField(CulturalLife)
+    aesthetic = models.ManyToManyField(Aesthetic)
     literature = models.ManyToManyField(Literature)
     popular_culture = models.ManyToManyField(PopularCulture)
     entertainment = models.ManyToManyField(Entertainment)
     media = models.ManyToManyField(Media)
-    modernity = models.CharField(max_length=200, null=True)
-    objects_mentioned = models.ManyToManyField(ObjectsMentioned)
-    psychology = models.ManyToManyField(Psychology)
-    social_issue = models.ManyToManyField(SocialIssue)
-    social_science = models.ManyToManyField(SocialScience)
+    leisure = models.ManyToManyField(Leisure)
     consumerism = models.ManyToManyField(Consumerism)
+    science = models.ManyToManyField(Science)
+    objects_mentioned = models.ManyToManyField(ObjectsMentioned)
 
     def __str__(self):
         return self.title
-

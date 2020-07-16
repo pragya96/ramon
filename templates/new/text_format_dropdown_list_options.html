@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for format in text_format %}
+<option value="{{ format.pk }}">{{ format.type }} ({{ format.name }})</option>
+{% endfor %}

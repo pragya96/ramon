@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ramón | New Personal Memory
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
+{% endblock %}
+
+{% block content %}
+    <div id="wrapper">
+        {% include 'tables/sidenav.html' %}
+        <main id="page-content-wrapper" role="main">
+            <div class="row">
+                <div class="col-11 card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">New Personal Memory</h2>
+                        <hr>
+                        <br>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.person.id_for_label }}">People:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.person }}
+                                        {{ form.person.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label required" for="{{ form.memory.id_for_label }}">Memory:</label>
+                                        {{ form.memory }}
+                                        {{ form.memory.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.building.id_for_label }}">Buildings:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.building }}
+                                        {{ form.building.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.location.id_for_label }}">Locations:
+                                            <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                        </label>
+                                        {{ form.location }}
+                                        {{ form.location.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.start_date.id_for_label }}">Start Date:</label>
+                                        {{ form.start_date }}
+                                        {{ form.start_date.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label" for="{{ form.end_date.id_for_label }}">End Date:</label>
+                                        {{ form.end_date }}
+                                        {{ form.end_date.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group form-inline">
+                                        <label class="label required" for="{{ form.status.id_for_label }}">Status:</label>
+                                        {{ form.status }}
+                                        {{ form.status.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <button type="button" class="btn btn-light cancel-btn" onclick="location.href='{% url 'personal-memories' %}'">Cancel</button>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <button type="submit" class="btn submit-btn">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/new.js' %}"></script>
+{% endblock %}

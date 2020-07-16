@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ramón | Politics Period
+Ramón | Politics Periods
 {% endblock %}
 
 {% block css %}
@@ -21,22 +21,26 @@ Ramón | Politics Period
             <div class="row">
                 <div class="col-11 card">
                     <div class="card-body">
-                        <h2 class="card-title text-center">Politics Period</h2>
+                        <h2 class="card-title text-center">Politics Periods</h2>
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Years</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
                                         <td>{{ item.name }}</td>
+                                        <td>{{ item.years }}</td>
                                         <td>
                                             <a href="{% url 'edit-politics-periods' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-politics-periods' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -51,5 +55,8 @@ Ramón | Politics Period
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 3;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

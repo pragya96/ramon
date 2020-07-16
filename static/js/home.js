@@ -11,11 +11,12 @@ $(document).ready(function() {
         "scrollX": true, 
         rowCallback: function(row, data, index){
         	console.log( 'data: ' + data );
-        	console.log( 'data[27]: ' + data[27] );
-        	if(data[27]==='Incomplete'){
+            console.log( 'status: ' + status );
+        	console.log( 'data[status]: ' + data[status] );
+        	if(data[status]==='Incomplete'){
         		$('td', row).css('background-color', '#ffcccc');
         	}
-        	if(data[27]==='Ready for Review'){
+        	if(data[status]==='Ready for Review'){
         		$('td', row).css('background-color', '#d3f3dd');
         	}
         }

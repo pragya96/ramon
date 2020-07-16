@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Ramón | Personal Memories
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
+    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
+{% endblock %}
+
+{% block content %}
+    <div id="wrapper">
+        {% include 'tables/sidenav.html' %}
+        <main id="page-content-wrapper" role="main">
+            <div class="row">
+                <div class="col-11 card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Personal Memories</h2>
+                        <table id="table_id" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>People</th>
+                                    <th>Memory</th>
+                                    <th>Building</th>
+                                    <th>Location</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Actions</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in data %}
+                                    <tr>
+                                        <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
+                                        <td>{{ item.memory }}</td>
+                                        <td>{% for building in item.building.all %}{{ building.name }}<br/>{% endfor %}</td>
+                                        <td>{% for location in item.location.all %}{{ location.name }}<br/>{% endfor %}</td>
+                                        <td>{{ item.start_date }}</td>
+                                        <td>{{ item.end_date }}</td>
+                                        <td>
+                                            <a href="{% url 'edit-personal-memories' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-personal-memories' item.id %}" onclick="return confirm('Do you want to delete {{ item.memory }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                        <td>{{ item.get_status_display }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script type="text/javascript">
+        var status = 7;
+    </script>
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

@@ -25,18 +25,54 @@ Ramón | Objects
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
                                     <th>Actions</th>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Building</th>
+                                    <th>Urbanism</th>
+                                    <th>Leisure</th>
+                                    <th>Architecture</th>
+                                    <th>Personal Memory</th>
+                                    <th>Historical Memory</th>
+                                    <th>Politics</th>
+                                    <th>Science</th>
+                                    <th>Art</th>
+                                    <th>Cultural Life</th>
+                                    <th>Aesthetic</th>
+                                    <th>Literature</th>
+                                    <th>Entertainment</th>
+                                    <th>Media</th>
+                                    <th>Popular Culture</th>
+                                    <th>Consumerism</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.name }}</td>
                                         <td>
                                             <a href="{% url 'edit-objects' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-objects' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.location.name }}</td>
+                                        <td>{{ item.building.name }}</td>
+                                        <td>{{ item.urbanism.name }}</td>
+                                        <td>{{ item.leisure.name }}</td>
+                                        <td>{{ item.architecture.person.name }}</td>
+                                        <td>{{ item.personal_memory.memory }}</td>
+                                        <td>{{ item.historical_memory.person.name }}</td>
+                                        <td>{{ item.politics.period.name }}</td>
+                                        <td>{{ item.science.type }} ({{ item.science.name }})</td>
+                                        <td>{{ item.art.title }}</td>
+                                        <td>{{ item.cultural_life.events }}</td>
+                                        <td>{{ item.aesthetic.name }}</td>
+                                        <td>{{ item.literature.work }}</td>
+                                        <td>{{ item.entertainment.type }}</td>
+                                        <td>{{ item.media.name }}</td>
+                                        <td>{{ item.popular_culture.event }}</td>
+                                        <td>{{ item.consumerism.shop }}</td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -51,5 +87,8 @@ Ramón | Objects
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 19;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

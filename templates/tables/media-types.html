@@ -27,6 +27,7 @@ Ramón | Media Types
                                 <tr>
                                     <th>Type</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,6 +38,7 @@ Ramón | Media Types
                                             <a href="{% url 'edit-media-types' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-media-types' item.id %}" onclick="return confirm('Do you want to delete {{ item.type }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -51,5 +53,8 @@ Ramón | Media Types
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 2;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

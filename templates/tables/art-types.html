@@ -26,17 +26,21 @@ Ramón | Art Types
                             <thead>
                                 <tr>
                                     <th>Type</th>
+                                    <th>Category</th>
                                     <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
                                         <td>{{ item.type }}</td>
+                                        <td>{{ item.category.name }}</td>
                                         <td>
                                             <a href="{% url 'edit-art-types' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-art-types' item.id %}" onclick="return confirm('Do you want to delete {{ item.type }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -51,5 +55,8 @@ Ramón | Art Types
 
 
 {% block js %}
+    <script type="text/javascript">
+        var status = 3;
+    </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
