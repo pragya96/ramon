@@ -28,16 +28,19 @@ body {
 }
 
 .submit-btn {
-	border: 2px solid black;
+	border: 1px solid black;
 	border-radius: 8px;
-	background: #f5b971;
+	/*background: #f5b971;*/
+	background: #ffe8be;
 	width: 70%;
+	font-weight: 600;
 }
 
 .cancel-btn {
-	border: 2px solid black;
+	border: 1px solid black;
 	border-radius: 8px;
 	width: 70%;
+	font-weight: 600;
 }
 
 .required:before {

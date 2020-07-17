@@ -374,83 +374,12 @@ class NewArticles(CreateView):
     template_name = "new/new-articles.html"
     model = models.Article
     form_class = forms.ArticleForm
-    success_url = reverse_lazy('articles')
 
-    # def form_valid(self, form):
-    #     self.object = form.save(commit=False)
-    #     article = models.Article(
-    #         title=form.cleaned_data['title'],
-    #         date=form.cleaned_data['date'],
-    #         newspaper=form.cleaned_data['newspaper'],
-    #         issue=form.cleaned_data['issue'],
-    #         page_numbers=form.cleaned_data['page_numbers'],
-    #         url=form.cleaned_data['url'],
-    #         status=form.cleaned_data['status'],
-    #     )
-    #     article.save()
-    #
-    #     for person in form.cleaned_data['person']:
-    #         person.article.add(article)
-    #
-    #     for location in form.cleaned_data['location']:
-    #         location.article.add(article)
-    #
-    #     for building in form.cleaned_data['building']:
-    #         building.article.add(article)
-    #
-    #     for personal_memory in form.cleaned_data['personal_memory']:
-    #         personal_memory.article.add(article)
-    #
-    #     for historical_memory in form.cleaned_data['historical_memory']:
-    #         historical_memory.article.add(article)
-    #
-    #     for politics in form.cleaned_data['politics']:
-    #         politics.article.add(article)
-    #
-    #     for architecture in form.cleaned_data['architecture']:
-    #         architecture.article.add(article)
-    #
-    #     for urbanism in form.cleaned_data['urbanism']:
-    #         urbanism.article.add(article)
-    #
-    #     for art in form.cleaned_data['art']:
-    #         art.article.add(article)
-    #
-    #     for cultural_life in form.cleaned_data['cultural_life']:
-    #         cultural_life.article.add(article)
-    #
-    #     for aesthetic in form.cleaned_data['aesthetic']:
-    #         aesthetic.article.add(article)
-    #
-    #     for literature in form.cleaned_data['literature']:
-    #         literature.article.add(article)
-    #
-    #     for popular_culture in form.cleaned_data['popular_culture']:
-    #         popular_culture.article.add(article)
-    #
-    #     for entertainment in form.cleaned_data['entertainment']:
-    #         entertainment.article.add(article)
-    #
-    #     for media in form.cleaned_data['media']:
-    #         media.article.add(article)
-    #
-    #     for leisure in form.cleaned_data['leisure']:
-    #         leisure.article.add(article)
-    #
-    #     for consumerism in form.cleaned_data['consumerism']:
-    #         consumerism.article.add(article)
-    #
-    #     for science in form.cleaned_data['science']:
-    #         science.article.add(article)
-    #
-    #     for objects_mentioned in form.cleaned_data['objects_mentioned']:
-    #         objects_mentioned.article.add(article)
-    #
-    #     if form.cleaned_data['text_format']:
-    #         form.cleaned_data['text_format'].article.add(article)
-    #
-    #     # self.object.save()
-    #     return HttpResponseRedirect(self.get_success_url())
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('articles')
 
 
 class NewOccupations(CreateView):

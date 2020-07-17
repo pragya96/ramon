@@ -100,7 +100,9 @@ Ramón | New Article
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.type_of_format.id_for_label }}">Type of Format:</label>
+                                                    <label class="label" for="{{ form.type_of_format.id_for_label }}">Type of Format:
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-types-of-format" title="New Type of Format"><i class="fa fa-plus"></i></button>
+                                                    </label>
                                                     {{ form.type_of_format }}
                                                     {{ form.type_of_format.errors }}
                                                 </div>
@@ -108,17 +110,22 @@ Ramón | New Article
                                             <div class="col-6">
                                                 <div class="form-group form-inline">
                                                     <label class="label" for="{{ form.format_of_text.id_for_label }}">Format of Text:
-                                                        <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-text-formats" title="New Format of Text"><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.format_of_text }}
                                                     {{ form.format_of_text.errors }}
                                                 </div>
                                             </div>
+                                            <!-- These are buttons under the row of dropdown -->
+                                            <!-- <div class="col-6">
+                                                <button type="submit" class="btn btn-light new-page-button" name="new_page" value="new-types-of-format">New Type of Format</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="submit" class="btn btn-light new-page-button" name="new_page" value="new-text-formats">New Format of Text</button>
+                                            </div> -->
                                             <div class="col-6">
                                                 <div class="form-group form-inline">
-                                                    <label class="label required" for="{{ form.status.id_for_label }}">Status:
-                                                        <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
-                                                    </label>
+                                                    <label class="label required" for="{{ form.status.id_for_label }}">Status:</label>
                                                     {{ form.status }}
                                                     {{ form.status.errors }}
                                                 </div>

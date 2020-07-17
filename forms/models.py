@@ -39,12 +39,6 @@ class Person(models.Model):
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
-        if self.relation and self.occupation:
-            return self.name + " (" + self.relation.name + ", " + self.occupation.type + ")"
-        elif self.relation:
-            return self.name + " (" + self.relation.name + ")"
-        elif self.occupation:
-            return self.name + " (" + self.occupation.type + ")"
         return self.name
 
     class Meta:
