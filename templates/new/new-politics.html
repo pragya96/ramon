@@ -67,11 +67,15 @@ Ramón | New Politics
                                         {{ form.concepts.errors }}
                                     </div>
                                 </div>
+                            </div>
+                            <hr>
+                            <div class="row">
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label required" for="{{ form.status.id_for_label }}">Status:</label>
-                                        {{ form.status }}
-                                        {{ form.status.errors }}
+                                    <div class="form-group">
+                                        <label class="label status-label">Status of Record:</label>
+                                        {{ form.complete }}
+                                        <label class="label" for="{{ form.complete.id_for_label }}">Complete</label>
+                                        {{ form.complete.errors }}
                                     </div>
                                 </div>
                             </div>

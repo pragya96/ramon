@@ -196,3 +196,7 @@
 .fa-plus {
     font-size: 0.68em;
 }
+
+.status-label {
+  display: block;
+}

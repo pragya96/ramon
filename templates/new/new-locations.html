@@ -53,13 +53,6 @@ Ramón | New Location
                                         {{ form.old_madrid.errors }}
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label required" for="{{ form.status.id_for_label }}">Status:</label>
-                                        {{ form.status }}
-                                        {{ form.status.errors }}
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
@@ -67,6 +60,17 @@ Ramón | New Location
                                         <label class="label required" for="{{ form.coordinates.id_for_label }}">Coordinates:</label>
                                         {{ form.coordinates }}
                                         {{ form.coordinates.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="label status-label">Status of Record:</label>
+                                        {{ form.complete }}
+                                        <label class="label" for="{{ form.complete.id_for_label }}">Complete</label>
+                                        {{ form.complete.errors }}
                                     </div>
                                 </div>
                             </div>
