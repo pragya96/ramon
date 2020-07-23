@@ -9,11 +9,6 @@ Ramón | New Literature
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navbar %}
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
-{% endblock %}
-
 {% block content %}
     <div id="wrapper">
         {% include 'tables/sidenav.html' %}
@@ -36,8 +31,11 @@ Ramón | New Literature
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.movement.id_for_label }}">Movement:</label>
+                                    <div class="form-group">
+                                        <label class="label dropdown-label" for="{{ form.movement.id_for_label }}">Movement:
+                                            <i class="fa fa-info-circle" title="Select from dropdown."></i>
+                                            <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-literary-movements" title="Create new Literary Movement if it doesn't exist in dropdown."><i class="fa fa-plus"></i></button>
+                                        </label>
                                         {{ form.movement }}
                                         {{ form.movement.errors }}
                                     </div>
@@ -45,9 +43,10 @@ Ramón | New Literature
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.person.id_for_label }}">Writer:
+                                    <div class="form-group">
+                                        <label class="label dropdown-label" for="{{ form.person.id_for_label }}">Writer:
                                             <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                            <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-people" title="Create new Person if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                         </label>
                                         {{ form.person }}
                                         {{ form.person.errors }}
@@ -63,8 +62,11 @@ Ramón | New Literature
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.genre.id_for_label }}">Genre:</label>
+                                    <div class="form-group">
+                                        <label class="label dropdown-label" for="{{ form.genre.id_for_label }}">Genre:
+                                            <i class="fa fa-info-circle" title="Select from dropdown."></i>
+                                            <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-literary-genres" title="Create new Literary Genre if it doesn't exist in dropdown."><i class="fa fa-plus"></i></button>
+                                        </label>
                                         {{ form.genre }}
                                         {{ form.genre.errors }}
                                     </div>

@@ -9,11 +9,6 @@ Ramón | New Article
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navbar %}
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
-{% endblock %}
-
 {% block content %}
     <div id="wrapper">
         {% include 'tables/sidenav.html' %}
@@ -99,30 +94,25 @@ Ramón | New Article
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.type_of_format.id_for_label }}">Type of Format:
-                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-types-of-format" title="New Type of Format"><i class="fa fa-plus"></i></button>
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.type_of_format.id_for_label }}">Type of Format:
+                                                        <i class="fa fa-info-circle" title="Select from dropdown."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-types-of-format" title="Create new Type of Format if it doesn't exist in dropdown."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.type_of_format }}
                                                     {{ form.type_of_format.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.format_of_text.id_for_label }}">Format of Text:
-                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-text-formats" title="New Format of Text"><i class="fa fa-plus"></i></button>
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.format_of_text.id_for_label }}">Format of Text:
+                                                        <i class="fa fa-info-circle" title="Select from dropdown."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-text-formats" title="Create new Format of Text if it doesn't exist in dropdown."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.format_of_text }}
                                                     {{ form.format_of_text.errors }}
                                                 </div>
                                             </div>
-                                            <!-- These are buttons under the row of dropdown -->
-                                            <!-- <div class="col-6">
-                                                <button type="submit" class="btn btn-light new-page-button" name="new_page" value="new-types-of-format">New Type of Format</button>
-                                            </div>
-                                            <div class="col-6">
-                                                <button type="submit" class="btn btn-light new-page-button" name="new_page" value="new-text-formats">New Format of Text</button>
-                                            </div> -->
                                         </div>
                                         <hr>
                                         <div class="row">
@@ -140,9 +130,10 @@ Ramón | New Article
                                     <div class="tabcontent" id="People">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.person.id_for_label }}">People:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.person.id_for_label }}">People:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-people" title="Create new Person if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.person }}
                                                     {{ form.person.errors }}
@@ -154,9 +145,10 @@ Ramón | New Article
                                     <div class="tabcontent" id="Locations">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.location.id_for_label }}">Locations:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.location.id_for_label }}">Locations:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-locations" title="Create new Location if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.location }}
                                                     {{ form.location.errors }}
@@ -168,9 +160,10 @@ Ramón | New Article
                                     <div class="tabcontent" id="Buildings">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.building.id_for_label }}">Buildings:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.building.id_for_label }}">Buildings:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-buildings" title="Create new Building if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.building }}
                                                     {{ form.building.errors }}
@@ -182,27 +175,30 @@ Ramón | New Article
                                     <div class="tabcontent" id="Histories">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.personal_memory.id_for_label }}">Personal Memories:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.personal_memory.id_for_label }}">Personal Memories:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-personal-memories" title="Create new Personal Memory if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.personal_memory }}
                                                     {{ form.personal_memory.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.historical_memory.id_for_label }}">Historical Memories:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.historical_memory.id_for_label }}">Historical Memories:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-historical-memories" title="Create new Historical Memory if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.historical_memory }}
                                                     {{ form.historical_memory.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.politics.id_for_label }}">Politics:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.politics.id_for_label }}">Politics:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-politics" title="Create new Politics if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.politics }}
                                                     {{ form.politics.errors }}
@@ -214,18 +210,20 @@ Ramón | New Article
                                     <div class="tabcontent" id="Architectures">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.architecture.id_for_label }}">Architectures:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.architecture.id_for_label }}">Architectures:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-architectures" title="Create new Architecture if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.architecture }}
                                                     {{ form.architecture.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.urbanism.id_for_label }}">Urbanism:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.urbanism.id_for_label }}">Urbanism:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-urbanism" title="Create new Urbanism if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.urbanism }}
                                                     {{ form.urbanism.errors }}
@@ -237,36 +235,40 @@ Ramón | New Article
                                     <div class="tabcontent" id="Cultures">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.art.id_for_label }}">Arts:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.art.id_for_label }}">Arts:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-arts" title="Create new Art if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.art }}
                                                     {{ form.art.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.cultural_life.id_for_label }}">Cultural Lives:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.cultural_life.id_for_label }}">Cultural Lives:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-cultural-lives" title="Create new Cultural Life if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.cultural_life }}
                                                     {{ form.cultural_life.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.aesthetic.id_for_label }}">Aesthetic:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.aesthetic.id_for_label }}">Aesthetic:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-aesthetics" title="Create new Aesthetic if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.aesthetic }}
                                                     {{ form.aesthetic.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.literature.id_for_label }}">Literature:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.literature.id_for_label }}">Literature:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-literature" title="Create new Literature if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.literature }}
                                                     {{ form.literature.errors }}
@@ -278,45 +280,50 @@ Ramón | New Article
                                     <div class="tabcontent" id="Mass">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.popular_culture.id_for_label }}">Popular Culture:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.popular_culture.id_for_label }}">Popular Culture:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-popular-cultures" title="Create new Popular Culture if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.popular_culture }}
                                                     {{ form.popular_culture.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.entertainment.id_for_label }}">Entertainment:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.entertainment.id_for_label }}">Entertainment:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-entertainment" title="Create new Entertainment if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.entertainment }}
                                                     {{ form.entertainment.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.media.id_for_label }}">Media:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.media.id_for_label }}">Media:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-media" title="Create new Media if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.media }}
                                                     {{ form.media.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.leisure.id_for_label }}">Leisure:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.leisure.id_for_label }}">Leisure:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-leisure" title="Create new Leisure if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.leisure }}
                                                     {{ form.leisure.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.consumerism.id_for_label }}">Consumerism:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.consumerism.id_for_label }}">Consumerism:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-consumerism" title="Create new Consumerism if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.consumerism }}
                                                     {{ form.consumerism.errors }}
@@ -328,9 +335,10 @@ Ramón | New Article
                                     <div class="tabcontent" id="Sciences">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.science.id_for_label }}">Sciences:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.science.id_for_label }}">Sciences:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-sciences" title="Create new Science if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.science }}
                                                     {{ form.science.errors }}
@@ -342,9 +350,10 @@ Ramón | New Article
                                     <div class="tabcontent" id="Objects">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.objects_mentioned.id_for_label }}">Objects:
+                                                <div class="form-group">
+                                                    <label class="label dropdown-label" for="{{ form.objects_mentioned.id_for_label }}">Objects:
                                                         <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                                        <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-objects" title="Create new Object if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                                     </label>
                                                     {{ form.objects_mentioned }}
                                                     {{ form.objects_mentioned.errors }}
@@ -380,6 +389,7 @@ Ramón | New Article
 
 
 {% block js %}
+    <!-- This script handles the dependent dropdown items -->
     <script type="text/javascript">
         $("#id_type_of_format").change(function () {
           var url = $("#articleForm").attr("data-text-format-url");  
@@ -397,6 +407,8 @@ Ramón | New Article
 
         });
     </script>
+
+    <!-- This script handles the vertical tabs left of the form -->
     <script type="text/javascript">
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -412,12 +424,9 @@ Ramón | New Article
             evt.currentTarget.className += " active";
         }
 
-        // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
 
         function submitClicked() {
-            // document.getElementById("Metadata").style.display = "block";
-            // evt.currentTarget.className += " active";
             document.getElementById("defaultOpen").click();
         }
     </script>

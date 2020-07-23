@@ -9,11 +9,6 @@ Ramón | New Person
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navbar %}
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
-{% endblock %}
-
 {% block content %}
     <div id="wrapper">
         {% include 'tables/sidenav.html' %}
@@ -36,9 +31,10 @@ Ramón | New Person
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.occupation.id_for_label }}">Occupation:
+                                    <div class="form-group">
+                                        <label class="label dropdown-label" for="{{ form.occupation.id_for_label }}">Occupations:
                                             <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                            <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-occupations" title="Create new Occupation if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                         </label>
                                         {{ form.occupation }}
                                         {{ form.occupation.errors }}
@@ -47,9 +43,10 @@ Ramón | New Person
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.relation.id_for_label }}">Relation:
+                                    <div class="form-group">
+                                        <label class="label dropdown-label" for="{{ form.relation.id_for_label }}">Relations:
                                             <i class="fa fa-info-circle" title="Click on an item to select it. Hold control to select multiple items."></i>
+                                            <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-relations" title="Create new Relation if it doesn't exist in the list."><i class="fa fa-plus"></i></button>
                                         </label>
                                         {{ form.relation }}
                                         {{ form.relation.errors }}

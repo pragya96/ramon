@@ -9,11 +9,6 @@ Ramón | Politics
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navbar %}
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
-{% endblock %}
-
 {% block content %}
     <div id="wrapper">
         {% include 'tables/sidenav.html' %}
@@ -63,6 +58,7 @@ Ramón | Politics
 {% block js %}
     <script type="text/javascript">
         var status = 6;
+        var approveButton = false;
     </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

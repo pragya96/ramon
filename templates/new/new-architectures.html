@@ -9,11 +9,6 @@ Ramón | New Architecture
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navbar %}
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
-    <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
-{% endblock %}
-
 {% block content %}
     <div id="wrapper">
         {% include 'tables/sidenav.html' %}
@@ -29,8 +24,11 @@ Ramón | New Architecture
                             {{ form.non_field_errors }}
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label required" for="{{ form.person.id_for_label }}">Architect:</label>
+                                    <div class="form-group">
+                                        <label class="label dropdown-label required" for="{{ form.person.id_for_label }}">Architect:
+                                            <i class="fa fa-info-circle" title="Select from dropdown."></i>
+                                            <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-people" title="Create new Person if it doesn't exist in dropdown."><i class="fa fa-plus"></i></button>
+                                        </label>
                                         {{ form.person }}
                                         {{ form.person.errors }}
                                     </div>
@@ -45,8 +43,11 @@ Ramón | New Architecture
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="form-group form-inline">
-                                        <label class="label" for="{{ form.building.id_for_label }}">Building:</label>
+                                    <div class="form-group">
+                                        <label class="label dropdown-label" for="{{ form.building.id_for_label }}">Building:
+                                            <i class="fa fa-info-circle" title="Select from dropdown."></i>
+                                            <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-buildings" title="Create new Building if it doesn't exist in dropdown."><i class="fa fa-plus"></i></button>
+                                        </label>
                                         {{ form.building }}
                                         {{ form.building.errors }}
                                     </div>

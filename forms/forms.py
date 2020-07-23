@@ -299,10 +299,10 @@ class HistoricalPeriodForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    start_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
+    start_year = forms.CharField(required=False, max_length=50, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    end_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
+    end_year = forms.CharField(required=False, max_length=50, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
     complete = forms.BooleanField(required=False)
@@ -330,10 +330,10 @@ class PoliticsPeriodForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    start_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
+    start_year = forms.CharField(required=False, max_length=50, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    end_year = forms.IntegerField(required=False, min_value=1800, max_value=datetime.datetime.now().year, widget=forms.NumberInput(
+    end_year = forms.CharField(required=False, max_length=50, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
     complete = forms.BooleanField(required=False)

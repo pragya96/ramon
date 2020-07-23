@@ -21,8 +21,14 @@
             <div class="container">
                 <a class="navbar-brand" href="{% url 'index' %}" id="brand">Ramón Gómez de la Serna</a>
                 <span class="navbar-text">
-                    {% block navbar %}
-                    {% endblock %}
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
+                        {% endif %}
+                        <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>
+                    {% else %}
+                        <button type="button" class="btn btn-light" onclick="location.href='{% url 'login' %}'">Login</button>
+                    {% endif %}
                 </span>
             </div>
         </nav>

@@ -377,7 +377,7 @@ class NewArticles(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -396,7 +396,7 @@ class NewOccupations(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -409,7 +409,7 @@ class NewRelations(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -422,7 +422,7 @@ class NewPeople(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -435,7 +435,7 @@ class NewLocationType(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -455,22 +455,20 @@ class NewLocations(TemplateView):
     def post(self, request, **kwargs):
         form = forms.LocationForm(request.POST)
         if form.is_valid():
+            pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
             if 'id' in kwargs:
-                instance = models.Location.objects.get(pk=kwargs['id'])
-                form = forms.LocationForm(request.POST, instance=instance)
-                models.Location.objects.filter(pk=kwargs['id']).update(name=form.data['name'],
-                                                                       type=models.LocationType.objects.get(
-                                                                           pk=form.data['type']),
-                                                                       coordinates=form.data['coordinates'],
-                                                                       old_madrid=form.data['old_madrid'],
-                                                                       status=handle_status(request.user, form), )
+                models.Location.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
+                                                                       type=form.cleaned_data['type'],
+                                                                       coordinates=pnt,
+                                                                       old_madrid=form.cleaned_data['old_madrid'],
+                                                                       status=handle_status(request.user,
+                                                                                            form.cleaned_data['complete']))
             else:
-                pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
                 location = models.Location(name=form.cleaned_data['name'],
                                            type=form.cleaned_data['type'],
                                            coordinates=pnt,
                                            old_madrid=form.cleaned_data['old_madrid'],
-                                           status=handle_status(request.user, form), )
+                                           status=handle_status(request.user, form.cleaned_data['complete']))
                 location.save()
             return redirect(reverse('locations'))
         messages.error(request, form.errors)
@@ -486,7 +484,7 @@ class NewBuildingType(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -506,25 +504,22 @@ class NewBuildings(TemplateView):
     def post(self, request, **kwargs):
         form = forms.BuildingForm(request.POST)
         if form.is_valid():
+            pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
             if 'id' in kwargs:
-                instance = models.Building.objects.get(pk=kwargs['id'])
-                form = forms.BuildingForm(request.POST, instance=instance)
-                models.Building.objects.filter(pk=kwargs['id']).update(name=form.data['name'],
-                                                                       type=models.BuildingType.objects.get(
-                                                                           pk=form.data['type']),
-                                                                       location=models.Location.objects.get(
-                                                                           pk=form.data['location']),
-                                                                       coordinates=form.data['coordinates'],
-                                                                       old_madrid=form.data['old_madrid'],
-                                                                       status=handle_status(request.user, form), )
+                models.Building.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
+                                                                       type=form.cleaned_data['type'],
+                                                                       location=form.cleaned_data['location'],
+                                                                       coordinates=pnt,
+                                                                       old_madrid=form.cleaned_data['old_madrid'],
+                                                                       status=handle_status(request.user,
+                                                                                            form.cleaned_data['complete']))
             else:
-                pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
                 building = models.Building(name=form.cleaned_data['name'],
                                            type=form.cleaned_data['type'],
                                            location=form.cleaned_data['location'],
                                            coordinates=pnt,
                                            old_madrid=form.cleaned_data['old_madrid'],
-                                           status=handle_status(request.user, form), )
+                                           status=handle_status(request.user, form.cleaned_data['complete']))
                 building.save()
             return redirect(reverse('buildings'))
         messages.error(request, form.errors)
@@ -540,7 +535,7 @@ class NewTypesOfFormat(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -553,7 +548,7 @@ class NewFormatOfTexts(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -566,7 +561,7 @@ class NewPersonalMemories(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -579,7 +574,7 @@ class NewHistoricalPeriods(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -592,7 +587,7 @@ class NewHistoricalMemories(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -605,7 +600,7 @@ class NewPoliticsPeriod(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -618,7 +613,7 @@ class NewPolitics(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -631,7 +626,7 @@ class NewArchitectures(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -644,7 +639,7 @@ class NewUrbanism(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -657,7 +652,7 @@ class NewArtCategories(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -670,7 +665,7 @@ class NewArtTypes(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -683,7 +678,7 @@ class NewArtStyles(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -696,7 +691,7 @@ class NewArtisticMovements(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -709,7 +704,7 @@ class NewArts(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -722,7 +717,7 @@ class NewCulturalLives(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -735,7 +730,7 @@ class NewAestheticMovements(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -748,7 +743,7 @@ class NewAesthetics(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -761,7 +756,7 @@ class NewLiteraryMovements(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -774,7 +769,7 @@ class NewLiteraryGenres(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -787,7 +782,7 @@ class NewLiterature(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -800,7 +795,7 @@ class NewPopularCultures(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -813,7 +808,7 @@ class NewEntertainment(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -826,7 +821,7 @@ class NewMediaTypes(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -839,7 +834,7 @@ class NewMedia(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -852,7 +847,7 @@ class NewLeisureTypes(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -865,7 +860,7 @@ class NewLeisure(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -878,7 +873,7 @@ class NewFashion(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -891,7 +886,7 @@ class NewConsumerism(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -904,7 +899,7 @@ class NewTypesOfScience(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -917,7 +912,7 @@ class NewSciences(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -930,7 +925,7 @@ class NewObjects(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -949,7 +944,7 @@ class EditArticles(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -965,7 +960,7 @@ class EditOccupations(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -981,7 +976,7 @@ class EditRelations(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -997,7 +992,7 @@ class EditPeople(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1013,7 +1008,7 @@ class EditLocationType(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1029,7 +1024,7 @@ class EditBuildingType(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1045,7 +1040,7 @@ class EditTypesOfFormat(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1061,7 +1056,7 @@ class EditFormatOfTexts(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1077,7 +1072,7 @@ class EditPersonalMemories(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1093,7 +1088,7 @@ class EditHistoricalPeriods(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1109,7 +1104,7 @@ class EditHistoricalMemories(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1125,7 +1120,7 @@ class EditPoliticsPeriod(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1141,7 +1136,7 @@ class EditPolitics(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1157,7 +1152,7 @@ class EditArchitectures(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1173,7 +1168,7 @@ class EditUrbanism(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1189,7 +1184,7 @@ class EditArtCategories(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1205,7 +1200,7 @@ class EditArtTypes(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1221,7 +1216,7 @@ class EditArtStyles(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1237,7 +1232,7 @@ class EditArtisticMovements(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1253,7 +1248,7 @@ class EditArts(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1269,7 +1264,7 @@ class EditCulturalLives(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1285,7 +1280,7 @@ class EditAestheticMovements(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1301,7 +1296,7 @@ class EditAesthetics(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1317,7 +1312,7 @@ class EditLiteraryMovements(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1333,7 +1328,7 @@ class EditLiteraryGenres(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1349,7 +1344,7 @@ class EditLiterature(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1365,7 +1360,7 @@ class EditPopularCultures(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1381,7 +1376,7 @@ class EditEntertainment(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1397,7 +1392,7 @@ class EditMediaTypes(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1413,7 +1408,7 @@ class EditMedia(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1429,7 +1424,7 @@ class EditLeisureTypes(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1445,7 +1440,7 @@ class EditLeisure(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1461,7 +1456,7 @@ class EditFashion(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1477,7 +1472,7 @@ class EditConsumerism(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1493,7 +1488,7 @@ class EditTypesOfScience(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1509,7 +1504,7 @@ class EditSciences(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1525,7 +1520,7 @@ class EditObjects(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = handle_status(self.request.user, form)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1818,8 +1813,8 @@ def load_text_format(request):
     return render(request, 'new/text_format_dropdown_list_options.html', {'text_format': text_format})
 
 
-def handle_status(user, form):
-    if form.cleaned_data['complete']:
+def handle_status(user, complete):
+    if complete:
         if user.is_superuser:
             return 'R'
         else:

@@ -103,9 +103,6 @@ class FormatOfText(models.Model):
     def __str__(self):
         if self.name:
             return self.name
-            # return self.name + " (" + self.type.type + ")"
-        # else:
-        #     return self.type.type
 
 
 class PersonalMemory(models.Model):
@@ -126,12 +123,8 @@ class PersonalMemory(models.Model):
 
 class HistoricalPeriod(models.Model):
     name = models.CharField(max_length=100)
-    start_year = models.PositiveIntegerField(null=True, validators=[
-        MinValueValidator(1600),
-        MaxValueValidator(datetime.datetime.now().year)],)
-    end_year = models.PositiveIntegerField(null=True, validators=[
-        MinValueValidator(1600),
-        MaxValueValidator(datetime.datetime.now().year)],)
+    start_year = models.CharField(max_length=50, null=True)
+    end_year = models.CharField(max_length=50, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
@@ -152,12 +145,8 @@ class HistoricalMemory(models.Model):
 
 class PoliticsPeriod(models.Model):
     name = models.CharField(max_length=100)
-    start_year = models.PositiveIntegerField(null=True, validators=[
-        MinValueValidator(1600),
-        MaxValueValidator(datetime.datetime.now().year)],)
-    end_year = models.PositiveIntegerField(null=True, validators=[
-        MinValueValidator(1600),
-        MaxValueValidator(datetime.datetime.now().year)],)
+    start_year = models.CharField(max_length=50, null=True)
+    end_year = models.CharField(max_length=50, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):

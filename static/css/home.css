@@ -143,11 +143,9 @@
 .tab {
   float: left;
   border-top: 1px solid #ccc;
-  /*border-left: 1px solid #ccc;*/
   border-bottom: 1px solid #ccc;
   background-color: #f1f1f1;
   width: 100%;
-  /*height: 100%;*/
 }
 
 /* Style the buttons inside the tab */
@@ -178,23 +176,24 @@
   border-right: 0px;
 }
 
-
-/*.new-page-button {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-}*/
-
 .new-page-icon {
-    padding: 0px;
-    margin-left: 10px;
-    margin-bottom: 5px;
-    width: 18px;
-    height: 18px;
-    line-height: 50%;
+  position: absolute;
+  right: 3%;
+  padding: 0px;
+  margin-bottom: 5px;
+  width: 18px;
+  height: 18px;
+  line-height: 50%;
 }
 
 .fa-plus {
-    font-size: 0.68em;
+  font-size: 0.68em;
+}
+
+.dropdown-label {
+  display: block;
+  margin-bottom: 0px;
+  height: 100%;
 }
 
 .status-label {
