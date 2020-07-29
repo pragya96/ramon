@@ -937,7 +937,6 @@ class EditArticles(UpdateView):
     template_name = "new/new-articles.html"
     model = models.Article
     form_class = forms.ArticleForm
-    success_url = reverse_lazy('articles')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -947,6 +946,12 @@ class EditArticles(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('articles')
 
 
 class EditOccupations(UpdateView):
