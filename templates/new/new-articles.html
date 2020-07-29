@@ -25,7 +25,7 @@ Ramón | New Article
                             {% if messages %}
                                 <ul class="messages">
                                     {% for message in messages %}
-                                    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}
@@ -63,6 +63,13 @@ Ramón | New Article
                                                     <label class="label" for="{{ form.date.id_for_label }}">Date:</label>
                                                     {{ form.date }}
                                                     {{ form.date.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-inline">
+                                                    <label class="label" for="{{ form.place_of_publication.id_for_label }}">Place of Publication:</label>
+                                                    {{ form.place_of_publication }}
+                                                    {{ form.place_of_publication.errors }}
                                                 </div>
                                             </div>
                                             <div class="col-6">

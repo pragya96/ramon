@@ -23,6 +23,7 @@ Ramón | Articles
                                     <th>Actions</th>
                                     <th>Title</th>
                                     <th>Date</th>
+                                    <th>Place of Publication</th>
                                     <th>Newspaper</th>
                                     <th>Issue</th>
                                     <th>Page Numbers</th>
@@ -60,6 +61,7 @@ Ramón | Articles
                                         </td>
                                         <td>{{ item.title }}</td>
                                         <td>{{ item.date }}</td>
+                                        <td>{{ item.place_of_publication }}</td>
                                         <td>{{ item.newspaper }}</td>
                                         <td>{{ item.issue }}</td>
                                         <td>{{ item.page_numbers }}</td>
@@ -101,7 +103,7 @@ Ramón | Articles
 
 {% block js %}
     <script type="text/javascript">
-        var status = 28;
+        var status = 29;
         var approveButton = false;
     </script>
     <script src="{% static 'js/home.js' %}"></script>

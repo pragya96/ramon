@@ -12,6 +12,9 @@ class ArticleForm(forms.ModelForm):
     date = forms.DateField(required=False, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control datepicker'}
     ))
+    place_of_publication = forms.CharField(required=False, max_length=100, initial="Madrid", widget=forms.TextInput(
+        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+    ))
     newspaper = forms.CharField(required=False, max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))

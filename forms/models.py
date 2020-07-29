@@ -448,6 +448,7 @@ class ObjectsMentioned(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField(null=True)
+    place_of_publication = models.CharField(max_length=100, null=True)
     newspaper = models.CharField(max_length=100, null=True)
     issue = models.IntegerField(null=True)
     page_numbers = models.CharField(max_length=50, null=True)
