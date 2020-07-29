@@ -94,13 +94,6 @@ Ramón | New Article
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-inline">
-                                                    <label class="label" for="{{ form.url.id_for_label }}">URL:</label>
-                                                    {{ form.url }}
-                                                    {{ form.url.errors }}
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
                                                 <div class="form-group">
                                                     <label class="label dropdown-label" for="{{ form.type_of_format.id_for_label }}">Type of Format:
                                                         <i class="fa fa-info-circle" title="Select from dropdown."></i>
@@ -118,6 +111,13 @@ Ramón | New Article
                                                     </label>
                                                     {{ form.format_of_text }}
                                                     {{ form.format_of_text.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-inline">
+                                                    <label class="label" for="{{ form.url.id_for_label }}">URL:</label>
+                                                    {{ form.url }}
+                                                    {{ form.url.errors }}
                                                 </div>
                                             </div>
                                         </div>
