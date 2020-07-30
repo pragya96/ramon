@@ -122,11 +122,12 @@ class ArticleForm(forms.ModelForm):
         if 'type_of_format' in self.data:
             try:
                 type_of_format_id = int(self.data.get('type_of_format'))
-                self.fields['format_of_text'].queryset = models.FormatOfText.objects.filter(type_id=type_of_format_id)
+                print('hi')
+                self.fields['format_of_text'].queryset = models.FormatOfText.objects.filter(type_id=type_of_format_id, status='R')
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk and self.instance.type_of_format:
-            self.fields['format_of_text'].queryset = models.FormatOfText.objects.filter(type_id=self.instance.type_of_format.id)
+            self.fields['format_of_text'].queryset = models.FormatOfText.objects.filter(type_id=self.instance.type_of_format.id, status='R')
 
 
 class OccupationForm(forms.ModelForm):
@@ -256,10 +257,10 @@ class TypeOfFormatForm(forms.ModelForm):
 
 
 class FormatOfTextForm(forms.ModelForm):
-    name = forms.CharField(required=False, max_length=100, widget=forms.TextInput(
+    name = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    type = forms.ModelChoiceField(queryset=models.TypeOfFormat.objects.filter(status='R'), widget=forms.Select(
+    type = forms.ModelChoiceField(required=False, queryset=models.TypeOfFormat.objects.filter(status='R'), widget=forms.Select(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
     complete = forms.BooleanField(required=False)
@@ -385,18 +386,6 @@ class ArchitectureForm(forms.ModelForm):
         model = models.Architecture
         exclude = ['status']
 
-    # Filters the dropdown elements
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     try:
-    #         occupation = models.Occupation.objects.get(type="Architect")
-    #     except ObjectDoesNotExist:
-    #         occupation = None
-    #     if occupation:
-    #         self.fields['person'].queryset = models.Person.objects.filter(occupation=occupation)
-    #     else:
-    #         self.fields['person'].queryset = models.Person.objects.none()
-
 
 class UrbanismForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(
@@ -421,10 +410,10 @@ class ArtCategoryForm(forms.ModelForm):
 
 
 class ArtTypeForm(forms.ModelForm):
-    type = forms.CharField(required=False, max_length=100, widget=forms.TextInput(
+    type = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    category = forms.ModelChoiceField(queryset=models.ArtCategory.objects.filter(status='R'), widget=forms.Select(
+    category = forms.ModelChoiceField(required=False, queryset=models.ArtCategory.objects.filter(status='R'), widget=forms.Select(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
     complete = forms.BooleanField(required=False)
@@ -492,11 +481,11 @@ class ArtForm(forms.ModelForm):
         if 'category' in self.data:
             try:
                 category_id = int(self.data.get('category'))
-                self.fields['type'].queryset = models.ArtType.objects.filter(category_id=category_id)
+                self.fields['type'].queryset = models.ArtType.objects.filter(category_id=category_id, status='R')
             except (ValueError, TypeError):
                 pass
-        elif self.instance.pk:
-            self.fields['type'].queryset = models.ArtType.objects.filter(category_id=self.instance.category.id)
+        elif self.instance.pk and self.instance.category:
+            self.fields['type'].queryset = models.ArtType.objects.filter(category_id=self.instance.category.id, status='R')
 
 
 class CulturalLifeForm(forms.ModelForm):
@@ -587,18 +576,6 @@ class LiteratureForm(forms.ModelForm):
         widgets = {
             'person': forms.SelectMultiple(attrs={'class': 'col-sm-12 col-lg-12 form-control'})
         }
-
-    # Filters the dropdown elements
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     try:
-    #         occupation = models.Occupation.objects.get(type="Writer")
-    #     except ObjectDoesNotExist:
-    #         occupation = None
-    #     if occupation:
-    #         self.fields['person'].queryset = models.Person.objects.filter(occupation=occupation)
-    #     else:
-    #         self.fields['person'].queryset = models.Person.objects.none()
 
 
 class PopularCultureForm(forms.ModelForm):

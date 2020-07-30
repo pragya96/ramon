@@ -97,7 +97,7 @@ class TypeOfFormat(models.Model):
 
 class FormatOfText(models.Model):
     name = models.CharField(max_length=100, null=True)
-    type = models.ForeignKey(TypeOfFormat, on_delete=models.CASCADE)
+    type = models.ForeignKey(TypeOfFormat, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):
@@ -205,7 +205,7 @@ class ArtCategory(models.Model):
 
 class ArtType(models.Model):
     type = models.CharField(max_length=100, null=True)
-    category = models.ForeignKey(ArtCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(ArtCategory, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='RR')
 
     def __str__(self):

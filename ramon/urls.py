@@ -19,10 +19,10 @@ from forms import views
 
 urlpatterns = [
     url(r'^ramon/', include([
-        url(r'^$', views.Index.as_view(), name='index'),
         url(r'^admin/', admin.site.urls),
         url(r'^accounts/', include('django.contrib.auth.urls')),
         url(r'^forms/', include('forms.urls')),
+        url(r'^', include('visualisation.urls')),
     ])),
 ]
 

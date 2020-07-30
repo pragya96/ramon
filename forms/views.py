@@ -12,10 +12,6 @@ from forms import forms
 
 
 # Create your views here.
-class Index(TemplateView):
-    template_name = "index.html"
-
-
 class Articles(TemplateView):
     template_name = "tables/home.html"
 
@@ -379,6 +375,7 @@ class NewArticles(CreateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -418,13 +415,19 @@ class NewPeople(CreateView):
     template_name = "new/new-people.html"
     model = models.Person
     form_class = forms.PersonForm
-    success_url = reverse_lazy('people')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('people')
 
 
 class NewLocationType(CreateView):
@@ -470,7 +473,13 @@ class NewLocations(TemplateView):
                                            old_madrid=form.cleaned_data['old_madrid'],
                                            status=handle_status(request.user, form.cleaned_data['complete']))
                 location.save()
-            return redirect(reverse('locations'))
+
+            # Redirect the page if user clicked on one of the plus buttons
+            if request.POST['new_page']:
+                return redirect(reverse('{}'.format(request.POST['new_page'])))
+            else:
+                return redirect(reverse('locations'))
+
         messages.error(request, form.errors)
         args = {'form': form}
         return render(request, self.template_name, args)
@@ -521,7 +530,13 @@ class NewBuildings(TemplateView):
                                            old_madrid=form.cleaned_data['old_madrid'],
                                            status=handle_status(request.user, form.cleaned_data['complete']))
                 building.save()
-            return redirect(reverse('buildings'))
+
+            # Redirect the page if user clicked on one of the plus buttons
+            if request.POST['new_page']:
+                return redirect(reverse('{}'.format(request.POST['new_page'])))
+            else:
+                return redirect(reverse('buildings'))
+
         messages.error(request, form.errors)
         args = {'form': form}
         return render(request, self.template_name, args)
@@ -544,26 +559,37 @@ class NewFormatOfTexts(CreateView):
     template_name = "new/new-text-formats.html"
     model = models.FormatOfText
     form_class = forms.FormatOfTextForm
-    success_url = reverse_lazy('text-formats')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('text-formats')
 
 
 class NewPersonalMemories(CreateView):
     template_name = "new/new-personal-memories.html"
     model = models.PersonalMemory
     form_class = forms.PersonalMemoryForm
-    success_url = reverse_lazy('personal-memories')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('personal-memories')
 
 
 class NewHistoricalPeriods(CreateView):
@@ -583,13 +609,18 @@ class NewHistoricalMemories(CreateView):
     template_name = "new/new-historical-memories.html"
     model = models.HistoricalMemory
     form_class = forms.HistoricalMemoryForm
-    success_url = reverse_lazy('historical-memories')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('historical-memories')
 
 
 class NewPoliticsPeriod(CreateView):
@@ -609,26 +640,36 @@ class NewPolitics(CreateView):
     template_name = "new/new-politics.html"
     model = models.Politics
     form_class = forms.PoliticsForm
-    success_url = reverse_lazy('politics')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('politics')
 
 
 class NewArchitectures(CreateView):
     template_name = "new/new-architectures.html"
     model = models.Architecture
     form_class = forms.ArchitectureForm
-    success_url = reverse_lazy('architectures')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('architectures')
 
 
 class NewUrbanism(CreateView):
@@ -661,13 +702,18 @@ class NewArtTypes(CreateView):
     template_name = "new/new-art-types.html"
     model = models.ArtType
     form_class = forms.ArtTypeForm
-    success_url = reverse_lazy('art-types')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('art-types')
 
 
 class NewArtStyles(CreateView):
@@ -700,13 +746,19 @@ class NewArts(CreateView):
     template_name = "new/new-arts.html"
     model = models.Art
     form_class = forms.ArtForm
-    success_url = reverse_lazy('arts')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('arts')
 
 
 class NewCulturalLives(CreateView):
@@ -739,13 +791,18 @@ class NewAesthetics(CreateView):
     template_name = "new/new-aesthetics.html"
     model = models.Aesthetic
     form_class = forms.AestheticForm
-    success_url = reverse_lazy('aesthetics')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('aesthetics')
 
 
 class NewLiteraryMovements(CreateView):
@@ -778,26 +835,38 @@ class NewLiterature(CreateView):
     template_name = "new/new-literature.html"
     model = models.Literature
     form_class = forms.LiteratureForm
-    success_url = reverse_lazy('literature')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('literature')
 
 
 class NewPopularCultures(CreateView):
     template_name = "new/new-popular-cultures.html"
     model = models.PopularCulture
     form_class = forms.PopularCultureForm
-    success_url = reverse_lazy('popular-cultures')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('popular-cultures')
 
 
 class NewEntertainment(CreateView):
@@ -830,13 +899,19 @@ class NewMedia(CreateView):
     template_name = "new/new-media.html"
     model = models.Media
     form_class = forms.MediaForm
-    success_url = reverse_lazy('media')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('media')
 
 
 class NewLeisureTypes(CreateView):
@@ -856,13 +931,18 @@ class NewLeisure(CreateView):
     template_name = "new/new-leisure.html"
     model = models.Leisure
     form_class = forms.LeisureForm
-    success_url = reverse_lazy('leisure')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('leisure')
 
 
 class NewFashion(CreateView):
@@ -882,13 +962,18 @@ class NewConsumerism(CreateView):
     template_name = "new/new-consumerism.html"
     model = models.Consumerism
     form_class = forms.ConsumerismForm
-    success_url = reverse_lazy('consumerism')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('consumerism')
 
 
 class NewTypesOfScience(CreateView):
@@ -921,13 +1006,18 @@ class NewObjects(CreateView):
     template_name = "new/new-objects.html"
     model = models.ObjectsMentioned
     form_class = forms.ObjectsMentionedForm
-    success_url = reverse_lazy('objects')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('objects')
 
 
 # Edit Methods ########################################################################################################
@@ -945,6 +1035,7 @@ class EditArticles(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -990,7 +1081,6 @@ class EditPeople(UpdateView):
     template_name = "new/new-people.html"
     model = models.Person
     form_class = forms.PersonForm
-    success_url = reverse_lazy('people')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -999,7 +1089,14 @@ class EditPeople(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('people')
 
 
 class EditLocationType(UpdateView):
@@ -1054,7 +1151,6 @@ class EditFormatOfTexts(UpdateView):
     template_name = "new/new-text-formats.html"
     model = models.FormatOfText
     form_class = forms.FormatOfTextForm
-    success_url = reverse_lazy('text-formats')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1064,13 +1160,18 @@ class EditFormatOfTexts(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('text-formats')
 
 
 class EditPersonalMemories(UpdateView):
     template_name = "new/new-personal-memories.html"
     model = models.PersonalMemory
     form_class = forms.PersonalMemoryForm
-    success_url = reverse_lazy('personal-memories')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1079,7 +1180,14 @@ class EditPersonalMemories(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('personal-memories')
 
 
 class EditHistoricalPeriods(UpdateView):
@@ -1102,7 +1210,6 @@ class EditHistoricalMemories(UpdateView):
     template_name = "new/new-historical-memories.html"
     model = models.HistoricalMemory
     form_class = forms.HistoricalMemoryForm
-    success_url = reverse_lazy('historical-memories')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1112,6 +1219,12 @@ class EditHistoricalMemories(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('historical-memories')
 
 
 class EditPoliticsPeriod(UpdateView):
@@ -1134,7 +1247,6 @@ class EditPolitics(UpdateView):
     template_name = "new/new-politics.html"
     model = models.Politics
     form_class = forms.PoliticsForm
-    success_url = reverse_lazy('politics')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1144,13 +1256,18 @@ class EditPolitics(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('politics')
 
 
 class EditArchitectures(UpdateView):
     template_name = "new/new-architectures.html"
     model = models.Architecture
     form_class = forms.ArchitectureForm
-    success_url = reverse_lazy('architectures')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1160,6 +1277,12 @@ class EditArchitectures(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('architectures')
 
 
 class EditUrbanism(UpdateView):
@@ -1198,7 +1321,6 @@ class EditArtTypes(UpdateView):
     template_name = "new/new-art-types.html"
     model = models.ArtType
     form_class = forms.ArtTypeForm
-    success_url = reverse_lazy('art-types')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1208,6 +1330,12 @@ class EditArtTypes(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('art-types')
 
 
 class EditArtStyles(UpdateView):
@@ -1246,7 +1374,6 @@ class EditArts(UpdateView):
     template_name = "new/new-arts.html"
     model = models.Art
     form_class = forms.ArtForm
-    success_url = reverse_lazy('arts')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1255,7 +1382,14 @@ class EditArts(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('arts')
 
 
 class EditCulturalLives(UpdateView):
@@ -1294,7 +1428,6 @@ class EditAesthetics(UpdateView):
     template_name = "new/new-aesthetics.html"
     model = models.Aesthetic
     form_class = forms.AestheticForm
-    success_url = reverse_lazy('aesthetics')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1304,6 +1437,12 @@ class EditAesthetics(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('aesthetics')
 
 
 class EditLiteraryMovements(UpdateView):
@@ -1342,7 +1481,6 @@ class EditLiterature(UpdateView):
     template_name = "new/new-literature.html"
     model = models.Literature
     form_class = forms.LiteratureForm
-    success_url = reverse_lazy('literature')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1351,14 +1489,20 @@ class EditLiterature(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('literature')
 
 
 class EditPopularCultures(UpdateView):
     template_name = "new/new-popular-cultures.html"
     model = models.PopularCulture
     form_class = forms.PopularCultureForm
-    success_url = reverse_lazy('popular-cultures')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1367,7 +1511,14 @@ class EditPopularCultures(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('popular-cultures')
 
 
 class EditEntertainment(UpdateView):
@@ -1406,7 +1557,6 @@ class EditMedia(UpdateView):
     template_name = "new/new-media.html"
     model = models.Media
     form_class = forms.MediaForm
-    success_url = reverse_lazy('media')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1415,7 +1565,14 @@ class EditMedia(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('media')
 
 
 class EditLeisureTypes(UpdateView):
@@ -1438,7 +1595,6 @@ class EditLeisure(UpdateView):
     template_name = "new/new-leisure.html"
     model = models.Leisure
     form_class = forms.LeisureForm
-    success_url = reverse_lazy('leisure')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1448,6 +1604,12 @@ class EditLeisure(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('leisure')
 
 
 class EditFashion(UpdateView):
@@ -1470,7 +1632,6 @@ class EditConsumerism(UpdateView):
     template_name = "new/new-consumerism.html"
     model = models.Consumerism
     form_class = forms.ConsumerismForm
-    success_url = reverse_lazy('consumerism')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1480,6 +1641,12 @@ class EditConsumerism(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('consumerism')
 
 
 class EditTypesOfScience(UpdateView):
@@ -1518,7 +1685,6 @@ class EditObjects(UpdateView):
     template_name = "new/new-objects.html"
     model = models.ObjectsMentioned
     form_class = forms.ObjectsMentionedForm
-    success_url = reverse_lazy('objects')
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1528,6 +1694,12 @@ class EditObjects(UpdateView):
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if self.request.POST.get("new_page"):
+            return reverse_lazy('{}'.format(self.request.POST.get("new_page")))
+        else:
+            return reverse_lazy('objects')
 
 
 # Delete Methods ######################################################################################################
@@ -1808,13 +1980,13 @@ class DeleteObjects(TemplateView):
 
 def load_art_types(request):
     category_id = request.GET.get('category')
-    types = models.ArtType.objects.filter(category_id=category_id)
+    types = models.ArtType.objects.filter(category_id=category_id, status='R')
     return render(request, 'new/art_type_dropdown_list_options.html', {'types': types})
 
 
 def load_text_format(request):
     type_of_format_id = request.GET.get('type_of_format')
-    text_format = models.FormatOfText.objects.filter(type_id=type_of_format_id)
+    text_format = models.FormatOfText.objects.filter(type_id=type_of_format_id, status='R')
     return render(request, 'new/text_format_dropdown_list_options.html', {'text_format': text_format})
 
 

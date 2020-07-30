@@ -6,6 +6,17 @@ body {
 	background: linear-gradient(0deg, rgba(255,210,130,1) 13%, rgba(255,236,199,1) 100%) fixed;
 } 
 
+#index_header {
+	font-family: 'Arbutus Slab', serif;
+	text-align: center;
+	padding-top: 1%;
+	padding-bottom: 3%;
+}
+
+#articles_list thead {
+	display: none;
+}
+
 #brand {
 	font-family: 'Arbutus Slab', serif;
 }
