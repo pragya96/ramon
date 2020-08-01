@@ -20,19 +20,19 @@ Ramón | Literary Genres
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
                                     <th>Actions</th>
+                                    <th>Name</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.name }}</td>
                                         <td>
                                             <a href="{% url 'edit-literary-genres' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-literary-genres' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.name }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

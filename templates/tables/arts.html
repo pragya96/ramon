@@ -20,6 +20,7 @@ Ramón | Arts
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Title</th>
                                     <th>Category</th>
                                     <th>Type</th>
@@ -27,13 +28,16 @@ Ramón | Arts
                                     <th>Artist</th>
                                     <th>Style</th>
                                     <th>Artistic Movement</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            <a href="{% url 'edit-arts' pk=item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-arts' item.id %}" onclick="return confirm('Do you want to delete {{ item.title }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
                                         <td>{{ item.title }}</td>
                                         <td>{{ item.category }}</td>
                                         <td>{{ item.type }}</td>
@@ -45,10 +49,6 @@ Ramón | Arts
                                         <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
                                         <td>{% for style in item.style.all %}{{ style.type }}<br/>{% endfor %}</td>
                                         <td>{% for movement in item.movement.all %}{{ movement.name }}<br/>{% endfor %}</td>
-                                        <td>
-                                            <a href="{% url 'edit-arts' pk=item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-arts' item.id %}" onclick="return confirm('Do you want to delete {{ item.title }}?')"><i class="fa fa-trash"></i></a>
-                                        </td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

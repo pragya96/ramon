@@ -20,21 +20,21 @@ Ramón | Text Formats
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Name</th>
                                     <th>Type</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ item.type.type }}</td>
                                         <td>
                                             <a href="{% url 'edit-text-formats' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-text-formats' item.id %}" onclick="return confirm('Do you want to delete {{ item.type.type }} ({{ item.name }})?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.type.type }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

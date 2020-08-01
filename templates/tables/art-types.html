@@ -20,21 +20,21 @@ Ramón | Art Types
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Type</th>
                                     <th>Category</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.type }}</td>
-                                        <td>{{ item.category.name }}</td>
                                         <td>
                                             <a href="{% url 'edit-art-types' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-art-types' item.id %}" onclick="return confirm('Do you want to delete {{ item.type }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.type }}</td>
+                                        <td>{{ item.category.name }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

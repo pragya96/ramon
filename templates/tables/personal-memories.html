@@ -20,29 +20,29 @@ Ramón | Personal Memories
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>People</th>
                                     <th>Memory</th>
                                     <th>Building</th>
                                     <th>Location</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            <a href="{% url 'edit-personal-memories' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-personal-memories' item.id %}" onclick="return confirm('Do you want to delete {{ item.memory }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
                                         <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
                                         <td>{{ item.memory }}</td>
                                         <td>{% for building in item.building.all %}{{ building.name }}<br/>{% endfor %}</td>
                                         <td>{% for location in item.location.all %}{{ location.name }}<br/>{% endfor %}</td>
                                         <td>{{ item.start_date }}</td>
                                         <td>{{ item.end_date }}</td>
-                                        <td>
-                                            <a href="{% url 'edit-personal-memories' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-personal-memories' item.id %}" onclick="return confirm('Do you want to delete {{ item.memory }}?')"><i class="fa fa-trash"></i></a>
-                                        </td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

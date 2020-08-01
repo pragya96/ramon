@@ -20,27 +20,27 @@ Ramón | Politics
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Period</th>
                                     <th>Person</th>
                                     <th>Event</th>
                                     <th>Movement</th>
                                     <th>Concepts</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            <a href="{% url 'edit-politics' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-politics' item.id %}" onclick="return confirm('Do you want to delete {{ item.period.name }} ({{ item.person.name }})?')"><i class="fa fa-trash"></i></a>
+                                        </td>
                                         <td>{{ item.period.name }}</td>
                                         <td>{{ item.person.name }}</td>
                                         <td>{{ item.event }}</td>
                                         <td>{{ item.movement }}</td>
                                         <td>{{ item.concepts }}</td>
-                                        <td>
-                                            <a href="{% url 'edit-politics' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-politics' item.id %}" onclick="return confirm('Do you want to delete {{ item.period.name }} ({{ item.person.name }})?')"><i class="fa fa-trash"></i></a>
-                                        </td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

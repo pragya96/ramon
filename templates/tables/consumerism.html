@@ -20,23 +20,23 @@ Ramón | Consumerism
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Shop</th>
                                     <th>Fashion</th>
                                     <th>Advertisement</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.shop }}</td>
-                                        <td>{{ item.fashion.type }}</td>
-                                        <td>{{ item.advertisement }}</td>
                                         <td>
                                             <a href="{% url 'edit-consumerism' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-consumerism' item.id %}" onclick="return confirm('Do you want to delete {{ item.shop }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.shop }}</td>
+                                        <td>{{ item.fashion.type }}</td>
+                                        <td>{{ item.advertisement }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

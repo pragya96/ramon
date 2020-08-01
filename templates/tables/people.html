@@ -20,29 +20,29 @@ Ramón | People
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Name</th>
                                     <th>Occupation</th>
                                     <th>Relation</th>
                                     <th>Birthday</th>
                                     <th>Date of Death</th>
                                     <th>Fiction Character</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            <a href="{% url 'edit-people' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-people' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
                                         <td>{{ item.name }}</td>
                                         <td>{% for occupation in item.occupation.all %}{{ occupation.type }}<br/>{% endfor %}</td>
                                         <td>{% for relation in item.relation.all %}{{ relation.name }}<br/>{% endfor %}</td>
                                         <td>{{ item.birthday }}</td>
                                         <td>{{ item.date_of_death }}</td>
                                         <td>{{ item.fiction_character }}</td>
-                                        <td>
-                                            <a href="{% url 'edit-people' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-people' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
-                                        </td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

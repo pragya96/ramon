@@ -20,21 +20,21 @@ Ramón | Cultural Life
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Events</th>
                                     <th>Associations</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.events }}</td>
-                                        <td>{{ item.associations }}</td>
                                         <td>
                                             <a href="{% url 'edit-cultural-lives' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-cultural-lives' item.id %}" onclick="return confirm('Do you want to delete {{ item.events }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.events }}</td>
+                                        <td>{{ item.associations }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

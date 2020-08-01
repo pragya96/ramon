@@ -20,23 +20,23 @@ Ramón | Architectures
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Architect</th>
                                     <th>Style</th>
                                     <th>Building</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
-                                        <td>{{ item.person.name }}</td>
-                                        <td>{{ item.style }}</td>
-                                        <td>{{ item.building.name }}</td>
                                         <td>
                                             <a href="{% url 'edit-architectures' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-architectures' item.id %}" onclick="return confirm('Do you want to delete {{ item.person.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
+                                        <td>{{ item.person.name }}</td>
+                                        <td>{{ item.style }}</td>
+                                        <td>{{ item.building.name }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

@@ -22,27 +22,27 @@ Ramón | Locations
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Longitude</th>
                                     <th>Latitude</th>
                                     <th>Old Madrid</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            <a href="{% url 'new-locations' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-locations' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
                                         <td>{{ item.name }}</td>
                                         <td>{{ item.type }}</td>
                                         <td>{{ item.coordinates.x }}</td>
                                         <td>{{ item.coordinates.y }}</td>
                                         <td>{{ item.old_madrid }}</td>
-                                        <td>
-                                            <a href="{% url 'new-locations' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-locations' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
-                                        </td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

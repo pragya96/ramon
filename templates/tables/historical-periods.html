@@ -20,15 +20,19 @@ Ramón | Historical Periods
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Name</th>
                                     <th>Years</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            <a href="{% url 'edit-historical-periods' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-historical-periods' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
                                         <td>{{ item.name }}</td>
                                         <td>
                                             {% if item.start_year and item.end_year %}
@@ -38,10 +42,6 @@ Ramón | Historical Periods
                                             {% elif item.end_year %}
                                                 End: {{ item.end_year }}
                                             {% endif %}
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'edit-historical-periods' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-historical-periods' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>

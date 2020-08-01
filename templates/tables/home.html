@@ -65,7 +65,7 @@ Ramón | Articles
                                         <td>{{ item.newspaper }}</td>
                                         <td>{{ item.issue }}</td>
                                         <td>{{ item.page_numbers }}</td>
-                                        <td>{{ item.url }}</td>
+                                        <td>{% if item.url %} <a href="{{ item.url }}">View Article</a> {% endif %} </td>
                                         <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
                                         <td>{% for location in item.location.all %}{{ location.name }}<br/>{% endfor %}</td>
                                         <td>{% for building in item.building.all %}{{ building.name }}<br/>{% endfor %}</td>

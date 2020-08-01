@@ -20,27 +20,27 @@ Ramón | Literature
                         <table id="table_id" class="display nowrap" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Work</th>
                                     <th>Movement</th>
                                     <th>Writer</th>
                                     <th>Themes</th>
                                     <th>Genre</th>
-                                    <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in data %}
                                     <tr>
+                                        <td>
+                                            <a href="{% url 'edit-literature' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'delete-literature' item.id %}" onclick="return confirm('Do you want to delete {{ item.work }}?')"><i class="fa fa-trash"></i></a>
+                                        </td>
                                         <td>{{ item.work }}</td>
                                         <td>{{ item.movement.name }}</td>
                                         <td>{% for person in item.person.all %}{{ person.name }}<br/>{% endfor %}</td>
                                         <td>{{ item.themes }}</td>
                                         <td>{{ item.genre.name }}</td>
-                                        <td>
-                                            <a href="{% url 'edit-literature' item.id %}"><i class="fa fa-pencil"></i></a>
-                                            <a href="{% url 'delete-literature' item.id %}" onclick="return confirm('Do you want to delete {{ item.work }}?')"><i class="fa fa-trash"></i></a>
-                                        </td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}
