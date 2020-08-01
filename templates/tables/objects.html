@@ -50,23 +50,23 @@ Ramón | Objects
                                             <a href="{% url 'delete-objects' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                         <td>{{ item.name }}</td>
-                                        <td>{{ item.location.name }}</td>
-                                        <td>{{ item.building.name }}</td>
-                                        <td>{{ item.urbanism.name }}</td>
-                                        <td>{{ item.leisure.name }}</td>
-                                        <td>{{ item.architecture.person.name }}</td>
-                                        <td>{{ item.personal_memory.memory }}</td>
-                                        <td>{{ item.historical_memory.person.name }}</td>
-                                        <td>{{ item.politics.period.name }}</td>
-                                        <td>{{ item.science.type }} ({{ item.science.name }})</td>
-                                        <td>{{ item.art.title }}</td>
-                                        <td>{{ item.cultural_life.events }}</td>
-                                        <td>{{ item.aesthetic.name }}</td>
-                                        <td>{{ item.literature.work }}</td>
-                                        <td>{{ item.entertainment.type }}</td>
-                                        <td>{{ item.media.name }}</td>
-                                        <td>{{ item.popular_culture.event }}</td>
-                                        <td>{{ item.consumerism.shop }}</td>
+                                        <td>{% for location in item.location.all %}{{ location.name }}<br/>{% endfor %}</td>
+                                        <td>{% for building in item.building.all %}{{ building.name }}<br/>{% endfor %}</td>
+                                        <td>{% for urbanism in item.urbanism.all %}{{ urbanism.name }}<br/>{% endfor %}</td>
+                                        <td>{% for leisure in item.leisure.all %}{{ leisure.name }}<br/>{% endfor %}</td>
+                                        <td>{% for architecture in item.architecture.all %}{{ architecture.person.name }}<br/>{% endfor %}</td>
+                                        <td>{% for personal_memory in item.personal_memory.all %}{{ personal_memory.memory }}<br/>{% endfor %}</td>
+                                        <td>{% for historical_memory in item.historical_memory.all %}{{ historical_memory.person.name }}<br/>{% endfor %}</td>
+                                        <td>{% for politics in item.politics.all %}{{ politics.period.name }}<br/>{% endfor %}</td>
+                                        <td>{% for science in item.science.all %}{{ science.type }}<br/>{% endfor %}</td>
+                                        <td>{% for art in item.art.all %}{{ art.title }}<br/>{% endfor %}</td>
+                                        <td>{% for cultural_life in item.cultural_life.all %}{{ cultural_life.events }}<br/>{% endfor %}</td>
+                                        <td>{% for aesthetic in item.aesthetic.all %}{{ aesthetic.name }}<br/>{% endfor %}</td>
+                                        <td>{% for literature in item.literature.all %}{{ literature.work }}<br/>{% endfor %}</td>
+                                        <td>{% for entertainment in item.entertainment.all %}{{ entertainment.type }}<br/>{% endfor %}</td>
+                                        <td>{% for media in item.media.all %}{{ media.name }}<br/>{% endfor %}</td>
+                                        <td>{% for popular_culture in item.popular_culture.all %}{{ popular_culture.event }}<br/>{% endfor %}</td>
+                                        <td>{% for consumerism in item.consumerism.all %}{{ consumerism.shop }}<br/>{% endfor %}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>
                                 {% endfor %}

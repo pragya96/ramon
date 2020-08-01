@@ -475,7 +475,7 @@ class NewLocations(TemplateView):
                 location.save()
 
             # Redirect the page if user clicked on one of the plus buttons
-            if request.POST['new_page']:
+            if 'new_page' in request.POST:
                 return redirect(reverse('{}'.format(request.POST['new_page'])))
             else:
                 return redirect(reverse('locations'))
@@ -532,7 +532,7 @@ class NewBuildings(TemplateView):
                 building.save()
 
             # Redirect the page if user clicked on one of the plus buttons
-            if request.POST['new_page']:
+            if 'new_page' in request.POST:
                 return redirect(reverse('{}'.format(request.POST['new_page'])))
             else:
                 return redirect(reverse('buildings'))
@@ -1011,6 +1011,7 @@ class NewObjects(CreateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -1693,6 +1694,7 @@ class EditObjects(UpdateView):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
         self.object.save()
+        form.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):

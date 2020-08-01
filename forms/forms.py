@@ -724,63 +724,74 @@ class ObjectsMentionedForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    location = forms.ModelChoiceField(required=False, queryset=models.Location.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    building = forms.ModelChoiceField(required=False, queryset=models.Building.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    urbanism = forms.ModelChoiceField(required=False, queryset=models.Urbanism.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    leisure = forms.ModelChoiceField(required=False, queryset=models.Leisure.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    architecture = forms.ModelChoiceField(required=False, queryset=models.Architecture.objects.filter(status='R'),
-                                          widget=forms.Select(
-                                              attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-                                          ))
-    personal_memory = forms.ModelChoiceField(required=False, queryset=models.PersonalMemory.objects.filter(status='R'),
-                                             widget=forms.Select(
-                                                 attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-                                             ))
-    historical_memory = forms.ModelChoiceField(required=False, queryset=models.HistoricalMemory.objects.filter(status='R'),
-                                               widget=forms.Select(
-                                                   attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-                                               ))
-    politics = forms.ModelChoiceField(required=False, queryset=models.Politics.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    science = forms.ModelChoiceField(required=False, queryset=models.Science.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    art = forms.ModelChoiceField(required=False, queryset=models.Art.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    cultural_life = forms.ModelChoiceField(required=False, queryset=models.CulturalLife.objects.filter(status='R'),
-                                           widget=forms.Select(
-                                               attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-                                           ))
-    aesthetic = forms.ModelChoiceField(required=False, queryset=models.Aesthetic.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    literature = forms.ModelChoiceField(required=False, queryset=models.Literature.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    entertainment = forms.ModelChoiceField(required=False, queryset=models.Entertainment.objects.filter(status='R'),
-                                           widget=forms.Select(
-                                               attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-                                           ))
-    media = forms.ModelChoiceField(required=False, queryset=models.Media.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
-    popular_culture = forms.ModelChoiceField(required=False, queryset=models.PopularCulture.objects.filter(status='R'),
-                                             widget=forms.Select(
-                                                 attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-                                             ))
-    consumerism = forms.ModelChoiceField(required=False, queryset=models.Consumerism.objects.filter(status='R'), widget=forms.Select(
-        attrs={'class': 'col-sm-12 col-lg-12 form-control'}
-    ))
+    location = forms.ModelMultipleChoiceField(required=False, queryset=models.Location.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    building = forms.ModelMultipleChoiceField(required=False, queryset=models.Building.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    urbanism = forms.ModelMultipleChoiceField(required=False, queryset=models.Urbanism.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    leisure = forms.ModelMultipleChoiceField(required=False, queryset=models.Leisure.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    architecture = forms.ModelMultipleChoiceField(required=False, queryset=models.Architecture.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    personal_memory = forms.ModelMultipleChoiceField(required=False, queryset=models.PersonalMemory.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    historical_memory = forms.ModelMultipleChoiceField(required=False, queryset=models.HistoricalMemory.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    politics = forms.ModelMultipleChoiceField(required=False, queryset=models.Politics.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    science = forms.ModelMultipleChoiceField(required=False, queryset=models.Science.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    art = forms.ModelMultipleChoiceField(required=False, queryset=models.Art.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    cultural_life = forms.ModelMultipleChoiceField(required=False, queryset=models.CulturalLife.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    aesthetic = forms.ModelMultipleChoiceField(required=False, queryset=models.Aesthetic.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    literature = forms.ModelMultipleChoiceField(required=False, queryset=models.Literature.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    entertainment = forms.ModelMultipleChoiceField(required=False, queryset=models.Entertainment.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    media = forms.ModelMultipleChoiceField(required=False, queryset=models.Media.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    popular_culture = forms.ModelMultipleChoiceField(required=False, queryset=models.PopularCulture.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
+    consumerism = forms.ModelMultipleChoiceField(required=False, queryset=models.Consumerism.objects.filter(status='R'),
+                                              widget=forms.SelectMultiple(
+                                                  attrs={'class': 'col-sm-12 col-lg-12 form-control'}
+                                              ))
     complete = forms.BooleanField(required=False)
 
     class Meta:
