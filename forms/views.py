@@ -371,6 +371,11 @@ class NewArticles(CreateView):
     model = models.Article
     form_class = forms.ArticleForm
 
+    def get_context_data(self, **kwargs):
+        context = super(NewArticles, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -391,6 +396,11 @@ class NewOccupations(CreateView):
     form_class = forms.OccupationForm
     success_url = reverse_lazy('occupations')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewOccupations, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -404,6 +414,11 @@ class NewRelations(CreateView):
     form_class = forms.RelationForm
     success_url = reverse_lazy('relations')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewRelations, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -415,6 +430,11 @@ class NewPeople(CreateView):
     template_name = "new/new-people.html"
     model = models.Person
     form_class = forms.PersonForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewPeople, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -436,6 +456,11 @@ class NewLocationType(CreateView):
     form_class = forms.LocationTypeForm
     success_url = reverse_lazy('location-types')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewLocationType, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -450,9 +475,11 @@ class NewLocations(TemplateView):
         if 'id' in kwargs:
             instance = models.Location.objects.get(pk=kwargs['id'])
             form = forms.LocationForm(instance=instance, initial=handle_initial_status(instance.status, request.user))
+            title = "Edit"
         else:
             form = forms.LocationForm()
-        args = {'form': form}
+            title = "New"
+        args = {'form': form, 'title': title}
         return render(request, self.template_name, args)
 
     def post(self, request, **kwargs):
@@ -491,6 +518,11 @@ class NewBuildingType(CreateView):
     form_class = forms.BuildingTypeForm
     success_url = reverse_lazy('building-types')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewBuildingType, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -505,9 +537,11 @@ class NewBuildings(TemplateView):
         if 'id' in kwargs:
             instance = models.Building.objects.get(pk=kwargs['id'])
             form = forms.BuildingForm(instance=instance, initial=handle_initial_status(instance.status, request.user))
+            title = "Edit"
         else:
             form = forms.BuildingForm()
-        args = {'form': form}
+            title = "New"
+        args = {'form': form, 'title': title}
         return render(request, self.template_name, args)
 
     def post(self, request, **kwargs):
@@ -548,6 +582,11 @@ class NewTypesOfFormat(CreateView):
     form_class = forms.TypeOfFormatForm
     success_url = reverse_lazy('types-of-format')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewTypesOfFormat, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -559,6 +598,11 @@ class NewFormatOfTexts(CreateView):
     template_name = "new/new-text-formats.html"
     model = models.FormatOfText
     form_class = forms.FormatOfTextForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewFormatOfTexts, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -577,6 +621,11 @@ class NewPersonalMemories(CreateView):
     template_name = "new/new-personal-memories.html"
     model = models.PersonalMemory
     form_class = forms.PersonalMemoryForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewPersonalMemories, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -598,6 +647,11 @@ class NewHistoricalPeriods(CreateView):
     form_class = forms.HistoricalPeriodForm
     success_url = reverse_lazy('historical-periods')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewHistoricalPeriods, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -609,6 +663,11 @@ class NewHistoricalMemories(CreateView):
     template_name = "new/new-historical-memories.html"
     model = models.HistoricalMemory
     form_class = forms.HistoricalMemoryForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewHistoricalMemories, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -629,6 +688,11 @@ class NewPoliticsPeriod(CreateView):
     form_class = forms.PoliticsPeriodForm
     success_url = reverse_lazy('politics-periods')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewPoliticsPeriod, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -640,6 +704,11 @@ class NewPolitics(CreateView):
     template_name = "new/new-politics.html"
     model = models.Politics
     form_class = forms.PoliticsForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewPolitics, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -658,6 +727,11 @@ class NewArchitectures(CreateView):
     template_name = "new/new-architectures.html"
     model = models.Architecture
     form_class = forms.ArchitectureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewArchitectures, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -678,6 +752,11 @@ class NewUrbanism(CreateView):
     form_class = forms.UrbanismForm
     success_url = reverse_lazy('urbanism')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewUrbanism, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -691,6 +770,11 @@ class NewArtCategories(CreateView):
     form_class = forms.ArtCategoryForm
     success_url = reverse_lazy('art-categories')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewArtCategories, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -702,6 +786,11 @@ class NewArtTypes(CreateView):
     template_name = "new/new-art-types.html"
     model = models.ArtType
     form_class = forms.ArtTypeForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewArtTypes, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -722,6 +811,11 @@ class NewArtStyles(CreateView):
     form_class = forms.ArtStyleForm
     success_url = reverse_lazy('art-styles')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewArtStyles, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -735,6 +829,11 @@ class NewArtisticMovements(CreateView):
     form_class = forms.ArtisticMovementForm
     success_url = reverse_lazy('artistic-movements')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewArtisticMovements, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -746,6 +845,11 @@ class NewArts(CreateView):
     template_name = "new/new-arts.html"
     model = models.Art
     form_class = forms.ArtForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewArts, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -767,6 +871,11 @@ class NewCulturalLives(CreateView):
     form_class = forms.CulturalLifeForm
     success_url = reverse_lazy('cultural-lives')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewCulturalLives, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -780,6 +889,11 @@ class NewAestheticMovements(CreateView):
     form_class = forms.AestheticMovementForm
     success_url = reverse_lazy('aesthetic-movements')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewAestheticMovements, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -791,6 +905,11 @@ class NewAesthetics(CreateView):
     template_name = "new/new-aesthetics.html"
     model = models.Aesthetic
     form_class = forms.AestheticForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewAesthetics, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -811,6 +930,11 @@ class NewLiteraryMovements(CreateView):
     form_class = forms.LiteraryMovementForm
     success_url = reverse_lazy('literary-movements')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewLiteraryMovements, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -824,6 +948,11 @@ class NewLiteraryGenres(CreateView):
     form_class = forms.LiteraryGenreForm
     success_url = reverse_lazy('literary-genres')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewLiteraryGenres, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -835,6 +964,11 @@ class NewLiterature(CreateView):
     template_name = "new/new-literature.html"
     model = models.Literature
     form_class = forms.LiteratureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewLiterature, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -854,6 +988,11 @@ class NewPopularCultures(CreateView):
     template_name = "new/new-popular-cultures.html"
     model = models.PopularCulture
     form_class = forms.PopularCultureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewPopularCultures, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -875,6 +1014,11 @@ class NewEntertainment(CreateView):
     form_class = forms.EntertainmentForm
     success_url = reverse_lazy('entertainment')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewEntertainment, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -888,6 +1032,11 @@ class NewMediaTypes(CreateView):
     form_class = forms.MediaTypeForm
     success_url = reverse_lazy('media-types')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewMediaTypes, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -899,6 +1048,11 @@ class NewMedia(CreateView):
     template_name = "new/new-media.html"
     model = models.Media
     form_class = forms.MediaForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewMedia, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -920,6 +1074,11 @@ class NewLeisureTypes(CreateView):
     form_class = forms.LeisureTypeForm
     success_url = reverse_lazy('leisure-types')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewLeisureTypes, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -931,6 +1090,11 @@ class NewLeisure(CreateView):
     template_name = "new/new-leisure.html"
     model = models.Leisure
     form_class = forms.LeisureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewLeisure, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -951,6 +1115,11 @@ class NewFashion(CreateView):
     form_class = forms.FashionForm
     success_url = reverse_lazy('fashion')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewFashion, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -962,6 +1131,11 @@ class NewConsumerism(CreateView):
     template_name = "new/new-consumerism.html"
     model = models.Consumerism
     form_class = forms.ConsumerismForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewConsumerism, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -982,6 +1156,11 @@ class NewTypesOfScience(CreateView):
     form_class = forms.TypeOfScienceForm
     success_url = reverse_lazy('types-of-science')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewTypesOfScience, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -995,6 +1174,11 @@ class NewSciences(CreateView):
     form_class = forms.ScienceForm
     success_url = reverse_lazy('sciences')
 
+    def get_context_data(self, **kwargs):
+        context = super(NewSciences, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
@@ -1006,6 +1190,11 @@ class NewObjects(CreateView):
     template_name = "new/new-objects.html"
     model = models.ObjectsMentioned
     form_class = forms.ObjectsMentionedForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NewObjects, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -1028,6 +1217,11 @@ class EditArticles(UpdateView):
     template_name = "new/new-articles.html"
     model = models.Article
     form_class = forms.ArticleForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditArticles, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1052,6 +1246,11 @@ class EditOccupations(UpdateView):
     form_class = forms.OccupationForm
     success_url = reverse_lazy('occupations')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditOccupations, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1068,6 +1267,11 @@ class EditRelations(UpdateView):
     form_class = forms.RelationForm
     success_url = reverse_lazy('relations')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditRelations, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1082,6 +1286,11 @@ class EditPeople(UpdateView):
     template_name = "new/new-people.html"
     model = models.Person
     form_class = forms.PersonForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditPeople, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1106,6 +1315,11 @@ class EditLocationType(UpdateView):
     form_class = forms.LocationTypeForm
     success_url = reverse_lazy('location-types')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditLocationType, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1121,6 +1335,11 @@ class EditBuildingType(UpdateView):
     model = models.BuildingType
     form_class = forms.BuildingTypeForm
     success_url = reverse_lazy('building-types')
+
+    def get_context_data(self, **kwargs):
+        context = super(EditBuildingType, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1138,6 +1357,11 @@ class EditTypesOfFormat(UpdateView):
     form_class = forms.TypeOfFormatForm
     success_url = reverse_lazy('types-of-format')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditTypesOfFormat, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1152,6 +1376,11 @@ class EditFormatOfTexts(UpdateView):
     template_name = "new/new-text-formats.html"
     model = models.FormatOfText
     form_class = forms.FormatOfTextForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditFormatOfTexts, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1173,6 +1402,11 @@ class EditPersonalMemories(UpdateView):
     template_name = "new/new-personal-memories.html"
     model = models.PersonalMemory
     form_class = forms.PersonalMemoryForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditPersonalMemories, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1197,6 +1431,11 @@ class EditHistoricalPeriods(UpdateView):
     form_class = forms.HistoricalPeriodForm
     success_url = reverse_lazy('historical-periods')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditHistoricalPeriods, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1211,6 +1450,11 @@ class EditHistoricalMemories(UpdateView):
     template_name = "new/new-historical-memories.html"
     model = models.HistoricalMemory
     form_class = forms.HistoricalMemoryForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditHistoricalMemories, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1234,6 +1478,11 @@ class EditPoliticsPeriod(UpdateView):
     form_class = forms.PoliticsPeriodForm
     success_url = reverse_lazy('politics-periods')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditPoliticsPeriod, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1248,6 +1497,11 @@ class EditPolitics(UpdateView):
     template_name = "new/new-politics.html"
     model = models.Politics
     form_class = forms.PoliticsForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditPolitics, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1269,6 +1523,11 @@ class EditArchitectures(UpdateView):
     template_name = "new/new-architectures.html"
     model = models.Architecture
     form_class = forms.ArchitectureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditArchitectures, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1292,6 +1551,11 @@ class EditUrbanism(UpdateView):
     form_class = forms.UrbanismForm
     success_url = reverse_lazy('urbanism')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditUrbanism, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1308,6 +1572,11 @@ class EditArtCategories(UpdateView):
     form_class = forms.ArtCategoryForm
     success_url = reverse_lazy('art-categories')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditArtCategories, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1322,6 +1591,11 @@ class EditArtTypes(UpdateView):
     template_name = "new/new-art-types.html"
     model = models.ArtType
     form_class = forms.ArtTypeForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditArtTypes, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1345,6 +1619,11 @@ class EditArtStyles(UpdateView):
     form_class = forms.ArtStyleForm
     success_url = reverse_lazy('art-styles')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditArtStyles, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1361,6 +1640,11 @@ class EditArtisticMovements(UpdateView):
     form_class = forms.ArtisticMovementForm
     success_url = reverse_lazy('artistic-movements')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditArtisticMovements, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1375,6 +1659,11 @@ class EditArts(UpdateView):
     template_name = "new/new-arts.html"
     model = models.Art
     form_class = forms.ArtForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditArts, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1399,6 +1688,11 @@ class EditCulturalLives(UpdateView):
     form_class = forms.CulturalLifeForm
     success_url = reverse_lazy('cultural-lives')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditCulturalLives, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1415,6 +1709,11 @@ class EditAestheticMovements(UpdateView):
     form_class = forms.AestheticMovementForm
     success_url = reverse_lazy('aesthetic-movements')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditAestheticMovements, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1429,6 +1728,11 @@ class EditAesthetics(UpdateView):
     template_name = "new/new-aesthetics.html"
     model = models.Aesthetic
     form_class = forms.AestheticForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditAesthetics, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1452,6 +1756,11 @@ class EditLiteraryMovements(UpdateView):
     form_class = forms.LiteraryMovementForm
     success_url = reverse_lazy('literary-movements')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditLiteraryMovements, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1468,6 +1777,11 @@ class EditLiteraryGenres(UpdateView):
     form_class = forms.LiteraryGenreForm
     success_url = reverse_lazy('literary-genres')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditLiteraryGenres, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1482,6 +1796,11 @@ class EditLiterature(UpdateView):
     template_name = "new/new-literature.html"
     model = models.Literature
     form_class = forms.LiteratureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditLiterature, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1504,6 +1823,11 @@ class EditPopularCultures(UpdateView):
     template_name = "new/new-popular-cultures.html"
     model = models.PopularCulture
     form_class = forms.PopularCultureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditPopularCultures, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1528,6 +1852,11 @@ class EditEntertainment(UpdateView):
     form_class = forms.EntertainmentForm
     success_url = reverse_lazy('entertainment')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditEntertainment, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1544,6 +1873,11 @@ class EditMediaTypes(UpdateView):
     form_class = forms.MediaTypeForm
     success_url = reverse_lazy('media-types')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditMediaTypes, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1558,6 +1892,11 @@ class EditMedia(UpdateView):
     template_name = "new/new-media.html"
     model = models.Media
     form_class = forms.MediaForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditMedia, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1582,6 +1921,11 @@ class EditLeisureTypes(UpdateView):
     form_class = forms.LeisureTypeForm
     success_url = reverse_lazy('leisure-types')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditLeisureTypes, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1596,6 +1940,11 @@ class EditLeisure(UpdateView):
     template_name = "new/new-leisure.html"
     model = models.Leisure
     form_class = forms.LeisureForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditLeisure, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1619,6 +1968,11 @@ class EditFashion(UpdateView):
     form_class = forms.FashionForm
     success_url = reverse_lazy('fashion')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditFashion, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1633,6 +1987,11 @@ class EditConsumerism(UpdateView):
     template_name = "new/new-consumerism.html"
     model = models.Consumerism
     form_class = forms.ConsumerismForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditConsumerism, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
@@ -1656,6 +2015,11 @@ class EditTypesOfScience(UpdateView):
     form_class = forms.TypeOfScienceForm
     success_url = reverse_lazy('types-of-science')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditTypesOfScience, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1672,6 +2036,11 @@ class EditSciences(UpdateView):
     form_class = forms.ScienceForm
     success_url = reverse_lazy('sciences')
 
+    def get_context_data(self, **kwargs):
+        context = super(EditSciences, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)
 
@@ -1686,6 +2055,11 @@ class EditObjects(UpdateView):
     template_name = "new/new-objects.html"
     model = models.ObjectsMentioned
     form_class = forms.ObjectsMentionedForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EditObjects, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
 
     def get_initial(self):
         return handle_initial_status(self.object.status, self.request.user)

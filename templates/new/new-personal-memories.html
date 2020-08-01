@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ramón | New Personal Memory
+Ramón | {{ title }} Personal Memory
 {% endblock %}
 
 {% block css %}
@@ -16,7 +16,7 @@ Ramón | New Personal Memory
             <div class="row">
                 <div class="col-11 card">
                     <div class="card-body">
-                        <h2 class="card-title text-center">New Personal Memory</h2>
+                        <h2 class="card-title text-center">{{ title }} Personal Memory</h2>
                         <hr>
                         <br>
                         <form method="post">

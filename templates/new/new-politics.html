@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ramón | New Politics
+Ramón | {{ title }} Politics
 {% endblock %}
 
 {% block css %}
@@ -16,7 +16,7 @@ Ramón | New Politics
             <div class="row">
                 <div class="col-11 card">
                     <div class="card-body">
-                        <h2 class="card-title text-center">New Politics</h2>
+                        <h2 class="card-title text-center">{{ title }} Politics</h2>
                         <hr>
                         <br>
                         <form method="post">
@@ -27,7 +27,6 @@ Ramón | New Politics
                                     <div class="form-group">
                                         <label class="label dropdown-label required" for="{{ form.period.id_for_label }}">Period:
                                             <i class="fa fa-info-circle" title="Select from dropdown."></i>
-                                            <!-- <button type="submit" class="btn btn-outline-dark new-page-icon" name="new_page" value="new-politics-periods" title="Create new Politics Period if it doesn't exist in dropdown."><i class="fa fa-plus"></i></button> -->
                                         </label>
                                         {{ form.period }}
                                         {{ form.period.errors }}

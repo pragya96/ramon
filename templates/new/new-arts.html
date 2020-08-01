@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ramón | New Art
+Ramón | {{ title }} Art
 {% endblock %}
 
 {% block css %}
@@ -16,7 +16,7 @@ Ramón | New Art
             <div class="row">
                 <div class="col-11 card">
                     <div class="card-body">
-                        <h2 class="card-title text-center">New Art</h2>
+                        <h2 class="card-title text-center">{{ title }} Art</h2>
                         <hr>
                         <br>
                         <form method="post" id="artsForm" enctype='multipart/form-data' data-types-url="{% url 'ajax-load-art-types' %}">

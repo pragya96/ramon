@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ramón | New Article
+Ramón | {{ title }} Article
 {% endblock %}
 
 {% block css %}
@@ -16,7 +16,7 @@ Ramón | New Article
             <div class="row">
                 <div class="col-11 card">
                     <div class="card-body">
-                        <h2 class="card-title text-center">New Article</h2>
+                        <h2 class="card-title text-center">{{ title }} Article</h2>
                         <hr>
                         <br>
                         <form method="post" id="articleForm" enctype='multipart/form-data' data-text-format-url="{% url 'ajax-load-text-format' %}">

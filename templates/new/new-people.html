@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ramón | New Person
+Ramón | {{ title }} Person
 {% endblock %}
 
 {% block css %}
@@ -16,7 +16,7 @@ Ramón | New Person
             <div class="row">
                 <div class="col-11 card">
                     <div class="card-body">
-                        <h2 class="card-title text-center">New Person</h2>
+                        <h2 class="card-title text-center">{{ title }} Person</h2>
                         <hr>
                         <br>
                         <form method="post">

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Ramón | New Object
+Ramón | {{ title }} Object
 {% endblock %}
 
 {% block css %}
@@ -16,7 +16,7 @@ Ramón | New Object
             <div class="row">
                 <div class="col-11 card">
                     <div class="card-body">
-                        <h2 class="card-title text-center">New Object</h2>
+                        <h2 class="card-title text-center">{{ title }} Object</h2>
                         <hr>
                         <br>
                         <form method="post">

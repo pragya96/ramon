@@ -1,12 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block title %}
 Ramón Gómez de la Serna
 {% endblock %}
 
+
 {% block css %}
 {% endblock %}
 
+
 {% block content %}
+<div class="row">
+	<div class="col-12">
+		<h2 id="index_header">Ramón's Articles</h2>
+	</div>
+</div>
+<div class="row">
+	<div class="col-10 offset-1">
+		<table id="articles_list" class="display" style="width: 100%">
+			<thead>
+				<td>Articles</td>
+			</thead>	
+			<tbody>
+				{% for article in articles %}
+				<tr>
+					<td><p style="margin-left: 30px; text-indent: -30px;">{{article.title}}.
+						{% if article.date %} ({{article.date|date:'Y, F d'}}).{% endif %}
+
+						{% if article.newspaper%} <i>{{ article.newspaper }}</i>{% endif %}{% if article.issue and article.page_numbers %}, ({{ article.issue }}), {{ article.page_numbers }}.
+						{% elif article.issue %}, ({{ article.issue}}).
+						{% elif article.page_numbers %}, {{ article.page_numbers }}.
+						{% else %}.
+						{% endif %}
+
+						{% if article.url %}<a href="{{ article.url }}" style="color: blue">{{ article.url }}</a>.{% endif %}
+					</p></td>
+				</tr>
+				{% endfor %}
+			</tbody>	
+		</table>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/index.js' %}"></script>
 {% endblock %}
