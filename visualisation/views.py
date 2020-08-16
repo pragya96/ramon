@@ -9,5 +9,6 @@ class Index(TemplateView):
 
     def get(self, request):
         articles = models.Article.objects.filter(status='R')
-        args = {'articles': articles}
+        locations = models.Location.objects.filter(status='R')
+        args = {'articles': articles, 'locations': locations}
         return render(request, self.template_name, args)

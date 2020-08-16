@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
+from djgeojson.views import GeoJSONLayerView
 from visualisation import views
+from forms.models import *
 
 urlpatterns = [
     url(r'^$', views.Index.as_view(), name='index'),
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Location), name='data'),
 ]

@@ -485,18 +485,19 @@ class NewLocations(TemplateView):
     def post(self, request, **kwargs):
         form = forms.LocationForm(request.POST)
         if form.is_valid():
-            pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
+            pnt = Point(form.cleaned_data['geom'].coords[0]/100000, form.cleaned_data['geom'].coords[1]/100000)
+            print(pnt)
             if 'id' in kwargs:
                 models.Location.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
                                                                        type=form.cleaned_data['type'],
-                                                                       coordinates=pnt,
+                                                                       geom=pnt,
                                                                        old_madrid=form.cleaned_data['old_madrid'],
                                                                        status=handle_status(request.user,
                                                                                             form.cleaned_data['complete']))
             else:
                 location = models.Location(name=form.cleaned_data['name'],
                                            type=form.cleaned_data['type'],
-                                           coordinates=pnt,
+                                           geom=pnt,
                                            old_madrid=form.cleaned_data['old_madrid'],
                                            status=handle_status(request.user, form.cleaned_data['complete']))
                 location.save()
@@ -547,12 +548,12 @@ class NewBuildings(TemplateView):
     def post(self, request, **kwargs):
         form = forms.BuildingForm(request.POST)
         if form.is_valid():
-            pnt = Point(form.cleaned_data['coordinates'].coords[0], form.cleaned_data['coordinates'].coords[1])
+            pnt = Point(form.cleaned_data['geom'].coords[0], form.cleaned_data['geom'].coords[1])
             if 'id' in kwargs:
                 models.Building.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
                                                                        type=form.cleaned_data['type'],
                                                                        location=form.cleaned_data['location'],
-                                                                       coordinates=pnt,
+                                                                       geom=pnt,
                                                                        old_madrid=form.cleaned_data['old_madrid'],
                                                                        status=handle_status(request.user,
                                                                                             form.cleaned_data['complete']))
@@ -560,7 +561,7 @@ class NewBuildings(TemplateView):
                 building = models.Building(name=form.cleaned_data['name'],
                                            type=form.cleaned_data['type'],
                                            location=form.cleaned_data['location'],
-                                           coordinates=pnt,
+                                           geom=pnt,
                                            old_madrid=form.cleaned_data['old_madrid'],
                                            status=handle_status(request.user, form.cleaned_data['complete']))
                 building.save()

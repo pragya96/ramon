@@ -196,7 +196,7 @@ class LocationForm(gis_forms.ModelForm):
     type = forms.ModelChoiceField(required=False, queryset=models.LocationType.objects.filter(status='R'), widget=forms.Select(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    coordinates = gis_forms.PointField(widget=gis_forms.OSMWidget(
+    geom = gis_forms.PointField(widget=gis_forms.OSMWidget(
         attrs={}
     ))
     old_madrid = forms.NullBooleanField(required=False, widget=forms.Select(
@@ -231,7 +231,7 @@ class BuildingForm(gis_forms.ModelForm):
     location = forms.ModelChoiceField(required=False, queryset=models.Location.objects.filter(status='R'), widget=forms.Select(
         attrs={'class': 'col-sm-12 col-lg-12 form-control'}
     ))
-    coordinates = gis_forms.PointField(widget=gis_forms.OSMWidget(
+    geom = gis_forms.PointField(widget=gis_forms.OSMWidget(
         attrs={}
     ))
     old_madrid = forms.NullBooleanField(required=False, widget=forms.Select(

@@ -40,8 +40,8 @@ Ramón | Buildings
                                         <td>{{ item.name }}</td>
                                         <td>{{ item.type }}</td>
                                         <td>{{ item.location.name }}</td>
-                                        <td>{{ item.coordinates.x|div:100000 }}</td>
-                                        <td>{{ item.coordinates.y|div:100000 }}</td>
+                                        <td>{{ item.geom.x }}</td>
+                                        <td>{{ item.geom.y }}</td>
                                         <td>{{ item.old_madrid }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                     </tr>

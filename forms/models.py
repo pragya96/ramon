@@ -56,7 +56,7 @@ class LocationType(models.Model):
 class Location(gis_models.Model):
     name = models.CharField(max_length=100)
     type = models.ForeignKey(LocationType, on_delete=models.CASCADE, null=True)
-    coordinates = gis_models.GeometryField(blank=True, null=True)
+    geom = gis_models.GeometryField(blank=True, null=True)
     old_madrid = models.BooleanField(null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
@@ -76,7 +76,7 @@ class Building(models.Model):
     name = models.CharField(max_length=100)
     type = models.ForeignKey(BuildingType, on_delete=models.CASCADE, null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
-    coordinates = gis_models.PointField(null=True)
+    geom = gis_models.PointField(null=True)
     old_madrid = models.BooleanField(null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
