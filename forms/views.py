@@ -11,6 +11,13 @@ from forms import models
 from forms import forms
 
 
+OLD_MADRID = {
+    False: 0,
+    True: 1,
+    None: 2,
+}
+
+
 # Create your views here.
 class Articles(TemplateView):
     template_name = "tables/home.html"
@@ -468,49 +475,71 @@ class NewLocationType(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class NewLocations(TemplateView):
+class NewLocations(CreateView):
     template_name = "new/new-locations.html"
+    model = models.Location
+    form_class = forms.LocationForm
+    success_url = reverse_lazy('locations')
 
-    def get(self, request, **kwargs):
-        if 'id' in kwargs:
-            instance = models.Location.objects.get(pk=kwargs['id'])
-            form = forms.LocationForm(instance=instance, initial=handle_initial_status(instance.status, request.user))
-            title = "Edit"
-        else:
-            form = forms.LocationForm()
-            title = "New"
-        args = {'form': form, 'title': title}
-        return render(request, self.template_name, args)
+    def get_context_data(self, **kwargs):
+        context = super(NewLocations, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
-    def post(self, request, **kwargs):
-        form = forms.LocationForm(request.POST)
-        if form.is_valid():
-            pnt = Point(form.cleaned_data['geom'].coords[0]/100000, form.cleaned_data['geom'].coords[1]/100000)
-            print(pnt)
-            if 'id' in kwargs:
-                models.Location.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
-                                                                       type=form.cleaned_data['type'],
-                                                                       geom=pnt,
-                                                                       old_madrid=form.cleaned_data['old_madrid'],
-                                                                       status=handle_status(request.user,
-                                                                                            form.cleaned_data['complete']))
-            else:
-                location = models.Location(name=form.cleaned_data['name'],
-                                           type=form.cleaned_data['type'],
-                                           geom=pnt,
-                                           old_madrid=form.cleaned_data['old_madrid'],
-                                           status=handle_status(request.user, form.cleaned_data['complete']))
-                location.save()
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
+        pnt = form.cleaned_data['geom']
+        pnt.transform(4326)
+        self.object.geom = pnt
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
-            # Redirect the page if user clicked on one of the plus buttons
-            if 'new_page' in request.POST:
-                return redirect(reverse('{}'.format(request.POST['new_page'])))
-            else:
-                return redirect(reverse('locations'))
 
-        messages.error(request, form.errors)
-        args = {'form': form}
-        return render(request, self.template_name, args)
+# class NewLocations(TemplateView):
+#     template_name = "new/new-locations.html"
+#
+#     def get(self, request, **kwargs):
+#         if 'id' in kwargs:
+#             instance = models.Location.objects.get(pk=kwargs['id'])
+#             form = forms.LocationForm(instance=instance, initial=handle_initial_status(instance.status, request.user))
+#             title = "Edit"
+#         else:
+#             form = forms.LocationForm()
+#             title = "New"
+#         args = {'form': form, 'title': title}
+#         return render(request, self.template_name, args)
+#
+#     def post(self, request, **kwargs):
+#         form = forms.LocationForm(request.POST)
+#         if form.is_valid():
+#             print(form.cleaned_data['geom'])
+#             pnt = Point(form.cleaned_data['geom'].coords[0], form.cleaned_data['geom'].coords[1], srid=4326)
+#             print(pnt)
+#             if 'id' in kwargs:
+#                 models.Location.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
+#                                                                        type=form.cleaned_data['type'],
+#                                                                        geom=pnt,
+#                                                                        old_madrid=form.cleaned_data['old_madrid'],
+#                                                                        status=handle_status(request.user,
+#                                                                                             form.cleaned_data['complete']))
+#             else:
+#                 location = models.Location(name=form.cleaned_data['name'],
+#                                            type=form.cleaned_data['type'],
+#                                            geom=pnt,
+#                                            old_madrid=form.cleaned_data['old_madrid'],
+#                                            status=handle_status(request.user, form.cleaned_data['complete']))
+#                 # location.save()
+#
+#             # Redirect the page if user clicked on one of the plus buttons
+#             if 'new_page' in request.POST:
+#                 return redirect(reverse('{}'.format(request.POST['new_page'])))
+#             else:
+#                 return redirect(reverse('locations'))
+#
+#         messages.error(request, form.errors)
+#         args = {'form': form}
+#         return render(request, self.template_name, args)
 
 
 class NewBuildingType(CreateView):
@@ -531,50 +560,71 @@ class NewBuildingType(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class NewBuildings(TemplateView):
+class NewBuildings(CreateView):
     template_name = "new/new-buildings.html"
+    model = models.Building
+    form_class = forms.BuildingForm
+    success_url = reverse_lazy('buildings')
 
-    def get(self, request, **kwargs):
-        if 'id' in kwargs:
-            instance = models.Building.objects.get(pk=kwargs['id'])
-            form = forms.BuildingForm(instance=instance, initial=handle_initial_status(instance.status, request.user))
-            title = "Edit"
-        else:
-            form = forms.BuildingForm()
-            title = "New"
-        args = {'form': form, 'title': title}
-        return render(request, self.template_name, args)
+    def get_context_data(self, **kwargs):
+        context = super(NewBuildings, self).get_context_data(**kwargs)
+        context['title'] = "New"
+        return context
 
-    def post(self, request, **kwargs):
-        form = forms.BuildingForm(request.POST)
-        if form.is_valid():
-            pnt = Point(form.cleaned_data['geom'].coords[0], form.cleaned_data['geom'].coords[1])
-            if 'id' in kwargs:
-                models.Building.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
-                                                                       type=form.cleaned_data['type'],
-                                                                       location=form.cleaned_data['location'],
-                                                                       geom=pnt,
-                                                                       old_madrid=form.cleaned_data['old_madrid'],
-                                                                       status=handle_status(request.user,
-                                                                                            form.cleaned_data['complete']))
-            else:
-                building = models.Building(name=form.cleaned_data['name'],
-                                           type=form.cleaned_data['type'],
-                                           location=form.cleaned_data['location'],
-                                           geom=pnt,
-                                           old_madrid=form.cleaned_data['old_madrid'],
-                                           status=handle_status(request.user, form.cleaned_data['complete']))
-                building.save()
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
+        pnt = form.cleaned_data['geom']
+        pnt.transform(4326)
+        self.object.geom = pnt
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
-            # Redirect the page if user clicked on one of the plus buttons
-            if 'new_page' in request.POST:
-                return redirect(reverse('{}'.format(request.POST['new_page'])))
-            else:
-                return redirect(reverse('buildings'))
 
-        messages.error(request, form.errors)
-        args = {'form': form}
-        return render(request, self.template_name, args)
+# class NewBuildings(TemplateView):
+#     template_name = "new/new-buildings.html"
+#
+#     def get(self, request, **kwargs):
+#         if 'id' in kwargs:
+#             instance = models.Building.objects.get(pk=kwargs['id'])
+#             form = forms.BuildingForm(instance=instance, initial=handle_initial_status(instance.status, request.user))
+#             title = "Edit"
+#         else:
+#             form = forms.BuildingForm()
+#             title = "New"
+#         args = {'form': form, 'title': title}
+#         return render(request, self.template_name, args)
+#
+#     def post(self, request, **kwargs):
+#         form = forms.BuildingForm(request.POST)
+#         if form.is_valid():
+#             pnt = Point(form.cleaned_data['geom'].coords[0], form.cleaned_data['geom'].coords[1])
+#             if 'id' in kwargs:
+#                 models.Building.objects.filter(pk=kwargs['id']).update(name=form.cleaned_data['name'],
+#                                                                        type=form.cleaned_data['type'],
+#                                                                        location=form.cleaned_data['location'],
+#                                                                        geom=pnt,
+#                                                                        old_madrid=form.cleaned_data['old_madrid'],
+#                                                                        status=handle_status(request.user,
+#                                                                                             form.cleaned_data['complete']))
+#             else:
+#                 building = models.Building(name=form.cleaned_data['name'],
+#                                            type=form.cleaned_data['type'],
+#                                            location=form.cleaned_data['location'],
+#                                            geom=pnt,
+#                                            old_madrid=form.cleaned_data['old_madrid'],
+#                                            status=handle_status(request.user, form.cleaned_data['complete']))
+#                 building.save()
+#
+#             # Redirect the page if user clicked on one of the plus buttons
+#             if 'new_page' in request.POST:
+#                 return redirect(reverse('{}'.format(request.POST['new_page'])))
+#             else:
+#                 return redirect(reverse('buildings'))
+#
+#         messages.error(request, form.errors)
+#         args = {'form': form}
+#         return render(request, self.template_name, args)
 
 
 class NewTypesOfFormat(CreateView):
@@ -1331,6 +1381,35 @@ class EditLocationType(UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class EditLocations(UpdateView):
+    template_name = "new/new-locations.html"
+    model = models.Location
+    form_class = forms.LocationForm
+    success_url = reverse_lazy('locations')
+
+    def get_context_data(self, **kwargs):
+        context = super(EditLocations, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
+    def get_initial(self):
+        initial_dict = handle_initial_status(self.object.status, self.request.user)
+        if initial_dict:
+            initial_dict["old_madrid"] = OLD_MADRID.get(self.object.old_madrid)
+        else:
+            initial_dict = {'old_madrid': OLD_MADRID.get(self.object.old_madrid)}
+        return initial_dict
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
+        pnt = form.cleaned_data['geom']
+        pnt.transform(4326)
+        self.object.geom = pnt
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class EditBuildingType(UpdateView):
     template_name = "new/new-building-types.html"
     model = models.BuildingType
@@ -1348,6 +1427,35 @@ class EditBuildingType(UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class EditBuildings(UpdateView):
+    template_name = "new/new-buildings.html"
+    model = models.Building
+    form_class = forms.BuildingForm
+    success_url = reverse_lazy('buildings')
+
+    def get_context_data(self, **kwargs):
+        context = super(EditBuildings, self).get_context_data(**kwargs)
+        context['title'] = "Edit"
+        return context
+
+    def get_initial(self):
+        initial_dict = handle_initial_status(self.object.status, self.request.user)
+        if initial_dict:
+            initial_dict["old_madrid"] = OLD_MADRID.get(self.object.old_madrid)
+        else:
+            initial_dict = {'old_madrid': OLD_MADRID.get(self.object.old_madrid)}
+        return initial_dict
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.status = handle_status(self.request.user, form.cleaned_data['complete'])
+        pnt = form.cleaned_data['geom']
+        pnt.transform(4326)
+        self.object.geom = pnt
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 

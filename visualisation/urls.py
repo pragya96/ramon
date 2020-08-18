@@ -23,5 +23,5 @@ from forms.models import *
 
 urlpatterns = [
     url(r'^$', views.Index.as_view(), name='index'),
-    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Location), name='data'),
+    url(r'^data.geojson$', views.MapLayer.as_view(model=Location), name='data'),
 ]

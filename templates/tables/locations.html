@@ -35,7 +35,7 @@ Ramón | Locations
                                 {% for item in data %}
                                     <tr>
                                         <td>
-                                            <a href="{% url 'new-locations' item.id %}"><i class="fa fa-pencil"></i></a>
+                                            <a href="{% url 'edit-locations' item.id %}"><i class="fa fa-pencil"></i></a>
                                             <a href="{% url 'delete-locations' item.id %}" onclick="return confirm('Do you want to delete {{ item.name }}?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                         <td>{{ item.name }}</td>

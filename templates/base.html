@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/af-2.3.5/b-1.6.2/fh-3.1.7/r-2.2.5/sp-1.1.1/datatables.min.css"/>
-        <link href="{% static 'css/index.css' %}" rel="stylesheet">
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
         {% block css %}{% endblock %}
 
     </head>
@@ -22,7 +22,7 @@
                 <a class="navbar-brand" href="{% url 'index' %}" id="brand">Ramón Gómez de la Serna</a>
                 <span class="navbar-text">
                     {% if user.is_authenticated %}
-                        {% if user.is_superuser %}
+                        {% if user.is_superuser or user.is_staff %}
                             <button type="button" class="btn btn-light" onclick="location.href='{% url 'admin:index' %}'">Admin Page</button>
                         {% endif %}
                         <button type="button" class="btn btn-light" onclick="location.href='{% url 'logout' %}'">Logout</button>

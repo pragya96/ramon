@@ -56,12 +56,23 @@ class LocationType(models.Model):
 class Location(gis_models.Model):
     name = models.CharField(max_length=100)
     type = models.ForeignKey(LocationType, on_delete=models.CASCADE, null=True)
-    geom = gis_models.GeometryField(blank=True, null=True)
+    geom = gis_models.GeometryField(blank=True, null=True, srid=4326)
     old_madrid = models.BooleanField(null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
         return self.name
+
+    @property
+    def popupContent(self):
+        str_to_return = "<h5><u>Location: {}</u></h5><h6>Articles:</h6>".format(self.name)
+        articles = Article.objects.filter(location=self.id)
+        for article in articles:
+            if article.url:
+                str_to_return += "<a href='{}' style='color: blue'>{}</a><br>".format(article.url, article.title)
+            else:
+                str_to_return += "<p>{}</p>".format(article.title)
+        return str_to_return
 
 
 class BuildingType(models.Model):
@@ -76,12 +87,23 @@ class Building(models.Model):
     name = models.CharField(max_length=100)
     type = models.ForeignKey(BuildingType, on_delete=models.CASCADE, null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
-    geom = gis_models.PointField(null=True)
+    geom = gis_models.PointField(null=True, srid=4326, blank=True)
     old_madrid = models.BooleanField(null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
 
     def __str__(self):
         return self.name
+
+    @property
+    def popupContent(self):
+        str_to_return = "<h5><u>Building: {}</u></h5><h6>Articles:</h6>".format(self.name)
+        articles = Article.objects.filter(building=self.id)
+        for article in articles:
+            if article.url:
+                str_to_return += "<a href='{}' style='color: blue'>{}</a><br>".format(article.url, article.title)
+            else:
+                str_to_return += "<p>{}</p>".format(article.title)
+        return str_to_return
 
 
 class TypeOfFormat(models.Model):

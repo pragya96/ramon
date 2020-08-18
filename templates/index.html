@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load leaflet_tags %}
+{% load geojson_tags %}
 
 
 {% block title %}
@@ -8,6 +10,12 @@ Ramón Gómez de la Serna
 
 
 {% block css %}
+	{% leaflet_css %}
+	<style type="text/css">
+		.leaflet-container {
+			height: 450px;
+		}
+	</style>
 {% endblock %}
 
 
@@ -17,6 +25,13 @@ Ramón Gómez de la Serna
 		<h2 id="index_header">Ramón's Articles</h2>
 	</div>
 </div>
+<div class="row">
+	<div class="col-10 offset-1">
+		{% leaflet_map "main" callback="window.main_map_init"%}
+	</div>
+</div>
+<br>
+<br>
 <div class="row">
 	<div class="col-10 offset-1">
 		<table id="articles_list" class="display" style="width: 100%">
@@ -47,5 +62,32 @@ Ramón Gómez de la Serna
 
 
 {% block js %}
+	{% leaflet_js %}
     <script src="{% static 'js/index.js' %}"></script>
+    <script type="text/javascript">
+    	var locationsCollection = {{ locations|geojsonfeature:"popupContent"|safe }};
+    	var buildingsCollection = {{ buildings|geojsonfeature:"popupContent"|safe }};
+
+    	function onEachFeature(feature, layer) {
+			if (feature.properties && feature.properties.popupContent) {
+				layer.bindPopup(feature.properties.popupContent);
+			}
+		}
+
+		function main_map_init(map, options) {
+			map.setView([40.420, -3.70], 14);
+			L.geoJson(locationsCollection, {onEachFeature: onEachFeature}).addTo(map);
+			L.geoJson(buildingsCollection, {onEachFeature: onEachFeature}).addTo(map);
+		}
+
+   //  	function main_map_init (map, options) {
+			// map.setView([40.400, -3.70], 10.5);
+
+   //          var dataurl = '{% url "data" %}';
+
+		 //    $.getJSON(dataurl, function (data) {
+		 //        L.geoJson(data, {onEachFeature: onEachFeature}).addTo(map);
+		 //    });
+   //      }
+    </script>
 {% endblock %}
